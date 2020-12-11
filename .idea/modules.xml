@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GameBoyEmulator.iml" filepath="$PROJECT_DIR$/GameBoyEmulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LambdaGameBoyEmulator.iml" filepath="$PROJECT_DIR$/LambdaGameBoyEmulator.iml" />
     </modules>
   </component>
 </project>
