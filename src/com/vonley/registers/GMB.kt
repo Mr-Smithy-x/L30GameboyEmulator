@@ -2,6 +2,11 @@ package com.vonley.registers
 
 object GMB {
 
+
+    fun test(){
+
+    }
+
     /**
             MB 8bit-Load commands
                 ld   r,r         xx         4 ---- r=r
