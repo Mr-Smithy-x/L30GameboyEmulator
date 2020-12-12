@@ -15,4 +15,8 @@ object CPU {
     //Program Counter
     var pc: Int = 0
 
+
+
+
+
 }
