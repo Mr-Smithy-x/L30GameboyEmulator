@@ -1,1 +1,4 @@
 *.gba
+*.gb
+*.zip
+cpu_instrs
