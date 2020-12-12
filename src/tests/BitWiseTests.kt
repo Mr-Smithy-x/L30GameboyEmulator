@@ -56,7 +56,7 @@ class BitWiseTests {
     val b = 89
 
     @Test
-    fun testNot(){
+    fun testAnd(){
         //Where both have corresponding ones
         //sgn 64  32 16 8  4 2 1
         //0   1   0  1  0  1 0 0 = 4 + 16 + 64 = 84
@@ -77,8 +77,19 @@ class BitWiseTests {
         assert(a or b == 93)
     }
 
+    @Test
+    fun testXor(){
+        //Where either or have corresponding ones
+        //sgn 64  32 16 8  4 2 1
+        //0   1   0  1  0  1 0 0 = 4 + 16 + 64 = 84
+        //0   1   0  1  1  0 0 1 = 1 + 8 + 16 + 64 = 89
+        //-----------------------------------------------
+        //0   0   0  0  1  1 0 1 = 13
+        assert(a xor b == 13)
+    }
+
     @Test //We are working with 2 complements
-    fun testComplement(){
+    fun testNot2ndComplement(){
         //flips the operator
         // sgn  128 64  32 16 8 4 2 1
         // 0    0   1   0  1  0 1 0 0 = 4 + 16 + 64 = 84
