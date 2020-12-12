@@ -6,12 +6,16 @@ object CPU {
     var a: Int = 0 //Accumulator & Flags
 
 
-    var b: Int = 0; var c: Int = 0  //BC
-    var d: Int = 0; var e: Int = 0  //DE
-    var h: Int = 0; var l: Int = 0  //HL
+    var b: Int = 0;
+    var c: Int = 0  //BC
+    var d: Int = 0;
+    var e: Int = 0  //DE
+    var h: Int = 0;
+    var l: Int = 0  //HL
 
     //Stack Pointer
     var sp: Int = 0
+
     //Program Counter
     var pc: Int = 0
 
@@ -36,9 +40,13 @@ object CPU {
             c = (value and 0xFF)
         }
 
-    val af: Int
+    var af: Int
         get() {
-            return a
+            return (a shl 8) or Flag.flagByte
+        }
+        set(value) {
+            a = (value shr 8)
+            Flag.flagByte = (value and 0xFF)
         }
 
 }
