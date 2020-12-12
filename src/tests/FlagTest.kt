@@ -1,9 +1,10 @@
 package tests
 
-import com.vonley.extensions.toHexString
-import com.vonley.registers.CPU
-import com.vonley.registers.Flag
+import com.vonley.processor.registers.CPURegister
+import com.vonley.processor.registers.FlagRegister
+import junit.framework.TestCase
 import org.junit.Test
+
 /**
  * 0 - 8 signed range is -128 - 127
  * 0 - 8 unsigned range is 0-256
@@ -11,32 +12,46 @@ import org.junit.Test
  * Reference Bitwise Test class for understanding
  * @see BitWiseTests
  */
-class FlagTest {
+class FlagTest : TestCase() {
 
-    @Test
-    fun testFlagByte() {
-        Flag.nz = false
-        Flag.n = true
-        Flag.h = true
 
-        assert(Flag.flagByte == 0b01100000)
-        Flag.nz = true
-        assert(Flag.flagByte == 0b11100000)
-        Flag.flagByte = 0b10000000
-        assert(Flag.nz)
-        assert(Flag.n == false)
-        assert(Flag.h == false)
+    lateinit var cpuRegister: CPURegister
+    val flagRegister: FlagRegister
+        get() {
+            return cpuRegister.fr
+        }
+
+    override fun setUp() {
+        super.setUp()
+        cpuRegister = CPURegister()
     }
 
     @Test
-    fun testAccumulatorWithFlag(){
-        Flag.flagByte = 0b11010000
-        CPU.a = 0x2F
-        assert(Flag.flagByte == 0xD0)
-        assert(CPU.af == 0x2FD0)
-        CPU.af = 0x2FF0
-        assert(CPU.a == 0x2F)
-        assert(Flag.flagByte == 0xf0)
+    fun testFlagByte() {
+        flagRegister.zf = false
+        flagRegister.n = true
+        flagRegister.h = true
+
+        assert(flagRegister.byte == 0b01100000)
+        flagRegister.zf = true
+        assert(flagRegister.byte == 0b11100000)
+        flagRegister.byte = 0b10000000
+        assert(flagRegister.zf)
+        assert(flagRegister.n == false)
+        assert(flagRegister.h == false)
+        println(cpuRegister.fr)
+    }
+
+    @Test
+    fun testAccumulatorWithFlag() {
+        flagRegister.byte = 0b11010000
+        cpuRegister.a = 0x2F
+        assert(flagRegister.byte == 0xD0)
+        assert(cpuRegister.af == 0x2FD0)
+        cpuRegister.af = 0x2FF0
+        assert(cpuRegister.a == 0x2F)
+        assert(flagRegister.byte == 0xf0)
+        println(cpuRegister)
     }
 
 }

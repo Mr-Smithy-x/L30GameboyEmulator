@@ -1,6 +1,6 @@
 package com.vonley
 
-import com.vonley.registers.CPU
+import com.vonley.processor.registers.CPURegister
 
 class Main {
 
@@ -9,7 +9,6 @@ class Main {
         @JvmStatic
         fun main(string: Array<String>) {
             println("Gameboy Emulator Project. Wish me luck")
-            print(CPU.hl)
         }
     }
 

@@ -1,8 +1,11 @@
-package com.vonley.registers
+package com.vonley.processor.registers
 
-object Flag {
+import com.vonley.extensions.toBinaryString
+import com.vonley.extensions.toHexString
+
+class FlagRegister {
     //bit 7 - SET = Z, Clr = NZ, Zero Flag
-    var nz: Boolean = false
+    var zf: Boolean = false
 
     //bit 6 SET - nil, Clr = nil, Add/Sub-Flag (BCD)
     var n: Boolean = false
@@ -14,10 +17,10 @@ object Flag {
     var cy: Boolean = false
     //bit 3-0 not used (always zero)
 
-    var flagByte: Int
+    var byte: Int
         get() {
             var register = 0;
-            if (nz) {
+            if (zf) {
                 register = register xor (1 shl 7)
             }
             if (n) {
@@ -32,10 +35,22 @@ object Flag {
             return register
         }
         set(value) {
-            nz = (value shr 7) and 1 == 1
+            zf = (value shr 7) and 1 == 1
             n = (value shr 6) and 1 == 1
             h = (value shr 5) and 1 == 1
             cy = (value shr 4) and 1 == 1
         }
+
+    override fun toString(): String {
+        return """
+            FLAG:
+            zf  (Zero Flag)         : $zf
+            n   (Add/Sub-Flag)      : $n
+            h   (Half Carry Flag)   : $h
+            cy  (Carry Flag)        : $cy
+            hex: 0x${byte.toHexString()}
+            bin: 0b${byte.toBinaryString()}
+        """.trimIndent()
+    }
 
 }

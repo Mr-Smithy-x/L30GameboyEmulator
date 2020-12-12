@@ -1,6 +1,7 @@
 package tests
 
-import com.vonley.registers.CPU
+import com.vonley.processor.registers.CPURegister
+import junit.framework.TestCase
 import org.junit.Test
 /**
  * 0 - 8 signed range is -128 - 127
@@ -9,27 +10,37 @@ import org.junit.Test
  * Reference Bitwise Test class for understanding
  * @see BitWiseTests
  */
-class CPUTest {
+class CPUTest: TestCase() {
+
+    lateinit var cpuRegister: CPURegister
+    
+    override fun setUp() {
+        super.setUp()
+        cpuRegister = CPURegister()
+    }
 
     @Test
     fun testBC() {
-        CPU.b = 0xA8
-        CPU.c = 0x10
-        assert(CPU.bc == (CPU.b shl 8) or CPU.c)
+        cpuRegister.b = 0xA8
+        cpuRegister.c = 0x10
+        assert(cpuRegister.bc == (cpuRegister.b shl 8) or cpuRegister.c)
+        println(cpuRegister)
     }
 
     @Test
     fun testDE() {
-        CPU.d = 0x3F
-        CPU.e = 0x7F
-        assert(CPU.de == (CPU.d shl 8) or CPU.e)
+        cpuRegister.d = 0x3F
+        cpuRegister.e = 0x7F
+        assert(cpuRegister.de == (cpuRegister.d shl 8) or cpuRegister.e)
+        println(cpuRegister)
     }
 
     @Test
     fun testHL() {
-        CPU.h = 0x3F
-        CPU.l = 0x7F
-        assert(CPU.hl == (CPU.h shl 8) or CPU.l)
+        cpuRegister.h = 0x3F
+        cpuRegister.l = 0x7F
+        assert(cpuRegister.hl == (cpuRegister.h shl 8) or cpuRegister.l)
+        println(cpuRegister)
     }
 
     @Test
@@ -37,30 +48,32 @@ class CPUTest {
         val b = 0x2F
         val c = 0x18
 
-        CPU.b = b
-        CPU.c = c
+        cpuRegister.b = b
+        cpuRegister.c = c
 
-        assert(CPU.bc == (CPU.b shl 8) or CPU.c)
-        CPU.b = 0
-        CPU.c = 0
-        CPU.bc = 0x2F18
-        assert(CPU.b == b)
-        assert(CPU.c == c)
+        assert(cpuRegister.bc == (cpuRegister.b shl 8) or cpuRegister.c)
+        cpuRegister.b = 0
+        cpuRegister.c = 0
+        cpuRegister.bc = 0x2F18
+        assert(cpuRegister.b == b)
+        assert(cpuRegister.c == c)
+        println(cpuRegister)
     }
 
     @Test
     fun testSetDE(){
         val d = 0x34
         val e = 0x9F
-        CPU.d = d
-        CPU.e = e
+        cpuRegister.d = d
+        cpuRegister.e = e
 
-        assert(CPU.de == (CPU.d shl 8) or CPU.e)
-        CPU.d = 0
-        CPU.e = 0
-        CPU.de = 0x349F
-        assert(CPU.d == d)
-        assert(CPU.e == e)
+        assert(cpuRegister.de == (cpuRegister.d shl 8) or cpuRegister.e)
+        cpuRegister.d = 0
+        cpuRegister.e = 0
+        cpuRegister.de = 0x349F
+        assert(cpuRegister.d == d)
+        assert(cpuRegister.e == e)
+        println(cpuRegister)
     }
 
     @Test
@@ -68,14 +81,15 @@ class CPUTest {
         val h = 0x27
         val l = 0x4F
 
-        CPU.h = h
-        CPU.l = l
-        assert(CPU.hl == (CPU.h shl 8) or CPU.l)
-        CPU.h = 0
-        CPU.l = 0
-        CPU.hl = 0x274F
-        assert(CPU.h == h)
-        assert(CPU.l == l)
+        cpuRegister.h = h
+        cpuRegister.l = l
+        assert(cpuRegister.hl == (cpuRegister.h shl 8) or cpuRegister.l)
+        cpuRegister.h = 0
+        cpuRegister.l = 0
+        cpuRegister.hl = 0x274F
+        assert(cpuRegister.h == h)
+        assert(cpuRegister.l == l)
+        println(cpuRegister)
     }
 
 }
