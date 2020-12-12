@@ -5,6 +5,7 @@ object CPU {
     //HI            //LO
     var a: Int = 0 //Accumulator & Flags
 
+
     var b: Int = 0;
     var c: Int = 0  //BC
     var d: Int = 0;
@@ -39,5 +40,13 @@ object CPU {
             c = (value and 0xFF)
         }
 
+    var af: Int
+        get() {
+            return (a shl 8) or Flag.flagByte
+        }
+        set(value) {
+            a = (value shr 8)
+            Flag.flagByte = (value and 0xFF)
+        }
 
 }
