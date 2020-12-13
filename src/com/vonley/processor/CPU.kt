@@ -11,7 +11,7 @@ class CPU {
     }
 
     companion object {
-        val mmu = MemoryManagementUnit()
+        val mmu = MMU()
         val cpuRegister = CPURegister()
         val flagRegister: FlagRegister
             get() {

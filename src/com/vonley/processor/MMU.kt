@@ -10,7 +10,7 @@ package com.vonley.processor
 //writing XXXXXXBB = X doesnt care B = Bank Select bits in 4000-5FFF area
 
 //MBC2
-class MemoryManagementUnit {
+class MMU {
 
     enum class Region(
         val read: Boolean = false,

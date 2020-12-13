@@ -1,9 +1,9 @@
 package com.vonley.extensions
 
-import com.vonley.processor.MemoryManagementUnit
+import com.vonley.processor.MMU
 
-fun Int.getRegion(bootRomEnabled: Boolean = false): MemoryManagementUnit.Region {
-    return MemoryManagementUnit.Region.parse(this, bootRomEnabled)
+fun Int.getRegion(bootRomEnabled: Boolean = false): MMU.Region {
+    return MMU.Region.parse(this, bootRomEnabled)
 }
 
 fun Int.toBinaryString(): String {
