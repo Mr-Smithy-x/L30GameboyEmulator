@@ -2,7 +2,7 @@ package com.vonley.processor
 
 import com.vonley.extensions.getRegion
 import com.vonley.contracts.IntDifferenceImpl
-import com.vonley.type.Word
+import com.vonley.extensions.toHexString
 
 
 //MBC1
@@ -148,6 +148,24 @@ class MMU {
         return getByteArrayAtRegion(address)[index]
     }
 
+    fun writeShort(address: Int, value: Short) {
+        val left = (value.toInt() shr 8) and 0xFF
+        val right = (value.toInt() and 0xFF)
+        write(address, left.toByte())
+        write(address + 1, right.toByte())
+    }
+
+
+    fun readShort(address: Int): Short {
+        val region = address.getRegion()
+        val index = address and region.difference
+        val left = read(index)
+        val right = read(index + 1)
+        return (((left.toInt() and 0xFF) shl 8) or (right.toInt() and 0xFF)).toShort() //We are taking the byte, upscaling it to a short
+        //short is a signed word -32768 to +32767, Word is 0 - 65535, we are just representing the binary in 2's complement
+        //using a short
+    }
+
     private fun getByteArrayAtRegion(address: Int): ByteArray {
         return when (address.getRegion()) {
             Region.BOOT_ROM -> bootrom
@@ -170,7 +188,10 @@ class MMU {
         regionArray[index] = value
     }
 
-    fun write(address: Int, value: Word){
+    fun write(address: Int, value: Short) {
+        val region = address.getRegion()
+        val index = address and region.difference
+        val regionArray = getByteArrayAtRegion(address)
 
     }
 

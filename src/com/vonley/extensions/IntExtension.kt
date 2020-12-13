@@ -11,5 +11,15 @@ fun Int.toBinaryString(): String {
 }
 
 fun Int.toHexString(): String {
-    return "0x${Integer.toHexString(this)}"
+    return """0x${("%x".format(this)).toUpperCase()}"""
+}
+
+
+fun Short.toHexString(): String {
+    return """0x${("%x".format(this)).toUpperCase()} """
+}
+
+
+fun Byte.toHexString(): String {
+    return """0x${("%x".format(this)).toUpperCase()}"""
 }
