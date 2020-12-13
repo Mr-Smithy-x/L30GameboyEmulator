@@ -12,32 +12,91 @@ package com.vonley.processor
 //MBC2
 class MemoryManagementUnit {
 
-    enum class Region(read: Boolean = false, write: Boolean = false) {
-        ROM_BANK_0(true, false),
-        ROM_BANK_1(true, false),
-        VIDEO_RAM(true, true),
-        EXTERNAL_RAM(true, true),
-        WORK_RAM(true, true),
-        ECHO_RAM(false, false),
-        OAM_SPRITE(true, true),
-        IO_REG(true, true),
-        H_RAM(true, true),
-        JOYPAD_REGISTER(true, true),
-        ZERO_PAGE_RAM(true, true),
-        UNKNOWN,
+    enum class Region(
+        val read: Boolean = false,
+        val write: Boolean = false,
+        protected val range: IntRange = -1..-1
+    ) : ClosedRange<Int> {
+        BOOT_ROM(true, true, 0x0000..0x00FF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        ROM_BANK_0(true, false, 0x0000..0x3FFF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        ROM_BANK_1(true, false, 0x4000..0x7FFF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        VIDEO_RAM(true, true, 0x8000..0x9FFF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        EXTERNAL_RAM(true, true, 0xA000..0xBFFF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        WORK_RAM(true, true, 0xC000..0xDFFF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        ECHO_RAM(true, false, 0xE000..0xFDFF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        OAM_SPRITE(true, true, 0xFE00..0xFE9F) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
+        IO_REG(true, true, 0xFF00..0xFF7F) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        }, //Joy Pad
+        ZERO_PAGE_RAM(true, true, 0xFF80..0xFFFE) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        }; //H Ram
+        companion object {
+            fun parse(value: Int, bootRomEnabled: Boolean = false): Region {
+                return when {
+                    bootRomEnabled && value in BOOT_ROM -> BOOT_ROM
+                    value in ROM_BANK_0 -> ROM_BANK_0
+                    value in ROM_BANK_1 -> ROM_BANK_1
+                    value in VIDEO_RAM -> VIDEO_RAM
+                    value in EXTERNAL_RAM -> EXTERNAL_RAM
+                    value in WORK_RAM -> WORK_RAM
+                    value in ECHO_RAM -> ECHO_RAM
+                    value in OAM_SPRITE -> OAM_SPRITE
+                    value in IO_REG -> IO_REG
+                    value in ZERO_PAGE_RAM -> ZERO_PAGE_RAM
+                    else -> {
+                        throw ArrayIndexOutOfBoundsException("You're out of bounds")
+                    }
+                }
+            }
+        }
     }
-
-    //Entry Point
-    //0100-0103
-
-    //0104-0133
-    val nintendoLogo = intArrayOf(
-        0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B, 0x03, 0x73, 0x00, 0x83, 0x00, 0x0C, 0x00, 0x0D,
-        0x00, 0x08, 0x11, 0x1F, 0x88, 0x89, 0x00, 0x0E, 0xDC, 0xCC, 0x6E, 0xE6, 0xDD, 0xDD, 0xD9, 0x99,
-        0xBB, 0xBB, 0x67, 0x63, 0x6E, 0x0E, 0xEC, 0xCC, 0xDD, 0xDC, 0x99, 0x9F, 0xBB, 0xB9, 0x33, 0x3E
-    )
-
-    //0134-0143
 
     //Start	End	    Description	Notes
     //0000	3FFF	16KB ROM bank 00	From cartridge, usually a fixed bank
@@ -74,6 +133,18 @@ class MemoryManagementUnit {
     //FFFF	FFFF	Interrupts Enable Register (IE)
     var interupt = 0
 
+
+    //Entry Point
+    //0100-0103
+
+    //0104-0133
+    val nintendoLogo = intArrayOf(
+        0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B, 0x03, 0x73, 0x00, 0x83, 0x00, 0x0C, 0x00, 0x0D,
+        0x00, 0x08, 0x11, 0x1F, 0x88, 0x89, 0x00, 0x0E, 0xDC, 0xCC, 0x6E, 0xE6, 0xDD, 0xDD, 0xD9, 0x99,
+        0xBB, 0xBB, 0x67, 0x63, 0x6E, 0x0E, 0xEC, 0xCC, 0xDD, 0xDC, 0x99, 0x9F, 0xBB, 0xB9, 0x33, 0x3E
+    )
+
+    //0134-0143
 }
 
 
