@@ -2,6 +2,7 @@ package com.vonley.processor
 
 import com.vonley.extensions.getRegion
 import com.vonley.contracts.IntDifferenceImpl
+import com.vonley.extensions.toHexString
 import kotlin.experimental.and
 
 
@@ -26,7 +27,7 @@ class MMU {
     private val rombank1 = ByteArray(0x4000)
 
     //8000	9FFF	8KB Video RAM (VRAM)	Only bank 0 in Non-CGB mode Switchable bank 0/1 in CGB mode
-    private val vram = ByteArray(0x2000)
+    private var vram = ByteArray(0x2000)
 
     //A000	BFFF	8KB External RAM	In cartridge, switchable bank if any
     private var eram = ByteArray(0x2000)
@@ -149,30 +150,6 @@ class MMU {
     }
 
 
-    fun readByte(address: Int): Byte {
-        val region = address.getRegion()
-        val index = address and region.difference
-        return getByteArrayAtRegion(address)[index]
-    }
-
-    fun writeShort(address: Int, value: Short) {
-        val left = (value.toInt() shr 8) and 0xFF
-        val right = (value.toInt() and 0xFF)
-        writeByte(address, left.toByte())
-        writeByte(address + 1, right.toByte())
-    }
-
-
-    fun readShort(address: Int): Short {
-        val region = address.getRegion()
-        val index = address and region.difference
-        val left = readByte(index)
-        val right = readByte(index + 1)
-        return (((left.toInt() and 0xFF) shl 8) or (right.toInt() and 0xFF)).toShort() //We are taking the byte, upscaling it to a short
-        //short is a signed word -32768 to +32767, Word is 0 - 65535, we are just representing the binary in 2's complement
-        //using a short
-    }
-
     private fun getByteArrayAtRegion(address: Int): ByteArray {
         return when (address.getRegion()) {
             Region.BOOT_ROM -> bootrom
@@ -189,12 +166,38 @@ class MMU {
         }
     }
 
+    fun readByte(address: Int): Byte {
+        val region = address.getRegion()
+        val regionArray = getByteArrayAtRegion(address)
+        val index = address and region.difference
+        val byte = regionArray[index]
+        //println("Reading Addr: ${address.toHexString()} = Val: ${byte.toHexString()} at Idx: $index of Reg: $region with size: ${regionArray.size}")
+        return byte.and(0xFF.toByte())
+    }
+
+    fun writeShort(address: Int, value: Short) {
+        val left = (value.toInt() shr 8) and 0xFF
+        val right = (value.toInt() and 0xFF)
+        writeByte(address, left.toByte())
+        writeByte(address + 1, right.toByte())
+    }
+
+    fun readShort(address: Int): Short {
+        val lo = readByte(address)
+        val hi = readByte(address + 1)
+        return (((lo.toInt() and 0xFF) shl 8) or (hi.toInt() and 0xFF)).and(0xFFFF).toShort();//We are taking the byte, upscaling it to a short
+        //short is a signed word -32768 to +32767, Word is 0 - 65535, we are just representing the binary in 2's complement
+        //using a short
+    }
+
+
     fun writeByte(address: Int, value: Byte) {
         val region = address.getRegion()
         if (region.canWrite) {
-            val index = address and region.difference
             val regionArray = getByteArrayAtRegion(address)
+            val index = address and region.difference
             regionArray[index] = value.and(0xFF.toByte())
+            //println("Writing Val: ${value.toHexString()} to Addr: ${address.toHexString()} at Idx: $index of $region with size: ${regionArray.size}")
         } else {
             throw IllegalAccessException("You cannot write to this area")
         }

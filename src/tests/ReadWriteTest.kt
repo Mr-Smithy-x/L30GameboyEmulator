@@ -1,5 +1,6 @@
 package tests
 
+import com.vonley.extensions.toHexString
 import com.vonley.processor.MMU
 import junit.framework.TestCase
 
@@ -13,7 +14,7 @@ class ReadWriteTest : TestCase() {
     }
 
     fun testWriteShort() {
-        val address = 0x2FDE
+        val address = 0x8FDE
         val valueToWrite: Short = 0x4FA0
         mmu.writeShort(address, valueToWrite)
         val readShort = mmu.readShort(address)
@@ -25,17 +26,18 @@ class ReadWriteTest : TestCase() {
     }
 
     fun testReadShort() {
-        val address = 0x2FDE
+        val address = 0x8FDE
         val hiValueToWrite: Byte = 0x4F
         val loValueToWrite: Byte = (0xFF).toByte()
         mmu.writeByte(address, hiValueToWrite)
         mmu.writeByte(address + 1, loValueToWrite)
         val readShort: Short = mmu.readShort(address)
+        println(readShort.toHexString())
         assert(readShort == (0x4FFF).toShort())
     }
 
     fun testWriteThenRead() {
-        val address = 0x2FDE
+        val address = 0x8FDE
         val valueToWrite: Byte = 0x4F.toByte()
         mmu.writeByte(address, valueToWrite)
         val readByte = mmu.readByte(address)
