@@ -9,23 +9,37 @@ package com.vonley.processor
 //if 16/8 mode
 //writing XXXXXXBB = X doesnt care B = Bank Select bits in 4000-5FFF area
 
-
 //MBC2
-
-
-
 class MemoryManagementUnit {
+
+    enum class Region(read: Boolean = false, write: Boolean = false) {
+        ROM_BANK_0(true, false),
+        ROM_BANK_1(true, false),
+        VIDEO_RAM(true, true),
+        EXTERNAL_RAM(true, true),
+        WORK_RAM(true, true),
+        ECHO_RAM(false, false),
+        OAM_SPRITE(true, true),
+        IO_REG(true, true),
+        H_RAM(true, true),
+        JOYPAD_REGISTER(true, true),
+        ZERO_PAGE_RAM(true, true),
+        UNKNOWN,
+    }
 
     //Entry Point
     //0100-0103
 
     //0104-0133
-    val nintendoLogo = intArrayOf(0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B, 0x03, 0x73, 0x00, 0x83, 0x00, 0x0C, 0x00, 0x0D,
+    val nintendoLogo = intArrayOf(
+        0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B, 0x03, 0x73, 0x00, 0x83, 0x00, 0x0C, 0x00, 0x0D,
         0x00, 0x08, 0x11, 0x1F, 0x88, 0x89, 0x00, 0x0E, 0xDC, 0xCC, 0x6E, 0xE6, 0xDD, 0xDD, 0xD9, 0x99,
-        0xBB, 0xBB, 0x67, 0x63, 0x6E, 0x0E, 0xEC, 0xCC, 0xDD, 0xDC, 0x99, 0x9F, 0xBB, 0xB9, 0x33, 0x3E)
+        0xBB, 0xBB, 0x67, 0x63, 0x6E, 0x0E, 0xEC, 0xCC, 0xDD, 0xDC, 0x99, 0x9F, 0xBB, 0xB9, 0x33, 0x3E
+    )
 
     //0134-0143
 
+    //Start	End	    Description	Notes
     //0000	3FFF	16KB ROM bank 00	From cartridge, usually a fixed bank
     var rombank0 = ByteArray(0x4000)
 
@@ -39,10 +53,8 @@ class MemoryManagementUnit {
     private var eram = ByteArray(0x2000)
 
     //C000	CFFF	4KB Work RAM (WRAM) bank 0
-    var wrambank0 = ByteArray(0x1000)
-
     //D000	DFFF	4KB Work RAM (WRAM) bank 1~N	Only bank 1 in Non-CGB mode Switchable bank 1~7 in CGB mode
-    var wrambank1 = ByteArray(0x1000)
+    var wrambank = ByteArray(0x2000)
 
     //E000	FDFF	Mirror of C000~DDFF (ECHO RAM)	Nintendo says use of this area is prohibited.
     var echoram = ByteArray(0x1E00)//or 1DFF?
@@ -62,11 +74,6 @@ class MemoryManagementUnit {
     //FFFF	FFFF	Interrupts Enable Register (IE)
     var interupt = 0
 
-
-    /*
-Start	End	Description	Notes
-FEA0	FEFF	Not Usable	Nintendo says use of this area is prohibited
- */
 }
 
 
