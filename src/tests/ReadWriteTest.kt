@@ -3,6 +3,7 @@ package tests
 import com.vonley.extensions.toHexString
 import com.vonley.processor.MMU
 import junit.framework.TestCase
+import org.junit.jupiter.api.assertThrows
 
 class ReadWriteTest : TestCase() {
 
@@ -11,6 +12,14 @@ class ReadWriteTest : TestCase() {
     override fun setUp() {
         super.setUp()
         mmu = MMU()
+    }
+
+    fun testWriteThrowAccessError() {
+        val address = 0x2F3E
+        val byte: Byte = 0xA3.toByte()
+        assertThrows<IllegalAccessException> {
+            mmu.writeByte(address, byte)
+        }
     }
 
     fun testWriteShort() {
