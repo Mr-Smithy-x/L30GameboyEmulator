@@ -1,5 +1,9 @@
 package com.vonley.processor
 
+import com.vonley.extensions.getRegion
+import com.vonley.contracts.IntDifferenceImpl
+import com.vonley.type.Word
+
 
 //MBC1
 //XXXX XXXS = X doesnt care, S is the select mode for MBC1
@@ -11,12 +15,50 @@ package com.vonley.processor
 
 //MBC2
 class MMU {
+    //Start	End	    Description	Notes
+    //0000  00FF - The bootrom
+    private val bootrom = ByteArray(0x100)
+
+    //0000	3FFF	16KB ROM bank 00	From cartridge, usually a fixed bank
+    private var rombank0 = ByteArray(0x4000)
+
+    //4000	7FFF	16KB ROM Bank 01~NN	From cartridge, switchable bank via MB (if any)
+    private val rombank1 = ByteArray(0x4000)
+
+    //8000	9FFF	8KB Video RAM (VRAM)	Only bank 0 in Non-CGB mode Switchable bank 0/1 in CGB mode
+    private val vram = ByteArray(0x2000)
+
+    //A000	BFFF	8KB External RAM	In cartridge, switchable bank if any
+    private var eram = ByteArray(0x2000)
+
+    //C000	CFFF	4KB Work RAM (WRAM) bank 0
+    //D000	DFFF	4KB Work RAM (WRAM) bank 1~N	Only bank 1 in Non-CGB mode Switchable bank 1~7 in CGB mode
+    private val wrambank = ByteArray(0x2000)
+
+    //E000	FDFF	Mirror of C000~DDFF (ECHO RAM)	Nintendo says use of this area is prohibited.
+    private val echoram = ByteArray(0x1E00)//or 1DFF?
+
+    //FE00	FE9F	Sprite attribute table (OAM)
+    private val oam = ByteArray(0x60)
+
+    //FF00	FF7F	I/O Registers
+    private val ioregs = ByteArray(0x80)
+
+    //FEA0	FEFF	Not Usable	Nintendo says use of this area is prohibited
+    private val prohibited = ByteArray(0x60)
+
+    //FF80	FFFE	High RAM (HRAM)
+    private val hram = ByteArray(0x7F)
+
+    //FFFF	FFFF	Interrupts Enable Register (IE)
+    private var interupt = 0
+
 
     enum class Region(
         val read: Boolean = false,
         val write: Boolean = false,
         protected val range: IntRange = -1..-1
-    ) : ClosedRange<Int> {
+    ) : IntDifferenceImpl {
         BOOT_ROM(true, true, 0x0000..0x00FF) {
             override val endInclusive: Int
                 get() = range.last
@@ -77,6 +119,7 @@ class MMU {
             override val start: Int
                 get() = range.first
         }; //H Ram
+
         companion object {
             fun parse(value: Int, bootRomEnabled: Boolean = false): Region {
                 return when {
@@ -98,53 +141,55 @@ class MMU {
         }
     }
 
-    //Start	End	    Description	Notes
-    //0000	3FFF	16KB ROM bank 00	From cartridge, usually a fixed bank
-    var rombank0 = ByteArray(0x4000)
 
-    //4000	7FFF	16KB ROM Bank 01~NN	From cartridge, switchable bank via MB (if any)
-    var rombank1 = ByteArray(0x4000)
+    fun read(address: Int): Byte {
+        val region = address.getRegion()
+        val index = address and region.difference
+        return getByteArrayAtRegion(address)[index]
+    }
 
-    //8000	9FFF	8KB Video RAM (VRAM)	Only bank 0 in Non-CGB mode Switchable bank 0/1 in CGB mode
-    var vram = ByteArray(0x2000)
+    private fun getByteArrayAtRegion(address: Int): ByteArray {
+        return when (address.getRegion()) {
+            Region.BOOT_ROM -> bootrom
+            Region.ROM_BANK_0 -> rombank0
+            Region.ROM_BANK_1 -> rombank1
+            Region.VIDEO_RAM -> vram
+            Region.EXTERNAL_RAM -> eram
+            Region.WORK_RAM -> wrambank
+            Region.ECHO_RAM -> echoram
+            Region.OAM_SPRITE -> oam
+            Region.IO_REG -> ioregs
+            Region.ZERO_PAGE_RAM -> hram
+        }
+    }
 
-    //A000	BFFF	8KB External RAM	In cartridge, switchable bank if any
-    private var eram = ByteArray(0x2000)
+    fun write(address: Int, value: Byte) {
+        val region = address.getRegion()
+        val index = address and region.difference
+        val regionArray = getByteArrayAtRegion(address)
+        regionArray[index] = value
+    }
 
-    //C000	CFFF	4KB Work RAM (WRAM) bank 0
-    //D000	DFFF	4KB Work RAM (WRAM) bank 1~N	Only bank 1 in Non-CGB mode Switchable bank 1~7 in CGB mode
-    var wrambank = ByteArray(0x2000)
+    fun write(address: Int, value: Word){
 
-    //E000	FDFF	Mirror of C000~DDFF (ECHO RAM)	Nintendo says use of this area is prohibited.
-    var echoram = ByteArray(0x1E00)//or 1DFF?
+    }
 
-    //FE00	FE9F	Sprite attribute table (OAM)
-    var oam = ByteArray(0x60)
+    companion object {
 
-    //FF00	FF7F	I/O Registers
-    var ioregs = ByteArray(0x80)
+        //0104-0133 - Nintendo Logo
+        val nintendoLogo = intArrayOf(
+            0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B, 0x03, 0x73, 0x00, 0x83, 0x00, 0x0C, 0x00, 0x0D,
+            0x00, 0x08, 0x11, 0x1F, 0x88, 0x89, 0x00, 0x0E, 0xDC, 0xCC, 0x6E, 0xE6, 0xDD, 0xDD, 0xD9, 0x99,
+            0xBB, 0xBB, 0x67, 0x63, 0x6E, 0x0E, 0xEC, 0xCC, 0xDD, 0xDC, 0x99, 0x9F, 0xBB, 0xB9, 0x33, 0x3E
+        )
 
-    //FEA0	FEFF	Not Usable	Nintendo says use of this area is prohibited
-    private var prohibited = ByteArray(0x60)
-
-    //FF80	FFFE	High RAM (HRAM)
-    var hram = ByteArray(0x7F)
-
-    //FFFF	FFFF	Interrupts Enable Register (IE)
-    var interupt = 0
+        //0134-0143 = Title
 
 
-    //Entry Point
-    //0100-0103
+        //Entry Point
+        //0100-0103
 
-    //0104-0133
-    val nintendoLogo = intArrayOf(
-        0xCE, 0xED, 0x66, 0x66, 0xCC, 0x0D, 0x00, 0x0B, 0x03, 0x73, 0x00, 0x83, 0x00, 0x0C, 0x00, 0x0D,
-        0x00, 0x08, 0x11, 0x1F, 0x88, 0x89, 0x00, 0x0E, 0xDC, 0xCC, 0x6E, 0xE6, 0xDD, 0xDD, 0xD9, 0x99,
-        0xBB, 0xBB, 0x67, 0x63, 0x6E, 0x0E, 0xEC, 0xCC, 0xDD, 0xDC, 0x99, 0x9F, 0xBB, 0xB9, 0x33, 0x3E
-    )
-
-    //0134-0143
+    }
 }
 
 
