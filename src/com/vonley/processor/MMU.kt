@@ -45,7 +45,7 @@ class MMU {
     private val ioregs = ByteArray(0x80)
 
     //FEA0	FEFF	Not Usable	Nintendo says use of this area is prohibited
-    private val prohibited = ByteArray(0x60)
+    private val unusable = ByteArray(0x60)
 
     //FF80	FFFE	High RAM (HRAM)
     private val hram = ByteArray(0x7F)
@@ -55,8 +55,8 @@ class MMU {
 
 
     enum class Region(
-        val read: Boolean = false,
-        val write: Boolean = false,
+        val canRead: Boolean = false,
+        val canWrite: Boolean = false,
         protected val range: IntRange = -1..-1
     ) : IntDifferenceImpl {
         BOOT_ROM(true, true, 0x0000..0x00FF) {
@@ -107,6 +107,12 @@ class MMU {
             override val start: Int
                 get() = range.first
         },
+        UNUSABLE(true, false, 0xFEA0..0xFEFF) {
+            override val endInclusive: Int
+                get() = range.last
+            override val start: Int
+                get() = range.first
+        },
         IO_REG(true, true, 0xFF00..0xFF7F) {
             override val endInclusive: Int
                 get() = range.last
@@ -131,6 +137,7 @@ class MMU {
                     value in WORK_RAM -> WORK_RAM
                     value in ECHO_RAM -> ECHO_RAM
                     value in OAM_SPRITE -> OAM_SPRITE
+                    value in UNUSABLE -> UNUSABLE
                     value in IO_REG -> IO_REG
                     value in ZERO_PAGE_RAM -> ZERO_PAGE_RAM
                     else -> {
@@ -176,6 +183,7 @@ class MMU {
             Region.WORK_RAM -> wrambank
             Region.ECHO_RAM -> echoram
             Region.OAM_SPRITE -> oam
+            Region.UNUSABLE -> unusable
             Region.IO_REG -> ioregs
             Region.ZERO_PAGE_RAM -> hram
         }
@@ -183,9 +191,13 @@ class MMU {
 
     fun writeByte(address: Int, value: Byte) {
         val region = address.getRegion()
-        val index = address and region.difference
-        val regionArray = getByteArrayAtRegion(address)
-        regionArray[index] = value.and(0xFF.toByte())
+        if (region.canWrite) {
+            val index = address and region.difference
+            val regionArray = getByteArrayAtRegion(address)
+            regionArray[index] = value.and(0xFF.toByte())
+        } else {
+            throw IllegalAccessException("You cannot write to this area")
+        }
     }
 
     companion object {
