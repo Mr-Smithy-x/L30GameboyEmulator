@@ -1,10 +1,25 @@
 package com.vonley.extensions
 
+import com.vonley.processor.MMU
 
-fun Int.toBinaryString(): String? {
-    return Integer.toBinaryString(this)
+fun Int.getRegion(bootRomEnabled: Boolean = false): MMU.Region {
+    return MMU.Region.parse(this, bootRomEnabled)
 }
 
-fun Int.toHexString(): String? {
-    return Integer.toHexString(this)
+fun Int.toBinaryString(): String {
+    return "0b${Integer.toBinaryString(this)}"
+}
+
+fun Int.toHexString(): String {
+    return """0x${("%x".format(this)).toUpperCase()}"""
+}
+
+
+fun Short.toHexString(): String {
+    return """0x${("%x".format(this)).toUpperCase()} """
+}
+
+
+fun Byte.toHexString(): String {
+    return """0x${("%x".format(this)).toUpperCase()}"""
 }

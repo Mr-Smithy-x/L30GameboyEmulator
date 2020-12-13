@@ -48,8 +48,9 @@ class FlagRegister {
             n   (Add/Sub-Flag)      : $n
             h   (Half Carry Flag)   : $h
             cy  (Carry Flag)        : $cy
-            hex: 0x${byte.toHexString()}
-            bin: 0b${byte.toBinaryString()}
+            
+            hex: ${byte.toHexString()}
+            bin: ${byte.toBinaryString()}
         """.trimIndent()
     }
 
