@@ -56,10 +56,10 @@ class CPURegister {
     override fun toString(): String {
         return """
             CPU:
-            A  :    ${a.toHexString()}        F : ${fr.byte.toHexString()}  / F  : ${fr.byte.toBinaryString()}
-            H  :    ${h.toHexString()}        L : ${l.toHexString()}    / HL : ${hl.toHexString()}
-            B  :    ${b.toHexString()}        C : ${c.toHexString()}    / BC : ${bc.toHexString()}
-            D  :    ${d.toHexString()}        E : ${e.toHexString()}    / DE : ${de.toHexString()}
+            A  :    ${a.toHexString()}        F : ${fr.byte.toHexString()}        / F  : ${fr.byte.toBinaryString()}
+            H  :    ${h.toHexString()}        L : ${l.toHexString()}        / HL : ${hl.toHexString()}
+            B  :    ${b.toHexString()}        C : ${c.toHexString()}        / BC : ${bc.toHexString()}
+            D  :    ${d.toHexString()}        E : ${e.toHexString()}        / DE : ${de.toHexString()}
             AF :    ${af.toHexString()}
             
             

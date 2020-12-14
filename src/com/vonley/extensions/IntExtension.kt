@@ -16,12 +16,12 @@ fun Int.toHexString(): String {
 
 
 fun Short.toHexString(): String {
-    return """0x${("%x".format(this)).toUpperCase()} """
+    return """0x${("%x".format(this)).toUpperCase().padStart(4,'0')} """
 }
 
 
 fun Byte.toHexString(): String {
-    return """0x${("%x".format(this)).toUpperCase()}"""
+    return """0x${("%x".format(this)).toUpperCase().padStart(2, '0')}"""
 }
 
 fun Byte.toBinaryString(): String {

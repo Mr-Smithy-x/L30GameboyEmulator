@@ -1,6 +1,5 @@
 package tests
 
-import com.vonley.extensions.toHexString
 import com.vonley.processor.MMU
 import junit.framework.TestCase
 import org.junit.jupiter.api.assertThrows
