@@ -1,8 +1,7 @@
 package com.vonley.processor
 
-import com.vonley.extensions.getRegion
 import com.vonley.contracts.IntDifferenceImpl
-import com.vonley.extensions.toHexString
+import com.vonley.extensions.getRegion
 import kotlin.experimental.and
 
 
@@ -21,16 +20,16 @@ class MMU {
     private val bootrom = ByteArray(0x100)
 
     //0000	3FFF	16KB ROM bank 00	From cartridge, usually a fixed bank
-    private var rombank0 = ByteArray(0x4000)
+    private val rombank0 = ByteArray(0x4000)
 
     //4000	7FFF	16KB ROM Bank 01~NN	From cartridge, switchable bank via MB (if any)
     private val rombank1 = ByteArray(0x4000)
 
     //8000	9FFF	8KB Video RAM (VRAM)	Only bank 0 in Non-CGB mode Switchable bank 0/1 in CGB mode
-    private var vram = ByteArray(0x2000)
+    private val vram = ByteArray(0x2000)
 
     //A000	BFFF	8KB External RAM	In cartridge, switchable bank if any
-    private var eram = ByteArray(0x2000)
+    private val eram = ByteArray(0x2000)
 
     //C000	CFFF	4KB Work RAM (WRAM) bank 0
     //D000	DFFF	4KB Work RAM (WRAM) bank 1~N	Only bank 1 in Non-CGB mode Switchable bank 1~7 in CGB mode

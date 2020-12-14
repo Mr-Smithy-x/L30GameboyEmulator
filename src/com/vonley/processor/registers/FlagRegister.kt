@@ -17,7 +17,7 @@ class FlagRegister {
     var cy: Boolean = false
     //bit 3-0 not used (always zero)
 
-    var byte: Int
+    var byte: Byte
         get() {
             var register = 0;
             if (zf) {
@@ -32,13 +32,13 @@ class FlagRegister {
             if (cy) {
                 register = register xor (1 shl 4)
             }
-            return register
+            return (register and 0xFF).toByte()
         }
         set(value) {
-            zf = (value shr 7) and 1 == 1
-            n = (value shr 6) and 1 == 1
-            h = (value shr 5) and 1 == 1
-            cy = (value shr 4) and 1 == 1
+            zf = (value.toInt() and 0xFF shr 7) and 1 == 1
+            n = (value.toInt() and 0xFF shr 6) and 1 == 1
+            h = (value.toInt() and 0xFF shr 5) and 1 == 1
+            cy = (value.toInt() and 0xFF shr 4) and 1 == 1
         }
 
     override fun toString(): String {

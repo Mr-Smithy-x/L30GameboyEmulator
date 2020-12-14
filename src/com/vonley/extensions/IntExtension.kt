@@ -23,3 +23,7 @@ fun Short.toHexString(): String {
 fun Byte.toHexString(): String {
     return """0x${("%x".format(this)).toUpperCase()}"""
 }
+
+fun Byte.toBinaryString(): String {
+    return """0b${(Integer.toBinaryString(this.toInt() and 0xFF)).toUpperCase()}"""
+}

@@ -1,5 +1,6 @@
 package tests
 
+import com.vonley.extensions.toHexString
 import com.vonley.processor.registers.CPURegister
 import com.vonley.processor.registers.FlagRegister
 import junit.framework.TestCase
@@ -32,10 +33,10 @@ class FlagTest : TestCase() {
         flagRegister.n = true
         flagRegister.h = true
 
-        assert(flagRegister.byte == 0b01100000)
+        assert(flagRegister.byte == (0b01100000 and 0xFF).toByte())
         flagRegister.zf = true
-        assert(flagRegister.byte == 0b11100000)
-        flagRegister.byte = 0b10000000
+        assert(flagRegister.byte == (0b11100000 and 0xFF).toByte())
+        flagRegister.byte = (0b10000000 and 0xFF).toByte()
         assert(flagRegister.zf)
         assert(flagRegister.n == false)
         assert(flagRegister.h == false)
@@ -44,13 +45,13 @@ class FlagTest : TestCase() {
 
     @Test
     fun testAccumulatorWithFlag() {
-        flagRegister.byte = 0b11010000
+        flagRegister.byte = (0b11010000 and 0xFF).toByte()
         cpuRegister.a = 0x2F
-        assert(flagRegister.byte == 0xD0)
-        assert(cpuRegister.af == 0x2FD0)
+        assert(flagRegister.byte == (0xD0).and(0xFF).toByte())
+        assert(cpuRegister.af == (0x2FD0).and(0xFFFF).toShort())
         cpuRegister.af = 0x2FF0
-        assert(cpuRegister.a == 0x2F)
-        assert(flagRegister.byte == 0xf0)
+        assert(cpuRegister.a == (0x2F and 0xFF).toByte())
+        assert(flagRegister.byte == (0xF0 and 0xFF).toByte())
         println(cpuRegister)
     }
 

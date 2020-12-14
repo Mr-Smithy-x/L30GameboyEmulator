@@ -1,8 +1,11 @@
 package tests
 
+import com.vonley.extensions.toHexString
 import com.vonley.processor.registers.CPURegister
 import junit.framework.TestCase
 import org.junit.Test
+import kotlin.experimental.and
+
 /**
  * 0 - 8 signed range is -128 - 127
  * 0 - 8 unsigned range is 0-256
@@ -10,10 +13,10 @@ import org.junit.Test
  * Reference Bitwise Test class for understanding
  * @see BitWiseTests
  */
-class CPUTest: TestCase() {
+class CPUTest : TestCase() {
 
     lateinit var cpuRegister: CPURegister
-    
+
     override fun setUp() {
         super.setUp()
         cpuRegister = CPURegister()
@@ -21,9 +24,9 @@ class CPUTest: TestCase() {
 
     @Test
     fun testBC() {
-        cpuRegister.b = 0xA8
+        cpuRegister.b = 0xA8.toByte()
         cpuRegister.c = 0x10
-        assert(cpuRegister.bc == (cpuRegister.b shl 8) or cpuRegister.c)
+        assert(cpuRegister.bc == ((((cpuRegister.b.toInt() and 0xFF shl 8)) or (cpuRegister.c.toInt() and 0xFF)) and 0xFFFF).toShort())
         println(cpuRegister)
     }
 
@@ -31,7 +34,7 @@ class CPUTest: TestCase() {
     fun testDE() {
         cpuRegister.d = 0x3F
         cpuRegister.e = 0x7F
-        assert(cpuRegister.de == (cpuRegister.d shl 8) or cpuRegister.e)
+        assert(cpuRegister.de == ((((cpuRegister.d.toInt() and 0xFF shl 8)) or (cpuRegister.e.toInt() and 0xFF)) and 0xFFFF).toShort())
         println(cpuRegister)
     }
 
@@ -39,19 +42,19 @@ class CPUTest: TestCase() {
     fun testHL() {
         cpuRegister.h = 0x3F
         cpuRegister.l = 0x7F
-        assert(cpuRegister.hl == (cpuRegister.h shl 8) or cpuRegister.l)
+        assert(cpuRegister.hl == ((((cpuRegister.h.toInt() and 0xFF shl 8)) or (cpuRegister.l.toInt() and 0xFF)) and 0xFFFF).toShort())
         println(cpuRegister)
     }
 
     @Test
-    fun testSetBC(){
-        val b = 0x2F
-        val c = 0x18
+    fun testSetBC() {
+        val b: Byte = 0x2F
+        val c: Byte = 0x18
 
         cpuRegister.b = b
         cpuRegister.c = c
 
-        assert(cpuRegister.bc == (cpuRegister.b shl 8) or cpuRegister.c)
+        assert(cpuRegister.bc == ((((cpuRegister.b.toInt() and 0xFF shl 8)) or (cpuRegister.c.toInt() and 0xFF)) and 0xFFFF).toShort())
         cpuRegister.b = 0
         cpuRegister.c = 0
         cpuRegister.bc = 0x2F18
@@ -61,13 +64,13 @@ class CPUTest: TestCase() {
     }
 
     @Test
-    fun testSetDE(){
-        val d = 0x34
-        val e = 0x9F
+    fun testSetDE() {
+        val d: Byte = 0x34
+        val e: Byte = 0x9F.toByte()
         cpuRegister.d = d
         cpuRegister.e = e
 
-        assert(cpuRegister.de == (cpuRegister.d shl 8) or cpuRegister.e)
+        assert(cpuRegister.de == ((((cpuRegister.d.toInt() and 0xFF shl 8)) or (cpuRegister.e.toInt() and 0xFF)) and 0xFFFF).toShort())
         cpuRegister.d = 0
         cpuRegister.e = 0
         cpuRegister.de = 0x349F
@@ -77,13 +80,13 @@ class CPUTest: TestCase() {
     }
 
     @Test
-    fun testSetHL(){
-        val h = 0x27
-        val l = 0x4F
+    fun testSetHL() {
+        val h: Byte = 0x27
+        val l: Byte = 0x4F
 
         cpuRegister.h = h
         cpuRegister.l = l
-        assert(cpuRegister.hl == (cpuRegister.h shl 8) or cpuRegister.l)
+        assert(cpuRegister.hl == ((((cpuRegister.h.toInt() and 0xFF shl 8)) or (cpuRegister.l.toInt() and 0xFF)) and 0xFFFF).toShort())
         cpuRegister.h = 0
         cpuRegister.l = 0
         cpuRegister.hl = 0x274F

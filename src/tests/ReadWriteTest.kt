@@ -41,7 +41,6 @@ class ReadWriteTest : TestCase() {
         mmu.writeByte(address, hiValueToWrite)
         mmu.writeByte(address + 1, loValueToWrite)
         val readShort: Short = mmu.readShort(address)
-        println(readShort.toHexString())
         assert(readShort == (0x4FFF).toShort())
     }
 

@@ -1,11 +1,12 @@
-package com.vonley.processor
+package com.vonley.processor.instructions
 
-object GMB {
+class Instruction {
 
 
-    fun test(){
+    fun test() {
 
     }
+
 
     /**
             MB 8bit-Load commands

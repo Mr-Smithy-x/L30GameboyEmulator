@@ -8,49 +8,49 @@ class CPURegister {
     val fr = FlagRegister()
 
     //HI            //LO
-    var a: Int = 0 //Accumulator & Flags
+    var a: Byte = 0 //Accumulator & Flags
 
-    var b: Int = 0;
-    var c: Int = 0  //BC
-    var d: Int = 0;
-    var e: Int = 0  //DE
-    var h: Int = 0;
-    var l: Int = 0  //HL
+    var b: Byte = 0;
+    var c: Byte = 0  //BC
+    var d: Byte = 0;
+    var e: Byte = 0  //DE
+    var h: Byte = 0;
+    var l: Byte = 0  //HL
 
     //Stack Pointer
-    var sp: Int = 0
+    var sp: Short = 0
 
     //Program Counter
-    var pc: Int = 0
+    var pc: Short = 0
 
-    var hl: Int
-        get() = (h shl 8) or l
+    var hl: Short
+        get() = ((((h.toInt() and 0xFF shl 8)) or (l.toInt() and 0xFF)) and 0xFFFF).toShort()
         set(value) {
-            h = (value shr 8)
-            l = (value and 0xFF)
+            h = ((value.toInt() shr 8) and 0xFF).toByte()
+            l = ((value.toInt() and 0xFF).toByte())
         }
 
-    var de: Int
-        get() = (d shl 8) or e
+    var de: Short
+        get() = ((((d.toInt() and 0xFF shl 8)) or (e.toInt() and 0xFF)) and 0xFFFF).toShort()
         set(value) {
-            d = (value shr 8)
-            e = (value and 0xFF)
+            d = ((value.toInt() shr 8) and 0xFF).toByte()
+            e = ((value.toInt() and 0xFF).toByte())
         }
 
-    var bc: Int
-        get() = (b shl 8) or c
+    var bc: Short
+        get() = ((((b.toInt() and 0xFF shl 8)) or (c.toInt() and 0xFF)) and 0xFFFF).toShort()
         set(value) {
-            b = (value shr 8)
-            c = (value and 0xFF)
+            b = ((value.toInt() shr 8) and 0xFF).toByte()
+            c = ((value.toInt() and 0xFF).toByte())
         }
 
-    var af: Int
+    var af: Short
         get() {
-            return (a shl 8) or fr.byte
+            return ((((a.toInt() and 0xFF) shl 8) or (fr.byte.toInt() and 0xFF)) and 0xFFFF).toShort()
         }
         set(value) {
-            a = (value shr 8)
-            fr.byte = (value and 0xFF)
+            a = ((value.toInt() shr 8) and 0xFF).toByte()
+            fr.byte = ((value.toInt() and 0xFF).toByte())
         }
 
     override fun toString(): String {
@@ -58,7 +58,7 @@ class CPURegister {
             CPU:
             A  :    ${a.toHexString()}        F : ${fr.byte.toHexString()}  / F  : ${fr.byte.toBinaryString()}
             H  :    ${h.toHexString()}        L : ${l.toHexString()}    / HL : ${hl.toHexString()}
-            B  :    ${b.toHexString()}        C : ${b.toHexString()}    / BC : ${bc.toHexString()}
+            B  :    ${b.toHexString()}        C : ${c.toHexString()}    / BC : ${bc.toHexString()}
             D  :    ${d.toHexString()}        E : ${e.toHexString()}    / DE : ${de.toHexString()}
             AF :    ${af.toHexString()}
             
