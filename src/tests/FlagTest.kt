@@ -28,15 +28,15 @@ class FlagTest : TestCase() {
 
     @Test
     fun testFlagByte() {
-        flagRegister.zf = false
+        flagRegister.z = false
         flagRegister.n = true
         flagRegister.h = true
 
         assert(flagRegister.byte == (0b01100000u and 0xFFu).toUByte())
-        flagRegister.zf = true
+        flagRegister.z = true
         assert(flagRegister.byte == (0b11100000u and 0xFFu).toUByte())
         flagRegister.byte = (0b10000000u and 0xFFu).toUByte()
-        assert(flagRegister.zf)
+        assert(flagRegister.z)
         assert(flagRegister.n == false)
         assert(flagRegister.h == false)
         println(cpuRegister.fr)

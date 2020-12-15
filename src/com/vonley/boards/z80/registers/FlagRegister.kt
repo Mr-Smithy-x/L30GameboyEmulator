@@ -4,7 +4,7 @@ import com.vonley.extensions.*
 
 class FlagRegister {
     //bit 7 - SET = Z, Clr = NZ, Zero Flag
-    var zf: Boolean = false
+    var z: Boolean = false
 
     //bit 6 SET - nil, Clr = nil, Add/Sub-Flag (BCD)
     var n: Boolean = false
@@ -19,7 +19,7 @@ class FlagRegister {
     var byte: UByte
         get() {
             var register: UInt = 0x0u;
-            if (zf) {
+            if (z) {
                 register = register xor (1u shl 7)
             }
             if (n) {
@@ -34,7 +34,7 @@ class FlagRegister {
             return ((register and 0xFFu).toUByte())
         }
         set(value) {
-            zf = (value.toUInt() and 0xFFu shr 7) and 0x01u == 0x01u
+            z = (value.toUInt() and 0xFFu shr 7) and 0x01u == 0x01u
             n = (value.toUInt() and 0xFFu shr 6) and 0x01u == 0x01u
             h = (value.toUInt() and 0xFFu shr 5) and 0x01u == 0x01u
             cy = (value.toUInt() and 0xFFu shr 4) and 0x01u == 0x01u
@@ -43,7 +43,7 @@ class FlagRegister {
     override fun toString(): String {
         return """
             FLAG:
-            zf  (Zero Flag)         : $zf
+            zf  (Zero Flag)         : $z
             n   (Add/Sub-Flag)      : $n
             h   (Half Carry Flag)   : $h
             cy  (Carry Flag)        : $cy
