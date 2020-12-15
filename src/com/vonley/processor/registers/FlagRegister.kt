@@ -1,7 +1,6 @@
 package com.vonley.processor.registers
 
-import com.vonley.extensions.toBinaryString
-import com.vonley.extensions.toHexString
+import com.vonley.extensions.*
 
 class FlagRegister {
     //bit 7 - SET = Z, Clr = NZ, Zero Flag
@@ -17,28 +16,28 @@ class FlagRegister {
     var cy: Boolean = false
     //bit 3-0 not used (always zero)
 
-    var byte: Byte
+    var byte: UByte
         get() {
-            var register = 0;
+            var register: UInt = 0x0u;
             if (zf) {
-                register = register xor (1 shl 7)
+                register = register xor (1u shl 7)
             }
             if (n) {
-                register = register xor (1 shl 6)
+                register = register xor (1u shl 6)
             }
             if (h) {
-                register = register xor (1 shl 5)
+                register = register xor (1u shl 5)
             }
             if (cy) {
-                register = register xor (1 shl 4)
+                register = register xor (1u shl 4)
             }
-            return (register and 0xFF).toByte()
+            return ((register and 0xFFu).toUByte())
         }
         set(value) {
-            zf = (value.toInt() and 0xFF shr 7) and 1 == 1
-            n = (value.toInt() and 0xFF shr 6) and 1 == 1
-            h = (value.toInt() and 0xFF shr 5) and 1 == 1
-            cy = (value.toInt() and 0xFF shr 4) and 1 == 1
+            zf = (value.toUInt() and 0xFFu shr 7) and 0x01u == 0x01u
+            n = (value.toUInt() and 0xFFu shr 6) and 0x01u == 0x01u
+            h = (value.toUInt() and 0xFFu shr 5) and 0x01u == 0x01u
+            cy = (value.toUInt() and 0xFFu shr 4) and 0x01u == 0x01u
         }
 
     override fun toString(): String {

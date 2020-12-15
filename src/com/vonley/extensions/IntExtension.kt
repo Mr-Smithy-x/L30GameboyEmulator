@@ -1,6 +1,6 @@
 package com.vonley.extensions
 
-import com.vonley.processor.MMU
+import com.vonley.processor.memory.MMU
 
 fun Int.getRegion(bootRomEnabled: Boolean = false): MMU.Region {
     return MMU.Region.parse(this, bootRomEnabled)
@@ -19,11 +19,23 @@ fun Short.toHexString(): String {
     return """0x${("%x".format(this)).toUpperCase().padStart(4,'0')} """
 }
 
+fun UShort.toHexString(): String {
+    return """0x${("%x".format(this.toInt())).toUpperCase().padStart(4,'0')} """
+}
+
 
 fun Byte.toHexString(): String {
     return """0x${("%x".format(this)).toUpperCase().padStart(2, '0')}"""
 }
 
 fun Byte.toBinaryString(): String {
+    return """0b${(Integer.toBinaryString(this.toInt() and 0xFF)).toUpperCase()}"""
+}
+
+fun UByte.toHexString(): String {
+    return """0x${("%x".format(this.toInt())).toUpperCase().padStart(2, '0')}"""
+}
+
+fun UByte.toBinaryString(): String {
     return """0b${(Integer.toBinaryString(this.toInt() and 0xFF)).toUpperCase()}"""
 }

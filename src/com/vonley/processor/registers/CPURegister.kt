@@ -8,49 +8,47 @@ class CPURegister {
     val fr = FlagRegister()
 
     //HI            //LO
-    var a: Byte = 0 //Accumulator & Flags
+    var a: UByte = 0x0u //Accumulator & Flags
 
-    var b: Byte = 0;
-    var c: Byte = 0  //BC
-    var d: Byte = 0;
-    var e: Byte = 0  //DE
-    var h: Byte = 0;
-    var l: Byte = 0  //HL
+    var b: UByte = 0x0u
+    var c: UByte = 0x0u  //BC
+    var d: UByte = 0x0u
+    var e: UByte = 0x0u  //DE
+    var h: UByte = 0x0u
+    var l: UByte = 0x0u //HL
 
     //Stack Pointer
-    var sp: Short = 0
+    var sp: UShort = 0x0u
 
     //Program Counter
-    var pc: Short = 0
+    var pc: UShort = 0x0u
 
-    var hl: Short
-        get() = ((((h.toInt() and 0xFF shl 8)) or (l.toInt() and 0xFF)) and 0xFFFF).toShort()
+    var hl: UShort
+        get() = ((((h and 0xFFu).toUInt() shl 8) or (l and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
         set(value) {
-            h = ((value.toInt() shr 8) and 0xFF).toByte()
-            l = ((value.toInt() and 0xFF).toByte())
+            h = ((value.toUInt() shr 8) and 0xFFu).toUByte()
+            l = ((value.toUInt() and 0xFFu).toUByte())
         }
 
-    var de: Short
-        get() = ((((d.toInt() and 0xFF shl 8)) or (e.toInt() and 0xFF)) and 0xFFFF).toShort()
+    var de: UShort
+        get() = ((((d and 0xFFu).toUInt() shl 8) or (e and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
         set(value) {
-            d = ((value.toInt() shr 8) and 0xFF).toByte()
-            e = ((value.toInt() and 0xFF).toByte())
+            d = ((value.toUInt() shr 8) and 0xFFu).toUByte()
+            e = ((value.toUInt() and 0xFFu).toUByte())
         }
 
-    var bc: Short
-        get() = ((((b.toInt() and 0xFF shl 8)) or (c.toInt() and 0xFF)) and 0xFFFF).toShort()
+    var bc: UShort
+        get() = ((((b and 0xFFu).toUInt() shl 8) or (c and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
         set(value) {
-            b = ((value.toInt() shr 8) and 0xFF).toByte()
-            c = ((value.toInt() and 0xFF).toByte())
+            b = ((value.toUInt() shr 8) and 0xFFu).toUByte()
+            c = ((value.toUInt() and 0xFFu).toUByte())
         }
 
-    var af: Short
-        get() {
-            return ((((a.toInt() and 0xFF) shl 8) or (fr.byte.toInt() and 0xFF)) and 0xFFFF).toShort()
-        }
+    var af: UShort
+        get() = ((((a and 0xFFu).toUInt() shl 8) or (fr.byte and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
         set(value) {
-            a = ((value.toInt() shr 8) and 0xFF).toByte()
-            fr.byte = ((value.toInt() and 0xFF).toByte())
+            a = ((value.toUInt() shr 8) and 0xFFu).toUByte()
+            fr.byte = ((value.toUInt() and 0xFFu).toUByte())
         }
 
     override fun toString(): String {

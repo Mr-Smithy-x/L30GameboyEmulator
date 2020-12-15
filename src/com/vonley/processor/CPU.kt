@@ -1,5 +1,6 @@
 package com.vonley.processor
 
+import com.vonley.processor.memory.MMU
 import com.vonley.processor.registers.CPURegister
 import com.vonley.processor.registers.FlagRegister
 
