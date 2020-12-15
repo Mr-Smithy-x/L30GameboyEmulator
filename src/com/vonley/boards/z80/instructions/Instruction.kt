@@ -1,12 +1,6 @@
-package com.vonley.processor.instructions
+package com.vonley.boards.z80.instructions
 
 class Instruction {
-
-
-    fun test() {
-
-    }
-
 
     /**
             MB 8bit-Load commands

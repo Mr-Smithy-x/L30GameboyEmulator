@@ -1,4 +1,4 @@
-package com.vonley.processor.registers
+package com.vonley.boards.z80.registers
 
 import com.vonley.extensions.toBinaryString
 import com.vonley.extensions.toHexString

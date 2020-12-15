@@ -1,6 +1,6 @@
 package tests
 
-import com.vonley.processor.Rom
+import com.vonley.boards.z80.Rom
 import junit.framework.TestCase
 import java.io.File
 import java.io.FileNotFoundException
@@ -8,6 +8,7 @@ import java.io.FileNotFoundException
 class RomTest : TestCase() {
 
     lateinit var rom: Rom
+
     override fun setUp() {
         super.setUp()
         val file = File("gb/test.gb")
@@ -16,7 +17,6 @@ class RomTest : TestCase() {
         }else{
             throw FileNotFoundException("Doesnt exist")
         }
-
     }
 
     fun testReadTitle(){

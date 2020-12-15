@@ -1,8 +1,8 @@
-package com.vonley.processor
+package com.vonley.boards.z80
 
-import com.vonley.processor.memory.MMU
-import com.vonley.processor.registers.CPURegister
-import com.vonley.processor.registers.FlagRegister
+import com.vonley.boards.z80.memory.MMU
+import com.vonley.boards.z80.registers.CPURegister
+import com.vonley.boards.z80.registers.FlagRegister
 
 class CPU {
 

@@ -1,10 +1,8 @@
 package tests
 
-import com.vonley.extensions.toHexString
-import com.vonley.processor.registers.CPURegister
+import com.vonley.boards.z80.registers.CPURegister
 import junit.framework.TestCase
 import org.junit.Test
-import kotlin.experimental.and
 
 /**
  * 0 - 8 signed range is -128 - 127
@@ -26,7 +24,7 @@ class CPUTest : TestCase() {
     fun testBC() {
         cpuRegister.b = 0xA8u
         cpuRegister.c = 0x10u
-        assert(cpuRegister.bc == ((((cpuRegister.b.toUInt() and 0xFFu shl 8)) or (cpuRegister.c.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        assert(cpuRegister.bc == (((cpuRegister.b.toUInt() and 0xFFu shl 8) or (cpuRegister.c.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         println(cpuRegister)
     }
 
@@ -34,7 +32,7 @@ class CPUTest : TestCase() {
     fun testDE() {
         cpuRegister.d = 0x3Fu
         cpuRegister.e = 0x7Fu
-        assert(cpuRegister.de == ((((cpuRegister.d.toUInt() and 0xFFu shl 8)) or (cpuRegister.e.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        assert(cpuRegister.de == (((cpuRegister.d.toUInt() and 0xFFu shl 8) or (cpuRegister.e.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         println(cpuRegister)
     }
 
@@ -42,7 +40,7 @@ class CPUTest : TestCase() {
     fun testHL() {
         cpuRegister.h = 0x3Fu
         cpuRegister.l = 0x7Fu
-        assert(cpuRegister.hl == ((((cpuRegister.h.toUInt() and 0xFFu shl 8)) or (cpuRegister.l.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        assert(cpuRegister.hl == (((cpuRegister.h.toUInt() and 0xFFu shl 8) or (cpuRegister.l.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         println(cpuRegister)
     }
 
@@ -54,7 +52,7 @@ class CPUTest : TestCase() {
         cpuRegister.b = b
         cpuRegister.c = c
 
-        assert(cpuRegister.bc == ((((cpuRegister.b.toUInt() and 0xFFu shl 8)) or (cpuRegister.c.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        assert(cpuRegister.bc == (((cpuRegister.b.toUInt() and 0xFFu shl 8) or (cpuRegister.c.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         cpuRegister.b = 0u
         cpuRegister.c = 0u
         cpuRegister.bc = 0x2F18u
@@ -70,7 +68,7 @@ class CPUTest : TestCase() {
         cpuRegister.d = d
         cpuRegister.e = e
 
-        assert(cpuRegister.de == ((((cpuRegister.d.toUInt() and 0xFFu shl 8)) or (cpuRegister.e.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        assert(cpuRegister.de == (((cpuRegister.d.toUInt() and 0xFFu shl 8) or (cpuRegister.e.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         cpuRegister.d = 0x0u
         cpuRegister.e = 0x0u
         cpuRegister.de = 0x349Fu
@@ -86,7 +84,7 @@ class CPUTest : TestCase() {
 
         cpuRegister.h = h
         cpuRegister.l = l
-        assert(cpuRegister.hl == ((((cpuRegister.h.toUInt() and 0xFFu shl 8)) or (cpuRegister.l.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        assert(cpuRegister.hl == (((cpuRegister.h.toUInt() and 0xFFu shl 8) or (cpuRegister.l.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         cpuRegister.h = 0x0u
         cpuRegister.l = 0x0u
         cpuRegister.hl = 0x274Fu

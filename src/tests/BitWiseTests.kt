@@ -106,7 +106,6 @@ class BitWiseTests {
         assert(b.inv() == -90)
     }
 
-
     @Test
     fun testLeftShift(){
         //shift 2 spaces to the left
@@ -134,7 +133,5 @@ class BitWiseTests {
         assert(a shr 2 == 21)
         assert(b shr 2 == 22)
     }
-
-
 
 }

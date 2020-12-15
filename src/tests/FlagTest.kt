@@ -1,8 +1,7 @@
 package tests
 
-import com.vonley.extensions.toHexString
-import com.vonley.processor.registers.CPURegister
-import com.vonley.processor.registers.FlagRegister
+import com.vonley.boards.z80.registers.CPURegister
+import com.vonley.boards.z80.registers.FlagRegister
 import junit.framework.TestCase
 import org.junit.Test
 
@@ -15,8 +14,8 @@ import org.junit.Test
  */
 class FlagTest : TestCase() {
 
-
     lateinit var cpuRegister: CPURegister
+
     val flagRegister: FlagRegister
         get() {
             return cpuRegister.fr

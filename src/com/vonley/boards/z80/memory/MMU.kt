@@ -1,8 +1,7 @@
-package com.vonley.processor.memory
+package com.vonley.boards.z80.memory
 
 import com.vonley.contracts.IntDifferenceImpl
 import com.vonley.extensions.getRegion
-import kotlin.experimental.and
 
 
 //MBC1
@@ -149,6 +148,9 @@ class MMU {
     }
 
 
+    /**
+     * Returns the region to return at where we're righting to the MMU
+     */
     private fun getByteArrayAtRegion(address: Int): UByteArray {
         return when (address.getRegion()) {
             Region.BOOT_ROM -> bootrom
@@ -170,13 +172,12 @@ class MMU {
         val regionArray = getByteArrayAtRegion(address)
         val index = address and region.difference
         val byte = regionArray[index]
-        //println("Reading Addr: ${address.toHexString()} = Val: ${byte.toHexString()} at Idx: $index of Reg: $region with size: ${regionArray.size}")
         return byte.and(0xFFu)
     }
 
     fun writeShort(address: Int, value: UShort) {
         val left = ((value.toUInt() shr 8) and 0xFFu).toUByte()
-        val right = ((value.toUInt() and 0xFFu)).toUByte()
+        val right = (value.toUInt() and 0xFFu).toUByte()
         writeByte(address, left)
         writeByte(address + 1, right)
     }
@@ -196,14 +197,12 @@ class MMU {
             val regionArray = getByteArrayAtRegion(address)
             val index = address and region.difference
             regionArray[index] = value.and(0xFFu)
-            //println("Writing Val: ${value.toHexString()} to Addr: ${address.toHexString()} at Idx: $index of $region with size: ${regionArray.size}")
         } else {
             throw IllegalAccessException("You cannot write to this area")
         }
     }
 
     companion object {
-
 
     }
 }

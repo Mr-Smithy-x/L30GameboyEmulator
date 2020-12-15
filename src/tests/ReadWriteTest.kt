@@ -1,6 +1,6 @@
 package tests
 
-import com.vonley.processor.memory.MMU
+import com.vonley.boards.z80.memory.MMU
 import junit.framework.TestCase
 import org.junit.jupiter.api.assertThrows
 
@@ -50,6 +50,5 @@ class ReadWriteTest : TestCase() {
         val readByte = mmu.readByte(address)
         assert(valueToWrite == readByte)
     }
-
 
 }

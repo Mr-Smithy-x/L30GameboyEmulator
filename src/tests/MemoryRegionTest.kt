@@ -1,13 +1,12 @@
 package tests
 
 import com.vonley.extensions.getRegion
-import com.vonley.processor.memory.MMU
+import com.vonley.boards.z80.memory.MMU
 import junit.framework.TestCase
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 
 class MemoryRegionTest : TestCase() {
-
 
     @Test
     fun testRegions() {
@@ -25,14 +24,11 @@ class MemoryRegionTest : TestCase() {
         assert(0xFF90.getRegion(true) == MMU.Region.ZERO_PAGE_RAM)
     }
 
-
     @Test
     fun testOutOfBoundsRegions() {
         assertThrows<ArrayIndexOutOfBoundsException> {
             0x10000.getRegion()
         }
     }
-
-
 
 }
