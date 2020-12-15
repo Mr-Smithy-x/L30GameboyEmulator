@@ -13,7 +13,7 @@ class FlagRegister {
     var h: Boolean = false
 
     //bit 4 SET = C, Clr = NC - Carry Flag
-    var cy: Boolean = false
+    var c: Boolean = false
     //bit 3-0 not used (always zero)
 
     var byte: UByte
@@ -28,7 +28,7 @@ class FlagRegister {
             if (h) {
                 register = register xor (1u shl 5)
             }
-            if (cy) {
+            if (c) {
                 register = register xor (1u shl 4)
             }
             return ((register and 0xFFu).toUByte())
@@ -37,16 +37,16 @@ class FlagRegister {
             z = (value.toUInt() and 0xFFu shr 7) and 0x01u == 0x01u
             n = (value.toUInt() and 0xFFu shr 6) and 0x01u == 0x01u
             h = (value.toUInt() and 0xFFu shr 5) and 0x01u == 0x01u
-            cy = (value.toUInt() and 0xFFu shr 4) and 0x01u == 0x01u
+            c = (value.toUInt() and 0xFFu shr 4) and 0x01u == 0x01u
         }
 
     override fun toString(): String {
         return """
             FLAG:
-            zf  (Zero Flag)         : $z
+            z   (Zero Flag)         : $z
             n   (Add/Sub-Flag)      : $n
             h   (Half Carry Flag)   : $h
-            cy  (Carry Flag)        : $cy
+            c   (Carry Flag)        : $c
             
             hex: ${byte.toHexString()}
             bin: ${byte.toBinaryString()}
