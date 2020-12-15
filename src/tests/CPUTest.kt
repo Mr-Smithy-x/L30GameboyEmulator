@@ -24,40 +24,40 @@ class CPUTest : TestCase() {
 
     @Test
     fun testBC() {
-        cpuRegister.b = 0xA8.toByte()
-        cpuRegister.c = 0x10
-        assert(cpuRegister.bc == ((((cpuRegister.b.toInt() and 0xFF shl 8)) or (cpuRegister.c.toInt() and 0xFF)) and 0xFFFF).toShort())
+        cpuRegister.b = 0xA8u
+        cpuRegister.c = 0x10u
+        assert(cpuRegister.bc == ((((cpuRegister.b.toUInt() and 0xFFu shl 8)) or (cpuRegister.c.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         println(cpuRegister)
     }
 
     @Test
     fun testDE() {
-        cpuRegister.d = 0x3F
-        cpuRegister.e = 0x7F
-        assert(cpuRegister.de == ((((cpuRegister.d.toInt() and 0xFF shl 8)) or (cpuRegister.e.toInt() and 0xFF)) and 0xFFFF).toShort())
+        cpuRegister.d = 0x3Fu
+        cpuRegister.e = 0x7Fu
+        assert(cpuRegister.de == ((((cpuRegister.d.toUInt() and 0xFFu shl 8)) or (cpuRegister.e.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         println(cpuRegister)
     }
 
     @Test
     fun testHL() {
-        cpuRegister.h = 0x3F
-        cpuRegister.l = 0x7F
-        assert(cpuRegister.hl == ((((cpuRegister.h.toInt() and 0xFF shl 8)) or (cpuRegister.l.toInt() and 0xFF)) and 0xFFFF).toShort())
+        cpuRegister.h = 0x3Fu
+        cpuRegister.l = 0x7Fu
+        assert(cpuRegister.hl == ((((cpuRegister.h.toUInt() and 0xFFu shl 8)) or (cpuRegister.l.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
         println(cpuRegister)
     }
 
     @Test
     fun testSetBC() {
-        val b: Byte = 0x2F
-        val c: Byte = 0x18
+        val b: UByte = 0x2Fu
+        val c: UByte = 0x18u
 
         cpuRegister.b = b
         cpuRegister.c = c
 
-        assert(cpuRegister.bc == ((((cpuRegister.b.toInt() and 0xFF shl 8)) or (cpuRegister.c.toInt() and 0xFF)) and 0xFFFF).toShort())
-        cpuRegister.b = 0
-        cpuRegister.c = 0
-        cpuRegister.bc = 0x2F18
+        assert(cpuRegister.bc == ((((cpuRegister.b.toUInt() and 0xFFu shl 8)) or (cpuRegister.c.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        cpuRegister.b = 0u
+        cpuRegister.c = 0u
+        cpuRegister.bc = 0x2F18u
         assert(cpuRegister.b == b)
         assert(cpuRegister.c == c)
         println(cpuRegister)
@@ -65,15 +65,15 @@ class CPUTest : TestCase() {
 
     @Test
     fun testSetDE() {
-        val d: Byte = 0x34
-        val e: Byte = 0x9F.toByte()
+        val d: UByte = 0x34u
+        val e: UByte = 0x9Fu
         cpuRegister.d = d
         cpuRegister.e = e
 
-        assert(cpuRegister.de == ((((cpuRegister.d.toInt() and 0xFF shl 8)) or (cpuRegister.e.toInt() and 0xFF)) and 0xFFFF).toShort())
-        cpuRegister.d = 0
-        cpuRegister.e = 0
-        cpuRegister.de = 0x349F
+        assert(cpuRegister.de == ((((cpuRegister.d.toUInt() and 0xFFu shl 8)) or (cpuRegister.e.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        cpuRegister.d = 0x0u
+        cpuRegister.e = 0x0u
+        cpuRegister.de = 0x349Fu
         assert(cpuRegister.d == d)
         assert(cpuRegister.e == e)
         println(cpuRegister)
@@ -81,15 +81,15 @@ class CPUTest : TestCase() {
 
     @Test
     fun testSetHL() {
-        val h: Byte = 0x27
-        val l: Byte = 0x4F
+        val h: UByte = 0x27u
+        val l: UByte = 0x4Fu
 
         cpuRegister.h = h
         cpuRegister.l = l
-        assert(cpuRegister.hl == ((((cpuRegister.h.toInt() and 0xFF shl 8)) or (cpuRegister.l.toInt() and 0xFF)) and 0xFFFF).toShort())
-        cpuRegister.h = 0
-        cpuRegister.l = 0
-        cpuRegister.hl = 0x274F
+        assert(cpuRegister.hl == ((((cpuRegister.h.toUInt() and 0xFFu shl 8)) or (cpuRegister.l.toUInt() and 0xFFu)) and 0xFFFFu).toUShort())
+        cpuRegister.h = 0x0u
+        cpuRegister.l = 0x0u
+        cpuRegister.hl = 0x274Fu
         assert(cpuRegister.h == h)
         assert(cpuRegister.l == l)
         println(cpuRegister)

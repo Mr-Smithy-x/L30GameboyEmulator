@@ -33,10 +33,10 @@ class FlagTest : TestCase() {
         flagRegister.n = true
         flagRegister.h = true
 
-        assert(flagRegister.byte == (0b01100000 and 0xFF).toByte())
+        assert(flagRegister.byte == (0b01100000u and 0xFFu).toUByte())
         flagRegister.zf = true
-        assert(flagRegister.byte == (0b11100000 and 0xFF).toByte())
-        flagRegister.byte = (0b10000000 and 0xFF).toByte()
+        assert(flagRegister.byte == (0b11100000u and 0xFFu).toUByte())
+        flagRegister.byte = (0b10000000u and 0xFFu).toUByte()
         assert(flagRegister.zf)
         assert(flagRegister.n == false)
         assert(flagRegister.h == false)
@@ -45,13 +45,13 @@ class FlagTest : TestCase() {
 
     @Test
     fun testAccumulatorWithFlag() {
-        flagRegister.byte = (0b11010000 and 0xFF).toByte()
-        cpuRegister.a = 0x2F
-        assert(flagRegister.byte == (0xD0).and(0xFF).toByte())
-        assert(cpuRegister.af == (0x2FD0).and(0xFFFF).toShort())
-        cpuRegister.af = 0x2FF0
-        assert(cpuRegister.a == (0x2F and 0xFF).toByte())
-        assert(flagRegister.byte == (0xF0 and 0xFF).toByte())
+        flagRegister.byte = (0b11010000u and 0xFFu).toUByte()
+        cpuRegister.a = 0x2Fu
+        assert(flagRegister.byte == (0xD0u).and(0xFFu).toUByte())
+        assert(cpuRegister.af == (0x2FD0u).and(0xFFFFu).toUShort())
+        cpuRegister.af = 0x2FF0u
+        assert(cpuRegister.a == (0x2Fu and 0xFFu).toUByte())
+        assert(flagRegister.byte == (0xF0u and 0xFFu).toUByte())
         println(cpuRegister)
     }
 

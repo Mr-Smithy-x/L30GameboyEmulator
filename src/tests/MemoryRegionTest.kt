@@ -1,7 +1,7 @@
 package tests
 
 import com.vonley.extensions.getRegion
-import com.vonley.processor.MMU
+import com.vonley.processor.memory.MMU
 import junit.framework.TestCase
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
