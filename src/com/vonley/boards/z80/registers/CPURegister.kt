@@ -63,4 +63,8 @@ class CPURegister {
             
         """.trimIndent() + fr
     }
+
+    fun reset() {
+        fr.reset()
+    }
 }

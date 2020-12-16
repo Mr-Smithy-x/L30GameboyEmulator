@@ -202,6 +202,10 @@ class MMU {
         }
     }
 
+    fun reset() {
+
+    }
+
     companion object {
 
     }
