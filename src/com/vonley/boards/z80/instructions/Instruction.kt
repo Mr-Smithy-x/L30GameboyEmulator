@@ -15,49 +15,43 @@ import com.vonley.extensions.toHexString
  */
 class Instruction : HashMap<UShort, Execute>() {
     //3.3.1.1
-    enum class Load8Bit(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+    enum class OPS(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
 
         //1.) LD_N_N
         LD_B_N("LD B,n 06 8", 0x06u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = mmu.readByte(opcode.inc())
-                register.pc.inc()
-                register.pc.inc()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
         LD_C_N("LD C,n 0E 8", 0x0Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = mmu.readByte((opcode).inc())
-                register.pc.inc()
-                register.pc.inc()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
         LD_D_N("LD D,n 16 8", 0x16u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = mmu.readByte(opcode.inc())
-                register.pc.inc()
-                register.pc.inc()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
         LD_E_N("LD E,n 1E 8", 0x1Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = mmu.readByte(opcode.inc())
-                register.pc.inc()
-                register.pc.inc()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
         LD_H_N("LD H,n 26 8", 0x26u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = mmu.readByte(opcode.inc())
-                register.pc.inc()
-                register.pc.inc()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
         LD_L_N("LD L,n 2E 8", 0x2Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.l = mmu.readByte(opcode.inc())
-                register.pc.inc()
-                register.pc.inc()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
         LD_HL_N("LD HL,n 76 4", 0x36u, 12) {
@@ -356,26 +350,28 @@ class Instruction : HashMap<UShort, Execute>() {
         //LD A,A-L
         LD_A_BC("LD A,BC 0A 4", 0x0Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.a = mmu.readByte(register.hl)
+                register.a = (register.bc and 0xFFu).toUByte()
             }
         },
         LD_A_DE("LD A,DE 1A 4", 0x1Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.a = mmu.readByte(register.de)
+                register.a = (register.de and 0xFFu).toUByte()
             }
         },
 
         //LD_A_HL
         LD_A_NN("LD A,NN FA 4", 0xFAu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                //register.a = mmu.readByte(register.de.toInt())
+                val increment: UShort = (register.pc + 0x01u).toUShort()
+                register.a = (mmu.readShort(increment) and 0xFFu).toUByte()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
         LD_A_aa("LD A,aa 3E 4", 0x3Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.a = mmu.readShort(opcode.inc()).and(0xFFu).toUByte()
-                register.pc.inc()
-                register.pc.inc()
+                val memory = mmu.readShort((register.pc + 1u).toUShort())
+                register.a = (mmu.readShort(memory) and 0xFFu).toUByte()
+                register.pc = (register.pc + 2u).toUShort()
             }
         },
 
@@ -543,12 +539,8 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
-        };
+        },
 
-    }
-
-    //3.3.2 16bit Loads
-    enum class Load16Bit(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
 
         //3.3.2 16bit Loads
 
@@ -644,12 +636,9 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
-        };
+        },
 
-    }
-
-    //3.3.3
-    enum class ALU8Bit(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        //3.3.3
         //1.)
         ADD_A_A("ADD A, A", 0x87u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1030,7 +1019,6 @@ class Instruction : HashMap<UShort, Execute>() {
         },
 
         //9.) INC n
-
         INC_A("INC A", 0x3Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -1066,14 +1054,12 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        INC_HL("INC HL", 0x34u, 12) {
+        INC_HL_8BIT("INC HL", 0x34u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-
         //10.) DEC n
-
         DEC_A("DEC A", 0x3Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -1109,16 +1095,12 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        DEC_HL("DEC HL", 0x35u, 12) {
+        DEC_HL_8BIT("DEC (HL)", 0x35u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
-        };
-
-    }
-
-    //3.3.4
-    enum class ALU16Bit(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        },
+        //3.3.4 - 16BIT
         ADD_HL_BC("ADD HL, BC", 0x09u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -1139,15 +1121,11 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-
-
         ADD_SP_NUM("ADD HL, BC", 0xE8u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-
-
         //3.) INC nn
         INC_BC("INC BC", 0x03u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1159,7 +1137,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        INC_HL("INC HL", 0x23u, 8) {
+        INC_HL_16BIT("INC HL", 0x23u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -1169,8 +1147,6 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-
-
         //4.) DEC nn
         DEC_BC("DEC BC", 0x0Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1182,7 +1158,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        DEC_HL("DEC HL", 0x2Bu, 8) {
+        DEC_HL_16BIT("DEC HL", 0x2Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -1191,11 +1167,8 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
-        };
-    }
-
-    //3.3.5
-    enum class SWAP(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        },
+        //3.3.5
 
         //1.)
         SWAP_A("SWAP A CB 37", 0xCB37u, 8) {
@@ -1240,12 +1213,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
 
 
-        ;
-
-    }
-
-    //3.3.5
-    enum class MISC(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        //3.3.5
 
         //2.) DAA
         DAA("DAA -/-", 0x27u, 4) {
@@ -1310,12 +1278,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        ;
-
-    }
-
-    //3.3.6
-    enum class RS(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        //3.3.6
         //1.)
         RLCA("RLCA -/-", 0x07u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1638,12 +1601,8 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-    }
 
-    //3.3.7
-    enum class BITOPS(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
-
-
+        //3.3.7
         //1.) BIT b,r
         BIT_B_A("BIT b, A", 0xCB47u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1770,11 +1729,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-
-    }
-
-    //3.3.8
-    enum class JUMPS(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        //3.3.8
         //1.)
         JP_NN("JP nn", 0xC3u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1839,10 +1794,8 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-    }
 
-    //3.3.9
-    enum class CALL(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        //3.3.9
         //1.)
         CALL_NN("CALL nn", 0xCDu, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1871,10 +1824,8 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-    }
 
-    //3.3.10
-    enum class RESTART(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+        //3.3.10
         RST_00H("RST 00H", 0xC7u, 32) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -1915,9 +1866,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-    }
 
-    enum class RETURN(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
         //1.)
         RET("RET -/-", 0xC9u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -1958,73 +1907,7 @@ class Instruction : HashMap<UShort, Execute>() {
 
     init {
 
-        Load8Bit.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        Load16Bit.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        ALU8Bit.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        ALU16Bit.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        SWAP.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        MISC.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        RS.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        BITOPS.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        JUMPS.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        CALL.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        RESTART.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
-            }
-            put(it.opcode, it)
-        }
-        RETURN.values().forEach {
+        OPS.values().forEach {
             if (containsKey(it.opcode)) {
                 println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
             }
