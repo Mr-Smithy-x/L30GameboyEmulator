@@ -1331,20 +1331,637 @@ class Instruction {
     }
 
     //3.3.6
-    enum class RS(mnemonic: String, opcode: UInt, cycles: Int): Execute {
+    enum class RS(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
         //1.)
         RLCA("RLCA -/-", 0x07u, 4) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
+
         //2.)
         RLA("RLA -/-", 0x17u, 4) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
 
+        },
+
+        //3.) RRCA
+        RRCA("RRCA -/-", 0x0Fu, 4) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //4.) RRA
+        RRA("RRA -/-", 0x1Fu, 4) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //5.) RLC n
+        RLC_A("RLC A", 0xCB07u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RLC_B("RLC B", 0xCB00u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RLC_C("RLC C", 0xCB01u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RLC_D("RLC D", 0xCB02u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RLC_E("RLC E", 0xCB03u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RLC_H("RLC H", 0xCB04u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RLC_L("RLC L", 0xCB05u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RLC_HL("RLC HL", 0xCB06u, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //6.) RL n
+        RL_A("RL A", 0xCB17u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RL_B("RL B", 0xCB10u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RL_C("RL C", 0xCB11u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RL_D("RL D", 0xCB12u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RL_E("RL E", 0xCB13u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RL_H("RL H", 0xCB14u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RL_L("RL L", 0xCB15u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RL_HL("RL HL", 0xCB16u, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //7.) RRC n
+        RRC_A("RRC A", 0xCB0Fu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RRC_B("RRC B", 0xCB08u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RRC_C("RRC C", 0xCB09u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RRC_D("RRC D", 0xCB0Au, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RRC_E("RRC E", 0xCB0Bu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RRC_H("RRC H", 0xCB0Cu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RRC_L("RRC L", 0xCB0Du, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RRC_HL("RRC HL", 0xCB0Eu, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //8.) RR n
+        RR_A("RR A", 0xCB1Fu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RR_B("RR B", 0xCB18u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RR_C("RR C", 0xCB19u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RR_D("RR D", 0xCB1Au, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RR_E("RR E", 0xCB1Bu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RR_H("RR H", 0xCB1Cu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RR_L("RR L", 0xCB1Du, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RR_HL("RR HL", 0xCB1Eu, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //9.) SLA n
+        SLA_A("SLA A", 0xCB27u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SLA_B("SLA B", 0xCB20u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SLA_C("SLA C", 0xCB21u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SLA_D("SLA D", 0xCB22u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SLA_E("SLA E", 0xCB23u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SLA_H("SLA H", 0xCB24u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SLA_L("SLA L", 0xCB25u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SLA_HL("SLA HL", 0xCB26u, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //10.) SRA n
+        SRA_A("SRA A", 0xCB2Fu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRA_B("SRA B", 0xCB28u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRA_C("SRA C", 0xCB29u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRA_D("SRA D", 0xCB2Au, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRA_E("SRA E", 0xCB2Bu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRA_H("SRA H", 0xCB2Cu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRA_L("SRA L", 0xCB2Du, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRA_HL("SRA HL", 0xCB2Eu, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //10.) SRL n
+        SRL_A("SRL A", 0xCB3Fu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRL_B("SRL B", 0xCB38u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRL_C("SRL C", 0xCB39u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRL_D("SRL D", 0xCB3Au, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRL_E("SRL E", 0xCB3Bu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRL_H("SRL H", 0xCB3Cu, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRL_L("SRL L", 0xCB3Du, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SRL_HL("SRL HL", 0xCB3Eu, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+    }
+
+
+    //3.3.7
+    enum class BITOPS(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+
+
+        //1.) BIT b,r
+        BIT_B_A("BIT b, A", 0xCB47u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        BIT_B_B("BIT b, B", 0xCB40u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        BIT_B_C("BIT b, C", 0xCB41u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        BIT_B_D("BIT b, D", 0xCB42u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        BIT_B_E("BIT b, E", 0xCB43u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        BIT_B_H("BIT b, H", 0xCB44u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        BIT_B_L("BIT b, L", 0xCB45u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        BIT_B_HL("BIT b, HL", 0xCB46u, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //2.) SET b,r
+        SET_B_A("SET b, A", 0xCBC7u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_B("SET b, B", 0xCBC0u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_C("SET b, C", 0xCBC1u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_D("SET b, D", 0xCBC2u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_E("SET b, E", 0xCBC3u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_H("SET b, H", 0xCBC4u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_L("SET b, L", 0xCBC5u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_HL("SET b, HL", 0xCBC6u, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //3.) RES b,r
+        RES_B_A("RES b, A", 0xCB87u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_B_B("RES b, B", 0xCB80u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_B_C("RES b, C", 0xCB81u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_B_D("RES b, D", 0xCB82u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_B_E("RES b, E", 0xCB83u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_B_H("RES b, H", 0xCB84u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_B_L("RES b, L", 0xCB85u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_B_HL("RES b, HL", 0xCB86u, 16) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+
+    }
+
+    //3.3.8
+    enum class JUMPS(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+        //1.)
+        JP_NN("JP nn", 0xC3u, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //2.)
+        JP_NZ_NN("JP NZ, nn", 0xC2u, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        JP_Z_NN("JP Z, nn", 0xCAu, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        JP_NC_NN("JP NC, nn", 0xD2u, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        JP_C_NN("JP C, nn", 0xDAu, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //3.)
+        JP_HL("JP HL", 0xE9u, 4) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //4.)
+        JR_N("JR n", 0x18u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //5.)
+        JR_NZ_NUM("JR NZ,*", 0x20u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        JR_Z_NUM("JR Z,*", 0x28u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        JR_NC_NUM("JR NC,*", 0x30u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        JR_C_NUM("JR C,*", 0x38u, 8) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+    }
+
+    //3.3.9
+    enum class CALL(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+        //1.)
+        CALL_NN("CALL nn", 0xCDu, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //2.)
+        CALL_NZ_NUM("CALL NZ, nn", 0xC4u, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        CALL_N_NUM("CALL N, nn", 0xCCu, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        CALL_NC_NUM("CALL NC, nn", 0xD4u, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+        CALL_C_NUM("CALL C, nn", 0xDCu, 12) {
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+    }
+
+
+    //3.3.10
+    enum class RESTART(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+        RST_00H("RST 00H", 0xC7u, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RST_08H("RST 08H", 0xCFu, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RST_10H("RST 10H", 0xD7u, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RST_18H("RST 18H", 0xDFu, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RST_20H("RST 20H", 0xE7u, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RST_28H("RST 28H", 0xEFu, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RST_30H("RST 30H", 0xF7u, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RST_38H("RST 38H", 0xFFu, 32){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+    }
+    
+    enum class RETURN(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+        //1.)
+        RET("RET -/-", 0xC9u, 8){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //2.)
+        RET_NZ("RET NZ", 0xC0u, 8){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RET_Z("RET Z", 0xC8u, 8){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RET_NC("RET NC", 0xD0u, 8){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },RET_C("RET C", 0xD8u, 8){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        //3.)
+        RETI("RETI -/-", 0xD9u, 8){
+            override fun execute(mmu: MMU, cpu: CPU) {
+                TODO("Not yet implemented")
+            }
         }
+
     }
 }
 
