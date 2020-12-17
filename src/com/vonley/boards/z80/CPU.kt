@@ -9,6 +9,7 @@ class CPU {
 
     val mmu = MMU()
     val cpuRegister = CPURegister()
+    val instruction = Instruction()
     var running = false
     val flagRegister: FlagRegister
         get() = cpuRegister.fr
@@ -16,6 +17,8 @@ class CPU {
 
     fun step() {
         val pc = cpuRegister.pc
+        val op = instruction[pc]
+        op!!.execute(mmu, cpuRegister)
 
     }
 
