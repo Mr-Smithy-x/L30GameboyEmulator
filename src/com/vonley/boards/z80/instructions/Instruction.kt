@@ -2,11 +2,12 @@ package com.vonley.boards.z80.instructions
 
 import com.vonley.boards.z80.CPU
 import com.vonley.boards.z80.memory.MMU
+import com.vonley.extensions.toHexString
 
 //nn = signed byte
-class Instruction {
+class Instruction : HashMap<UInt, Execute>() {
     //3.3.1
-    enum class Load8Bit(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class Load8Bit(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
 
         //1.) LD_N_N
         LD_B_N("LD B,n 06 8", 0x06u, 8) {
@@ -519,20 +520,10 @@ class Instruction {
             }
         };
 
-        companion object {
-            fun getOp(byte: UByte) {
-
-                when (byte) {
-                    0x06u.toUByte() -> {
-                    }
-                }
-            }
-        }
-
     }
 
     //3.3.2 16bit Loads
-    enum class Load16Bit(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class Load16Bit(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
 
         //3.3.2 16bit Loads
 
@@ -630,19 +621,10 @@ class Instruction {
             }
         };
 
-
-        fun getOp(byte: UByte) {
-
-            when (byte) {
-                0x06u.toUByte() -> {
-                }
-            }
-        }
-
     }
 
     //3.3.3
-    enum class ALU8Bit(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class ALU8Bit(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
         //1.)
         ADD_A_A("ADD A, A", 0x87u, 4) {
             override fun execute(mmu: MMU, cpu: CPU) {
@@ -1108,18 +1090,10 @@ class Instruction {
             }
         };
 
-        fun getOp(byte: UByte) {
-
-            when (byte) {
-                0x06u.toUByte() -> {
-                }
-            }
-        }
-
     }
 
     //3.3.4
-    enum class ALU16Bit(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class ALU16Bit(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
         ADD_HL_BC("ADD HL, BC", 0x09u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
@@ -1193,19 +1167,10 @@ class Instruction {
                 TODO("Not yet implemented")
             }
         };
-
-        fun getOp(byte: UByte) {
-
-            when (byte) {
-                0x06u.toUByte() -> {
-                }
-            }
-        }
-
     }
 
     //3.3.5
-    enum class SWAP(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class SWAP(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
 
         //1.)
         SWAP_A("SWAP A CB 37", 0xCB37u, 8) {
@@ -1213,37 +1178,37 @@ class Instruction {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_B("SWAP A CB 37", 0xCB30u, 8) {
+        SWAP_B("SWAP B CB 37", 0xCB30u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_C("SWAP A CB 37", 0xCB31u, 8) {
+        SWAP_C("SWAP C CB 37", 0xCB31u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_D("SWAP A CB 37", 0xCB32u, 8) {
+        SWAP_D("SWAP D CB 37", 0xCB32u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_E("SWAP A CB 37", 0xCB33u, 8) {
+        SWAP_E("SWAP E CB 37", 0xCB33u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_H("SWAP A CB 37", 0xCB34u, 8) {
+        SWAP_H("SWAP H CB 37", 0xCB34u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_L("SWAP A CB 37", 0xCB35u, 8) {
+        SWAP_L("SWAP L CB 37", 0xCB35u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_HL("SWAP A CB 37", 0xCB37u, 16) {
+        SWAP_HL("SWAP HL CB 37", 0xCB36u, 16) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
@@ -1252,16 +1217,10 @@ class Instruction {
 
         ;
 
-        companion object {
-            fun getShort(short: UShort) {
-
-            }
-        }
-
     }
 
     //3.3.5
-    enum class MISC(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class MISC(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
 
         //2.) DAA
         DAA("DAA -/-", 0x27u, 4) {
@@ -1331,7 +1290,7 @@ class Instruction {
     }
 
     //3.3.6
-    enum class RS(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class RS(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
         //1.)
         RLCA("RLCA -/-", 0x07u, 4) {
             override fun execute(mmu: MMU, cpu: CPU) {
@@ -1656,9 +1615,8 @@ class Instruction {
         },
     }
 
-
     //3.3.7
-    enum class BITOPS(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class BITOPS(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
 
 
         //1.) BIT b,r
@@ -1791,7 +1749,7 @@ class Instruction {
     }
 
     //3.3.8
-    enum class JUMPS(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class JUMPS(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
         //1.)
         JP_NN("JP nn", 0xC3u, 12) {
             override fun execute(mmu: MMU, cpu: CPU) {
@@ -1859,7 +1817,7 @@ class Instruction {
     }
 
     //3.3.9
-    enum class CALL(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+    enum class CALL(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
         //1.)
         CALL_NN("CALL nn", 0xCDu, 12) {
             override fun execute(mmu: MMU, cpu: CPU) {
@@ -1890,81 +1848,168 @@ class Instruction {
         },
     }
 
-
     //3.3.10
-    enum class RESTART(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
-        RST_00H("RST 00H", 0xC7u, 32){
+    enum class RESTART(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
+        RST_00H("RST 00H", 0xC7u, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RST_08H("RST 08H", 0xCFu, 32){
+        },
+        RST_08H("RST 08H", 0xCFu, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RST_10H("RST 10H", 0xD7u, 32){
+        },
+        RST_10H("RST 10H", 0xD7u, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RST_18H("RST 18H", 0xDFu, 32){
+        },
+        RST_18H("RST 18H", 0xDFu, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RST_20H("RST 20H", 0xE7u, 32){
+        },
+        RST_20H("RST 20H", 0xE7u, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RST_28H("RST 28H", 0xEFu, 32){
+        },
+        RST_28H("RST 28H", 0xEFu, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RST_30H("RST 30H", 0xF7u, 32){
+        },
+        RST_30H("RST 30H", 0xF7u, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RST_38H("RST 38H", 0xFFu, 32){
+        },
+        RST_38H("RST 38H", 0xFFu, 32) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
     }
-    
-    enum class RETURN(mnemonic: String, opcode: UInt, cycles: Int) : Execute {
+
+    enum class RETURN(val mnemonic: String, val opcode: UInt, override val cycles: Int) : Execute {
         //1.)
-        RET("RET -/-", 0xC9u, 8){
+        RET("RET -/-", 0xC9u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
 
         //2.)
-        RET_NZ("RET NZ", 0xC0u, 8){
+        RET_NZ("RET NZ", 0xC0u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RET_Z("RET Z", 0xC8u, 8){
+        },
+        RET_Z("RET Z", 0xC8u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RET_NC("RET NC", 0xD0u, 8){
+        },
+        RET_NC("RET NC", 0xD0u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
-        },RET_C("RET C", 0xD8u, 8){
+        },
+        RET_C("RET C", 0xD8u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         },
 
         //3.)
-        RETI("RETI -/-", 0xD9u, 8){
+        RETI("RETI -/-", 0xD9u, 8) {
             override fun execute(mmu: MMU, cpu: CPU) {
                 TODO("Not yet implemented")
             }
         }
 
     }
+
+    init {
+
+        Load8Bit.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put(it.opcode, it)
+        }
+        Load16Bit.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        ALU8Bit.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        ALU16Bit.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        SWAP.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        MISC.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        RS.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        BITOPS.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        JUMPS.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        CALL.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        RESTART.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+        RETURN.values().forEach {
+            if (containsKey(it.opcode)) {
+                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            }
+            put (it.opcode, it)
+        }
+    }
+
 }
 
 interface Execute {
     fun execute(mmu: MMU, cpu: CPU)
+    val cycles: Int
 }

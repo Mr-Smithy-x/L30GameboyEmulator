@@ -16,8 +16,6 @@ class CPU {
 
     fun step() {
         val pc = cpuRegister.pc
-        val byte = mmu.readByte(pc.toInt())
-        Instruction.getOp(byte)
 
     }
 

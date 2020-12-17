@@ -14,6 +14,10 @@ fun Int.toHexString(): String {
     return """0x${("%x".format(this)).toUpperCase()}"""
 }
 
+fun UInt.toHexString(): String {
+    return """0x${("%x".format(this.toInt())).toUpperCase()}"""
+}
+
 fun Short.toHexString(): String {
     return """0x${("%x".format(this)).toUpperCase().padStart(4,'0')} """
 }
