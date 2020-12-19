@@ -12,6 +12,11 @@ import com.vonley.extensions.toHexString
  * word: 16 bits: w
  * 8 bit addr: a
  * 16 bit addr: aa
+ * d8 - 8 bit immediate data
+ * d16 - 16 bit immediate data
+ * a8 - 8bit unsigned data, which is added to $FF00 in certain instructions (replacement for in and out instructions)
+ * a16 - 16 bit address
+ * r8 - 8bit signed data
  */
 class Instruction : HashMap<UShort, Execute>() {
     //3.3.1.1
@@ -22,32 +27,38 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_BC_NN("LD BC, NN", 0x01u, 12) {
+        LD_BC_d16("LD BC, d16", 0x01u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
         LD_BC_A("LD BC,A", 0x02u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.bc = register.a.toUShort()
             }
         },
         INC_BC("INC BC", 0x03u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.bc = register.bc.inc()
             }
         },
         INC_B("INC B", 0x04u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.b = register.b.inc()
+                register.fr.z = (register.b == 0x00u.toUByte())
+                register.fr.n = true
+                //check h flag
             }
         },
         DEC_B("DEC B", 0x05u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.b.dec()
+                register.fr.z = (register.b == 0x00u.toUByte())
+                register.fr.n = false
+                //check h flag
             }
         },
-        LD_B_N("LD B,n 06 8", 0x06u, 8) {
+        LD_B_d8("LD B,d8", 0x06u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = mmu.readByte(opcode.inc())
                 register.pc = (register.pc + 2u).toUShort()
@@ -420,7 +431,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.b = register.hl.and(0xFFu.toUShort()).toUByte()
             }
         },
-        LD_B_A("LD A,# 3E 4", 0x47u, 4) {
+        LD_B_A("LD B,A 47 4", 0x47u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -1761,10 +1772,11 @@ class Instruction : HashMap<UShort, Execute>() {
     init {
 
         OPS.values().forEach {
-            if (containsKey(it.opcode)) {
-                println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
+            if (!containsKey(it.opcode)) {
+                put(it.opcode, it)
+            }else{
+                //println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
             }
-            put(it.opcode, it)
         }
     }
 
