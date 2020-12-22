@@ -24,17 +24,19 @@ class Instruction : HashMap<UShort, Execute>() {
 
         NOP("NOP -/-", 0x00u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.pc = register.pc.inc()
             }
         },
         LD_BC_d16("LD BC, d16", 0x01u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                mmu.writeByte(register.bc, register.a)
+                register.pc = register.pc.plus(0x3u).toUShort()
             }
         },
-        LD_BC_A("LD BC,A", 0x02u, 8) {
+        LD_BC_A("LD (BC),A", 0x02u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.bc = register.a.toUShort()
+                //TODO Is this valid?
+                mmu.writeByte(register.bc, register.a)
             }
         },
         INC_BC("INC BC", 0x03u, 8) {
@@ -42,41 +44,48 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.bc = register.bc.inc()
             }
         },
+        //z0h-
         INC_B("INC B", 0x04u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = register.b.inc()
                 register.fr.z = (register.b == 0x00u.toUByte())
                 register.fr.n = true
-                //check h flag
+                TODO("Something to h flag")
             }
         },
+        //z1h-
         DEC_B("DEC B", 0x05u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b.dec()
                 register.fr.z = (register.b == 0x00u.toUByte())
                 register.fr.n = false
-                //check h flag
+                TODO("Something to h flag")
             }
         },
         LD_B_d8("LD B,d8", 0x06u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = mmu.readByte(opcode.inc())
-                register.pc = (register.pc + 2u).toUShort()
+                register.pc = register.pc.inc()
             }
         },
         RLCA("RLCA -/-", 0x07u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.z = false
+                register.fr.n = false
+                register.fr.h = false
+                TODO("Something to C")
             }
         },
-        LD_NN_SP("LD (nn), SP", 0x08u, 20) {
+        LD_a16_SP("LD (a16), SP", 0x08u, 20) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
+        //-0hc
         ADD_HL_BC("ADD HL, BC", 0x09u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.n = true
+                TODO("Do something to h & c flags")
             }
         },
         LD_A_BC("LD A,BC 0A 4", 0x0Au, 8) {
@@ -89,14 +98,18 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
+        //z0h-
         INC_C("INC C", 0x0Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.n = false
+                TODO("Do something to z & h flags")
             }
         },
+        //z1h-
         DEC_C("DEC C", 0x0Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.n = true
+                TODO("Do something to z & h flags")
             }
         },
         LD_C_N("LD C,n 0E 8", 0x0Eu, 8) {
@@ -105,9 +118,13 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.pc = (register.pc + 2u).toUShort()
             }
         },
+        //000c
         RRCA("RRCA -/-", 0x0Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.z = false
+                register.fr.n = false
+                register.fr.h = false
+                TODO("Do something to C")
             }
         },
 

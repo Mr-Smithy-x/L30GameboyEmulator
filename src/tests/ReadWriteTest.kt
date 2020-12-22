@@ -1,6 +1,7 @@
 package tests
 
 import com.vonley.boards.z80.memory.MMU
+import com.vonley.extensions.toHexString
 import junit.framework.TestCase
 import org.junit.jupiter.api.assertThrows
 
@@ -30,7 +31,9 @@ class ReadWriteTest : TestCase() {
         val readLoByte = mmu.readByte(address.inc())
         assert(readHiByte == (valueToWrite.toUInt() shr 8 and 0xFFu).toUByte())
         assert(readLoByte == (valueToWrite.toUInt() and 0xFFu).toUByte())
+        println((readShort and 0xFFFFu).toHexString())
         assert(readShort == valueToWrite)
+
     }
 
     fun testReadShort() {

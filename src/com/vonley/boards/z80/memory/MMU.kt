@@ -4,6 +4,7 @@ import com.vonley.contracts.UShortDifferenceImpl
 import com.vonley.extensions.getRegion
 import com.vonley.extensions.shl
 import com.vonley.extensions.shr
+import com.vonley.extensions.toHexString
 
 
 //MBC1
@@ -188,6 +189,7 @@ class MMU {
     fun readShort(address: UShort): UShort {
         val lo = readByte(address)
         val hi = readByte(address.inc())
+
         return (((lo and 0xFFu).toUShort() shl 8) or (hi and 0xFFu).toUShort()).and(0xFFFFu);
     }
 

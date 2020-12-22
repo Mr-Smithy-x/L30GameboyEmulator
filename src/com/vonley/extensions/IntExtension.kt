@@ -29,7 +29,7 @@ infix fun UShort.shr(bitCount: Int): UShort {
 }
 
 infix fun UShort.shl(bitCount: Int): UShort {
-    return (toUInt() shr bitCount).and(0xFFFFu).toUShort()
+    return (toUInt() shl bitCount).and(0xFFFFu).toUShort()
 }
 
 
@@ -81,6 +81,7 @@ fun Int.toBCDValue(): Int {
     }
     return result
 }
+
 
 fun Int.Companion.toBCDValue(integer: Int): Int {
     var shift: Int
