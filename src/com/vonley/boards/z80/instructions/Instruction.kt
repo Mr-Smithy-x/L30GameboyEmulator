@@ -2,7 +2,6 @@ package com.vonley.boards.z80.instructions
 
 import com.vonley.boards.z80.memory.MMU
 import com.vonley.boards.z80.registers.CPURegister
-import com.vonley.extensions.toHexString
 
 //nn = signed byte
 /**
@@ -18,19 +17,25 @@ import com.vonley.extensions.toHexString
  * a16 - 16 bit address
  * r8 - 8bit signed data
  */
+
+@ExperimentalUnsignedTypes
 class Instruction : HashMap<UShort, Execute>() {
     //3.3.1.1
-    enum class OPS(val mnemonic: String, val opcode: UShort, override val cycles: Int) : Execute {
+    enum class OPS(
+        val mnemonic: String,
+        val opcode: UShort,
+        override val cycles: Int,
+        override val length: UShort = 1u
+    ) : Execute {
 
-        NOP("NOP -/-", 0x00u, 4) {
+        NOP("NOP -/-", 0x00u, 4, 1u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.pc = register.pc.inc()
+                //register.pc = register.pc.inc()
             }
         },
-        LD_BC_d16("LD BC, d16", 0x01u, 12) {
+        LD_BC_d16("LD BC, d16", 0x01u, 12, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 mmu.writeByte(register.bc, register.a)
-                register.pc = register.pc.plus(0x3u).toUShort()
             }
         },
         LD_BC_A("LD (BC),A", 0x02u, 8) {
@@ -41,9 +46,10 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         INC_BC("INC BC", 0x03u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.bc = register.bc.inc()
+                //register.bc = register.bc.inc()
             }
         },
+
         //z0h-
         INC_B("INC B", 0x04u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -53,6 +59,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Something to h flag")
             }
         },
+
         //z1h-
         DEC_B("DEC B", 0x05u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -62,10 +69,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Something to h flag")
             }
         },
-        LD_B_d8("LD B,d8", 0x06u, 8) {
+        LD_B_d8("LD B,d8", 0x06u, 8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = mmu.readByte(opcode.inc())
-                register.pc = register.pc.inc()
             }
         },
         RLCA("RLCA -/-", 0x07u, 4) {
@@ -76,11 +82,12 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Something to C")
             }
         },
-        LD_a16_SP("LD (a16), SP", 0x08u, 20) {
+        LD_a16_SP("LD (a16), SP", 0x08u, 20, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
+
         //-0hc
         ADD_HL_BC("ADD HL, BC", 0x09u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -88,9 +95,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Do something to h & c flags")
             }
         },
-        LD_A_BC("LD A,BC 0A 4", 0x0Au, 8) {
+        LD_A_BC("LD A,BC", 0x0Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.a = (register.bc and 0xFFu).toUByte()
+                register.a = mmu.readByte(register.bc)
             }
         },
         DEC_BC("DEC BC", 0x0Bu, 8) {
@@ -98,6 +105,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
+
         //z0h-
         INC_C("INC C", 0x0Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -105,6 +113,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Do something to z & h flags")
             }
         },
+
         //z1h-
         DEC_C("DEC C", 0x0Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -112,12 +121,12 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Do something to z & h flags")
             }
         },
-        LD_C_N("LD C,n 0E 8", 0x0Eu, 8) {
+        LD_C_d8("LD C,d8", 0x0Eu, 8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = mmu.readByte((opcode).inc())
-                register.pc = (register.pc + 2u).toUShort()
             }
         },
+
         //000c
         RRCA("RRCA -/-", 0x0Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -128,9 +137,14 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        LD_DE_NN("LD DE, NN", 0x11u, 12) {
+        RSTOP("STOP", 0x10u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
+            }
+        },
+        LD_DE_d16("LD DE, d16", 0x11u, 12, 3u) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                register.de = mmu.readShort(opcode)
             }
         },
         LD_DE_A("LD DE,A", 0x12u, 8) {
@@ -153,10 +167,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_D_N("LD D,n 16 8", 0x16u, 8) {
+        LD_D_d8("LD D,d8", 0x16u, 8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = mmu.readByte(opcode.inc())
-                register.pc = (register.pc + 2u).toUShort()
             }
         },
         RLA("RLA -/-", 0x17u, 4) {
@@ -165,19 +178,19 @@ class Instruction : HashMap<UShort, Execute>() {
             }
 
         },
-        JR_N("JR n", 0x18u, 8) {
+        JR_N("JR n", 0x18u, 12, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        ADD_HL_DE("ADD HL, DE", 0x19u, 8) {
+        ADD_HL_DE("ADD HL,DE", 0x19u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        LD_A_DE("LD A,DE 1A 4", 0x1Au, 8) {
+        LD_A_DE("LD A,DE", 0x1Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.a = (register.de and 0xFFu).toUByte()
+                register.a = mmu.readByte(register.de)
             }
         },
         DEC_DE("DEC DE", 0x1Bu, 8) {
@@ -195,10 +208,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_E_N("LD E,n 1E 8", 0x1Eu, 8) {
+        LD_E_d8("LD E,d8", 0x1Eu, 8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = mmu.readByte(opcode.inc())
-                register.pc = (register.pc + 2u).toUShort()
             }
         },
         RRA("RRA -/-", 0x1Fu, 4) {
@@ -207,14 +219,14 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        JR_NZ_NUM("JR NZ,*", 0x20u, 8) {
+        JR_NZ_NUM("JR NZ,*", 0x20u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        LD_HL_NN("LD HL, NN", 0x21u, 12) {
+        LD_HL_d16("LD HL, d16", 0x21u, 12, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.hl = mmu.readShort(opcode)
             }
         },
         LD_HLI_A("LD (HLI), A", 0x22u, 8) {
@@ -229,7 +241,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LDI_HL_A("LDI (HL), A", 0x22u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                mmu.writeByte(register.hl, register.a)
+                register.incHL()
             }
         },
         INC_HL_16BIT("INC HL", 0x23u, 8) {
@@ -247,10 +260,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_H_N("LD H,n 26 8", 0x26u, 8) {
+        LD_H_d8("LD H,d8", 0x26u, 8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = mmu.readByte(opcode.inc())
-                register.pc = (register.pc + 2u).toUShort()
             }
         },
         DAA("DAA -/-", 0x27u, 4) {
@@ -258,7 +270,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        JR_Z_NUM("JR Z,*", 0x28u, 8) {
+        JR_Z_NUM("JR Z,*", 0x28u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -280,7 +292,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LDI_A_HL("LDI A,(HL)", 0x2Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = mmu.readByte(register.hl)
+                register.incHL()
             }
         },
         DEC_HL_16BIT("DEC HL", 0x2Bu, 8) {
@@ -298,10 +311,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_L_N("LD L,n 2E 8", 0x2Eu, 8) {
+        LD_L_d8("LD L,d8", 0x2Eu, 8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.l = mmu.readByte(opcode.inc())
-                register.pc = (register.pc + 2u).toUShort()
             }
         },
         CPL("CPL -/-", 0x2Fu, 4) {
@@ -310,12 +322,12 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        JR_NC_NUM("JR NC,*", 0x30u, 8) {
+        JR_NC_NUM("JR NC,*", 0x30u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        LD_SP_NN("LD SP, NN", 0x31u, 12) {
+        LD_SP_NN("LD SP, NN", 0x31u, 12, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -332,7 +344,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LDD_HL_A("LDD (HL),A", 0x32u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                mmu.writeByte(register.hl, register.a)
+                register.decHL()
             }
         },
         INC_SP("INC SP", 0x33u, 8) {
@@ -350,9 +363,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_HL_N("LD HL,n 76 4", 0x36u, 12) {
+        LD_HL_d8("LD HL,d8", 0x36u, 12, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = mmu.readShort((opcode).inc())
+                mmu.writeByte(register.hl, mmu.readByte(opcode.inc()))
             }
         },
         SCF("SCF -/-", 0x37u, 4) {
@@ -360,7 +373,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        JR_C_NUM("JR C,*", 0x38u, 8) {
+        JR_C_NUM("JR C,*", 0x38u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -382,7 +395,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LDD_A_HL("LDD A,(HL)", 0x3Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = mmu.readByte(register.hl)
+                register.decHL()
             }
         },
         DEC_SP("DEC SP", 0x3Bu, 8) {
@@ -390,301 +404,307 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
+
+        //z0h-
         INC_A("INC A", 0x3Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
+
+        //z1h-
         DEC_A("DEC A", 0x3Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        LD_A_aa("LD A,aa 3E 4", 0x3Eu, 8) {
+        LD_A_d8("LD A, d8", 0x3Eu, 8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val memory = mmu.readShort((register.pc + 1u).toUShort())
-                register.a = (mmu.readShort(memory) and 0xFFu).toUByte()
-                register.pc = (register.pc + 2u).toUShort()
+                register.a = mmu.readByte(opcode.inc())
             }
         },
+
+        //-00c
         CCF("CCF -/-", 0x3Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
 
-        LD_B_B("LD B,B 40 4", 0x40u, 4) {
+        LD_B_B("LD B,B", 0x40u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = register.b
             }
         },
-        LD_B_C("LD B,C 41 4", 0x41u, 4) {
+        LD_B_C("LD B,C", 0x41u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = register.c
             }
         },
-        LD_B_D("LD B,D 42 4", 0x42u, 4) {
+        LD_B_D("LD B,D", 0x42u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = register.d
             }
         },
-        LD_B_E("LD B,E 43 4", 0x43u, 4) {
+        LD_B_E("LD B,E", 0x43u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = register.e
             }
         },
-        LD_B_H("LD B,H 44 4", 0x44u, 4) {
+        LD_B_H("LD B,H", 0x44u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = register.h
             }
         },
-        LD_B_L("LD B,L 45 4", 0x45u, 4) {
+        LD_B_L("LD B,L", 0x45u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.b = register.l
             }
         },
-        LD_B_HL("LD B,HL 46 4", 0x46u, 8) {
+        LD_B_HL("LD B,HL", 0x46u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.b = register.hl.and(0xFFu.toUShort()).toUByte()
+                register.b = mmu.readByte(register.hl)
             }
         },
-        LD_B_A("LD B,A 47 4", 0x47u, 4) {
+        LD_B_A("LD B,A", 0x47u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.b = register.a
             }
         },
-        LD_C_B("LD C,B 48 4", 0x48u, 4) {
+
+        LD_C_B("LD C,B", 0x48u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = register.b
             }
         },
-        LD_C_C("LD C,C 49 4", 0x49u, 4) {
+        LD_C_C("LD C,C", 0x49u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = register.c
             }
         },
-        LD_C_D("LD C,D 4A 4", 0x4Au, 4) {
+        LD_C_D("LD C,D", 0x4Au, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = register.d
             }
         },
-        LD_C_E("LD C,E 4B 4", 0x4Bu, 4) {
+        LD_C_E("LD C,E", 0x4Bu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = register.e
             }
         },
-        LD_C_H("LD C,H 4C 4", 0x4Cu, 4) {
+        LD_C_H("LD C,H", 0x4Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = register.h
             }
         },
-        LD_C_L("LD C,L 4D 4", 0x4Du, 4) {
+        LD_C_L("LD C,L", 0x4Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.c = register.l
             }
         },
-        LD_C_HL("LD C,HL 4E 4", 0x4Eu, 8) {
+        LD_C_HL("LD C,HL", 0x4Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.c = register.hl.and(0xFFu.toUShort()).toUByte()
+                register.c = mmu.readByte(register.hl)
             }
         },
-        LD_C_A("LD A,# 3E 4", 0x4Fu, 4) {
+        LD_C_A("LD C,A", 0x4Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.c = register.a
             }
         },
 
-        LD_D_B("LD D,B 50 4", 0x50u, 4) {
+        LD_D_B("LD D,B", 0x50u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = register.b
             }
         },
-        LD_D_C("LD D,C 51 4", 0x51u, 4) {
+        LD_D_C("LD D,C", 0x51u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = register.c
             }
         },
-        LD_D_D("LD D,D 52 4", 0x52u, 4) {
+        LD_D_D("LD D,D", 0x52u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = register.d
             }
         },
-        LD_D_E("LD D,E 53 4", 0x53u, 4) {
+        LD_D_E("LD D,E", 0x53u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = register.e
             }
         },
-        LD_D_H("LD D,H 54 4", 0x54u, 4) {
+        LD_D_H("LD D,H", 0x54u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = register.h
             }
         },
-        LD_D_L("LD D,L 55 4", 0x55u, 4) {
+        LD_D_L("LD D,L", 0x55u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.d = register.l
             }
         },
-        LD_D_HL("LD D,HL 56 4", 0x56u, 8) {
+        LD_D_HL("LD D,HL", 0x56u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-
-                register.d = register.hl.and(0xFFu.toUShort()).toUByte()
+                register.d = mmu.readByte(register.hl)
             }
         },
-        LD_E_B("LD E,B 58 4", 0x58u, 4) {
+        LD_E_B("LD E,B", 0x58u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = register.b
             }
         },
-        LD_D_A("LD A,# 3E 4", 0x57u, 4) {
+        LD_D_A("LD D,A", 0x57u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        LD_E_C("LD E,C 59 4", 0x59u, 4) {
+
+        LD_E_C("LD E,C", 0x59u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = register.c
             }
         },
-        LD_E_D("LD E,D 5A 4", 0x5Au, 4) {
+        LD_E_D("LD E,D", 0x5Au, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = register.d
             }
         },
-        LD_E_E("LD E,E 5B 4", 0x5Bu, 4) {
+        LD_E_E("LD E,E", 0x5Bu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = register.e
             }
         },
-        LD_E_H("LD E,H 5C 4", 0x5Cu, 4) {
+        LD_E_H("LD E,H", 0x5Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = register.h
             }
         },
-        LD_E_L("LD E,L 5D 4", 0x5Du, 4) {
+        LD_E_L("LD E,L", 0x5Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.e = register.l
             }
         },
-        LD_E_HL("LD E,HL 5E 4", 0x5Eu, 8) {
+        LD_E_HL("LD E,HL", 0x5Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.e = register.hl.and(0xFFu.toUShort()).toUByte()
+                register.e = mmu.readByte(register.hl)
             }
         },
-        LD_E_A("LD A,# 3E 4", 0x5Fu, 4) {
+        LD_E_A("LD E,A", 0x5Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.e = register.a
             }
         },
 
-        LD_H_B("LD H,B 60 4", 0x60u, 4) {
+        LD_H_B("LD H,B", 0x60u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = register.b
             }
         },
-        LD_H_C("LD H,C 61 4", 0x61u, 4) {
+        LD_H_C("LD H,C", 0x61u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = register.c
             }
         },
-        LD_H_D("LD H,D 62 4", 0x62u, 4) {
+        LD_H_D("LD H,D", 0x62u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = register.d
             }
         },
-        LD_H_E("LD H,E 63 4", 0x63u, 4) {
+        LD_H_E("LD H,E", 0x63u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = register.e
             }
         },
-        LD_H_H("LD H,H 64 4", 0x64u, 4) {
+        LD_H_H("LD H,H", 0x64u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = register.h
             }
         },
-        LD_H_L("LD H,L 65 4", 0x65u, 4) {
+        LD_H_L("LD H,L", 0x65u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.h = register.l
             }
         },
-        LD_H_HL("LD H,HL 66 4", 0x66u, 8) {
+        LD_H_HL("LD H,HL", 0x66u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.h = register.hl.and(0xFFu.toUShort()).toUByte()
+                register.h = mmu.readByte(register.hl)
             }
         },
-        LD_H_A("LD A,# 3E 4", 0x67u, 4) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
-            }
-        },
-        LD_L_B("LD L,B 68 4", 0x68u, 4) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                register.l = register.b
-            }
-        },
-        LD_L_C("LD L,C 69 4", 0x69u, 4) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                register.l = register.c
-            }
-        },
-        LD_L_D("LD L,D 6A 4", 0x6Au, 4) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                register.l = register.d
-            }
-        },
-        LD_L_E("LD L,E 6B 4", 0x6Bu, 4) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                register.l = register.e
-            }
-        },
-        LD_L_H("LD L,H 6C 4", 0x6Cu, 4) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                register.l = register.h
-            }
-        },
-        LD_L_L("LD L,L 6D 4", 0x6Du, 4) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                register.l = register.l
-            }
-        },
-        LD_L_HL("LD L,HL 6E 4", 0x6Eu, 8) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                register.l = register.hl.and(0xFFu.toUShort()).toUByte()
-            }
-        },
-        LD_L_A("LD L,A 4", 0x6Fu, 4) {
+        LD_H_A("LD H,A", 0x67u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
 
-        LD_HL_B("LD HL,B 70 4", 0x70u, 8) {
+        LD_L_B("LD L,B", 0x68u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = register.b.toUShort()
+                register.l = register.b
             }
         },
-        LD_HL_C("LD HL,C 71 4", 0x71u, 8) {
+        LD_L_C("LD L,C", 0x69u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = register.c.toUShort()
+                register.l = register.c
             }
         },
-        LD_HL_D("LD HL,D 72 4", 0x72u, 8) {
+        LD_L_D("LD L,D", 0x6Au, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = register.d.toUShort()
+                register.l = register.d
             }
         },
-        LD_HL_E("LD HL,E 73 4", 0x73u, 8) {
+        LD_L_E("LD L,E", 0x6Bu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = register.e.toUShort()
+                register.l = register.e
             }
         },
-        LD_HL_H("LD HL,H 74 4", 0x74u, 8) {
+        LD_L_H("LD L,H", 0x6Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = register.h.toUShort()
+                register.l = register.h
             }
         },
-        LD_HL_L("LD HL,L 75 4", 0x75u, 8) {
+        LD_L_L("LD L,L", 0x6Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = register.l.toUShort()
+                register.l = register.l
+            }
+        },
+        LD_L_HL("LD L,HL", 0x6Eu, 8) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                register.l = mmu.readByte(register.hl)
+            }
+        },
+        LD_L_A("LD L,A", 0x6Fu, 4) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                register.l = register.a
+            }
+        },
+
+        LD_HL_B("LD (HL),B", 0x70u, 8) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                mmu.writeByte(register.hl, register.b)
+            }
+        },
+        LD_HL_C("LD (HL),C", 0x71u, 8) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                mmu.writeByte(register.hl, register.c)
+            }
+        },
+        LD_HL_D("LD (HL),D", 0x72u, 8) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                mmu.writeByte(register.hl, register.d)
+            }
+        },
+        LD_HL_E("LD (HL),E", 0x73u, 8) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                mmu.writeByte(register.hl, register.e)
+            }
+        },
+        LD_HL_H("LD (HL),H", 0x74u, 8) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                mmu.writeByte(register.hl, register.h)
+            }
+        },
+        LD_HL_L("LD (HL),L", 0x75u, 8) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                mmu.writeByte(register.hl, register.l)
             }
         },
         HALT("HALT -/-", 0x76u, 4) {
@@ -692,48 +712,48 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_HL_A("LD HL,A", 0x77u, 8) {
+        LD_HL_A("LD (HL),A", 0x77u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                mmu.writeByte(register.hl, register.a)
             }
         },
-        LD_A_B("LD A,B 78 4", 0x78u, 4) {
+
+        LD_A_B("LD A,B", 0x78u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.b
             }
         },
-        LD_A_C("LD A,C 79 4", 0x79u, 4) {
+        LD_A_C("LD A,C", 0x79u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.c
             }
         },
-        LD_A_D("LD A,D 7A 4", 0x7Au, 4) {
+        LD_A_D("LD A,D", 0x7Au, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.d
             }
         },
-        LD_A_E("LD A,E 7B 4", 0x7Bu, 4) {
+        LD_A_E("LD A,E", 0x7Bu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.e
             }
         },
-        LD_A_H("LD A,H 7C 4", 0x7Cu, 4) {
+        LD_A_H("LD A,H", 0x7Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.h
             }
         },
-        LD_A_L("LD A,L 7D 4", 0x7Du, 4) {
+        LD_A_L("LD A,L", 0x7Du, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.l
             }
         },
-        LD_A_HL("LD A,HL 7E 4", 0x7Eu, 8) {
+        LD_A_HL("LD A,HL", 0x7Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                //TODO: Solution for loading Short
-                register.a = register.hl.and(0xFFu.toUShort()).toUByte()
+                register.a = mmu.readByte(register.hl)
             }
         },
-        LD_A_A("LD A,A 7F 4", 0x7Fu, 4) {
+        LD_A_A("LD A,A", 0x7Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a
             }
@@ -779,6 +799,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
+
         ADC_A_B("ADC A, B", 0x88u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -860,6 +881,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
+
         SBC_A_B("SBC A,B", 0x98u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -1200,9 +1222,10 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        LDH_N_A("LDH (N), A // LD (FF00+n), A", 0xE0u, 12) {
+        LDH_a8_A("LDH (a8), A // LD (FF00+a8), A", 0xE0u, 12, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val addr: UShort = 0xFF00u.plus(mmu.readByte(opcode.inc())).and(0xFFFFu).toUShort()
+                mmu.writeByte(addr, register.a)
             }
         },
         POP_HL("POP HL", 0xE1u, 12) {
@@ -1210,9 +1233,10 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_C_A_5("LD (C),A", 0xE2u, 8) {
+        LD_Ca_A("LD (C),A", 0xE2u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val addr: UShort = 0xFF00u.plus(register.c).and(0xFFFFu).toUShort()
+                mmu.writeByte(addr, register.a)
             }
         },
         PUSH_HL("PUSH HL", 0xE5u, 16) {
@@ -1240,9 +1264,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_NN_A("LD A,# 3E 4", 0xEAu, 16) {
+        LD_a16_A("LD a16,A", 0xEAu, 16, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                mmu.writeByte(mmu.readShort(opcode.inc()), register.a)
             }
         },
         XOR_NUM("XOR *", 0xEEu, 8) {
@@ -1256,9 +1280,9 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        LDH_A_N("LDH A, (N) // LD A, (FF00+n)", 0xF0u, 12) {
+        LDH_A_a8("LDH A,(a8) // LD A,(FF00+n)", 0xF0u, 12, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = mmu.readByte(0xFF00u.plus(mmu.readByte(opcode.inc())).and(0xFFFFu).toUShort())
             }
         },
         POP_AF("POP AF", 0xF1u, 12) {
@@ -1266,9 +1290,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_A_C_5("LD A,(C)", 0xF2u, 8) {
+        LD_A_Ca("LD A,(C)", 0xF2u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = mmu.readByte((0xFF00u).plus(register.c).and(0xFFFFu).toUShort())
             }
         },
         DI("DI -/-", 0xF3u, 4) {
@@ -1306,11 +1330,10 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_A_NN("LD A,NN FA 4", 0xFAu, 16) {
+        LD_A_a16("LD A,a16", 0xFAu, 16, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val increment: UShort = (register.pc + 0x01u).toUShort()
-                register.a = (mmu.readShort(increment) and 0xFFu).toUByte()
-                register.pc = (register.pc + 2u).toUShort()
+                val increment: UShort = opcode.inc()
+                register.a = mmu.readByte(increment)
             }
         },
         EI("EI -/-", 0xFBu, 4) {
@@ -1791,7 +1814,7 @@ class Instruction : HashMap<UShort, Execute>() {
         OPS.values().forEach {
             if (!containsKey(it.opcode)) {
                 put(it.opcode, it)
-            }else{
+            } else {
                 //println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
             }
         }
@@ -1802,4 +1825,5 @@ class Instruction : HashMap<UShort, Execute>() {
 interface Execute {
     fun execute(mmu: MMU, register: CPURegister)
     val cycles: Int
+    val length: UShort
 }

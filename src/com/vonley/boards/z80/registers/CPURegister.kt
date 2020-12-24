@@ -51,6 +51,18 @@ class CPURegister {
             fr.byte = ((value.toUInt() and 0xFFu).toUByte())
         }
 
+    fun addPC(number: UShort) {
+        pc = pc.plus(number).and(0xFFFFu).toUShort()
+    }
+
+    fun incHL() {
+        hl = hl.plus(1u).and(0xFFFFu).toUShort()
+    }
+
+    fun decHL() {
+        hl = hl.minus(1u).and(0xFFFFu).toUShort()
+    }
+
     override fun toString(): String {
         return """
             CPU:
@@ -67,4 +79,6 @@ class CPURegister {
     fun reset() {
         fr.reset()
     }
+
+
 }
