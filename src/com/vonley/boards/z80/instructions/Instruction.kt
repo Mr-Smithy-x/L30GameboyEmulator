@@ -22,8 +22,8 @@ import com.vonley.boards.z80.registers.CPURegister
 class Instruction : HashMap<UShort, Execute>() {
     //3.3.1.1
     enum class OPS(
-        val mnemonic: String,
-        val opcode: UShort,
+        override val mnemonic: String,
+        override val opcode: UShort,
         override val cycles: Int,
         override val length: UShort = 1u
     ) : Execute {
@@ -46,7 +46,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         INC_BC("INC BC", 0x03u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                //register.bc = register.bc.inc()
+                register.bc = register.bc.inc()
             }
         },
 
@@ -109,6 +109,8 @@ class Instruction : HashMap<UShort, Execute>() {
         //z0h-
         INC_C("INC C", 0x0Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
+                register.c = register.c.inc()
+                register.fr.z = (register.c == 0x00u.toUByte())
                 register.fr.n = false
                 TODO("Do something to z & h flags")
             }
@@ -154,12 +156,15 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         INC_DE("INC DE", 0x13u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.de = register.de.inc()
             }
         },
         INC_D("INC D", 0x14u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.d = register.d.inc()
+                register.fr.z = (register.d == 0x00u.toUByte())
+                register.fr.n = false
+                TODO("h flag")
             }
         },
         DEC_D("DEC D", 0x15u, 4) {
@@ -200,7 +205,10 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         INC_E("INC E", 0x1Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.e = register.e.inc()
+                register.fr.z = (register.e == 0x00u.toUByte())
+                register.fr.n = false
+                TODO("h flag")
             }
         },
         DEC_E("DEC E", 0x1Du, 4) {
@@ -245,14 +253,17 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.incHL()
             }
         },
-        INC_HL_16BIT("INC HL", 0x23u, 8) {
+        INC_HL("INC HL", 0x23u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.hl = register.hl.inc()
             }
         },
         INC_H("INC H", 0x24u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.h = register.h.inc()
+                register.fr.z = (register.h == 0x00u.toUByte())
+                register.fr.n = false
+                TODO("h flag")
             }
         },
         DEC_H("DEC H", 0x25u, 4) {
@@ -296,14 +307,17 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.incHL()
             }
         },
-        DEC_HL_16BIT("DEC HL", 0x2Bu, 8) {
+        DEC_HL("DEC HL", 0x2Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.hl = register.hl.dec()
             }
         },
         INC_L("INC L", 0x2Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.l = register.l.inc()
+                register.fr.z = (register.l == 0x00u.toUByte())
+                register.fr.n = false
+                TODO("h flag")
             }
         },
         DEC_L("DEC L", 0x2Du, 4) {
@@ -350,15 +364,15 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         INC_SP("INC SP", 0x33u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.sp = register.sp.inc()
             }
         },
-        INC_HL_8BIT("INC HL", 0x34u, 12) {
+        INC_HL_a16("INC HL", 0x34u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        DEC_HL_8BIT("DEC (HL)", 0x35u, 12) {
+        DEC_HL_a16("DEC (HL)", 0x35u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -408,7 +422,10 @@ class Instruction : HashMap<UShort, Execute>() {
         //z0h-
         INC_A("INC A", 0x3Cu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.inc()
+                register.fr.z = (register.a == 0x00u.toUByte())
+                register.fr.n = false
+                TODO("h flag")
             }
         },
 
@@ -1360,8 +1377,6 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-
-
         RLC_B("RLC B", 0xCB00u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -1835,4 +1850,6 @@ interface Execute {
     fun execute(mmu: MMU, register: CPURegister)
     val cycles: Int
     val length: UShort
+    val opcode: UShort
+    val mnemonic: String
 }

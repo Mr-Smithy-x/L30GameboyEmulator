@@ -1,6 +1,8 @@
 package com.vonley.extensions
 
 import com.vonley.boards.z80.memory.MMU
+import com.vonley.boards.z80.registers.CPURegister
+import com.vonley.boards.z80.registers.FlagRegister
 import java.math.BigDecimal
 
 fun UShort.getRegion(bootRomEnabled: Boolean = false): MMU.Region {
@@ -23,7 +25,6 @@ fun UByte.toBinaryString(): String {
     return """0b${(Integer.toBinaryString(this.toInt() and 0xFF)).toUpperCase()}"""
 }
 
-
 infix fun UShort.shr(bitCount: Int): UShort {
     return (toUInt() shr bitCount).and(0xFFFFu).toUShort()
 }
@@ -31,7 +32,6 @@ infix fun UShort.shr(bitCount: Int): UShort {
 infix fun UShort.shl(bitCount: Int): UShort {
     return (toUInt() shl bitCount).and(0xFFFFu).toUShort()
 }
-
 
 fun Int.Companion.fromBCD(bcd: Int): Int {
     //lets say bcd is 593
@@ -41,7 +41,7 @@ fun Int.Companion.fromBCD(bcd: Int): Int {
     var placements = 1;
     var copy: Int = bcd
     var arr = Array(0) { "" }
-    while (copy > 0){
+    while (copy > 0) {
         val remainder = copy % 10
         copy /= 10
         placements += 1
@@ -59,7 +59,7 @@ fun Int.fromBCD(): Int {
     var placements = 1;
     var copy: Int = this
     var arr = Array(0) { "" }
-    while (copy > 0){
+    while (copy > 0) {
         val remainder = copy % 10
         copy /= 10
         placements += 1
