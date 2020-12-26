@@ -55,6 +55,10 @@ class CPURegister {
         pc = pc.plus(number).and(0xFFFFu).toUShort()
     }
 
+    fun addSP(number: UShort) {
+        sp = sp.plus(number).and(0xFFFFu).toUShort()
+    }
+
     fun incHL() {
         hl = hl.plus(1u).and(0xFFFFu).toUShort()
     }
@@ -62,6 +66,7 @@ class CPURegister {
     fun decHL() {
         hl = hl.minus(1u).and(0xFFFFu).toUShort()
     }
+
 
     override fun toString(): String {
         return """
@@ -79,6 +84,7 @@ class CPURegister {
     fun reset() {
         fr.reset()
     }
+
 
 
 }

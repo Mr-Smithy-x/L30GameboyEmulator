@@ -35,7 +35,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LD_BC_d16("LD BC, d16", 0x01u, 12, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                mmu.writeByte(register.bc, register.a)
+                register.bc = mmu.readShort(opcode.inc())
             }
         },
         LD_BC_A("LD (BC),A", 0x02u, 8) {
@@ -84,7 +84,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LD_a16_SP("LD (a16), SP", 0x08u, 20, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                mmu.writeShort(mmu.readShort(opcode.inc()), register.sp)
             }
         },
 
@@ -178,7 +178,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
 
         },
-        JR_N("JR n", 0x18u, 12, 2u) {
+        JR_r8("JR r8", 0x18u, 12, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -219,14 +219,14 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        JR_NZ_NUM("JR NZ,*", 0x20u, 12/8, 2u) {
+        JR_NZ_r8("JR NZ,r8", 0x20u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
         LD_HL_d16("LD HL, d16", 0x21u, 12, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.hl = mmu.readShort(opcode)
+                register.hl = mmu.readShort(opcode.inc())
             }
         },
         LD_HLI_A("LD (HLI), A", 0x22u, 8) {
@@ -270,7 +270,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        JR_Z_NUM("JR Z,*", 0x28u, 12/8, 2u) {
+        JR_Z_r8("JR Z,r8", 0x28u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -322,14 +322,14 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        JR_NC_NUM("JR NC,*", 0x30u, 12/8, 2u) {
+        JR_NC_r8("JR NC,r8", 0x30u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        LD_SP_NN("LD SP, NN", 0x31u, 12, 3u) {
+        LD_SP_d16("LD SP, d16", 0x31u, 12, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.sp = mmu.readShort(opcode.inc())
             }
         },
         LD_HLD_A("LD (HLD),A", 0x32u, 8) {
@@ -373,7 +373,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        JR_C_NUM("JR C,*", 0x38u, 12/8, 2u) {
+        JR_C_r8("JR C,r8", 0x38u, 12/8, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -1092,7 +1092,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         POP_BC("POP BC", 0xC1u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.bc = mmu.readShort(register.sp)
+                register.addSP(0x2u)
             }
         },
         JP_NZ_NN("JP NZ, nn", 0xC2u, 12) {
@@ -1112,7 +1113,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         PUSH_BC("PUSH BC", 0xC5u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.addSP(0x2u)
+                mmu.writeShort(register.sp, register.bc)
             }
         },
         ADD_A_NUM("ADD A, #", 0xC6u, 8) {
@@ -1168,7 +1170,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         POP_DE("POP DE", 0xD1u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.de = mmu.readShort(register.sp)
+                register.addSP(0x2u)
             }
         },
         JP_NC_NN("JP NC, nn", 0xD2u, 12) {
@@ -1213,7 +1216,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         PUSH_DE("PUSH DE", 0xDEu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.addSP(0x2u)
+                mmu.writeShort(register.sp, register.de)
             }
         },
         RST_18H("RST 18H", 0xDFu, 32) {
@@ -1230,7 +1234,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         POP_HL("POP HL", 0xE1u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.hl = mmu.readShort(register.sp)
+                register.addSP(0x2u)
             }
         },
         LD_Ca_A("LD (C),A", 0xE2u, 8) {
@@ -1241,7 +1246,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         PUSH_HL("PUSH HL", 0xE5u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.addSP(0x2u)
+                mmu.writeShort(register.sp, register.hl)
             }
         },
         AND_NUM("AND #", 0xE6u, 8) {
@@ -1254,7 +1260,8 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        ADD_SP_NUM("ADD HL, BC", 0xE8u, 16) {
+        //00hc
+        ADD_SP_r8("ADD SP, r8", 0xE8u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -1287,7 +1294,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         POP_AF("POP AF", 0xF1u, 12) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.af = mmu.readShort(register.sp)
+                register.addSP(0x2u)
             }
         },
         LD_A_Ca("LD A,(C)", 0xF2u, 8) {
@@ -1302,7 +1310,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         PUSH_AF("PUSH AF", 0xF5u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.addSP(0x2u)
+                mmu.writeShort(register.sp, register.af)
             }
         },
         OR_NUM("OR #", 0xF6u, 8) {
@@ -1310,30 +1319,30 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        LD_HL_SPpN("LD HL,SP+n", 0xF8u, 12) {
-            override fun execute(mmu: MMU, register: CPURegister) {
-                LDHL_SP_N.execute(mmu, register)
-            }
-        },
         RST_30H("RST 30H", 0xF7u, 32) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        LDHL_SP_N("LDHL SP,N", 0xF8u, 12) {
+        LD_HL_SPr8("LD HL,SP+r8", 0xF8u, 16, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                LDHL_SP_r8.execute(mmu, register)
+            }
+        },
+        LDHL_SP_r8("LD HL,SP+r8", 0xF8u, 16, 2u) {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                val sp_n = mmu.readByte(opcode.inc()).minus(128u)
+                register.hl = register.sp.plus(sp_n).and(0xFFFFu).toUShort()
             }
         },
         LD_SP_HL("LD SP,HL", 0xF9u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.sp = register.hl
             }
         },
         LD_A_a16("LD A,a16", 0xFAu, 16, 3u) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val increment: UShort = opcode.inc()
-                register.a = mmu.readByte(increment)
+                register.a = mmu.readByte(mmu.readShort(opcode.inc()))
             }
         },
         EI("EI -/-", 0xFBu, 4) {
@@ -1341,7 +1350,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        CP_NUM("CP #", 0xFEu, 8) {
+        CP_d8("CP d8", 0xFEu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
