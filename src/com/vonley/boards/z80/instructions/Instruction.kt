@@ -332,7 +332,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         CPL("CPL -/-", 0x2Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.inv()
             }
         },
 
@@ -778,42 +778,50 @@ class Instruction : HashMap<UShort, Execute>() {
 
         ADD_A_B("ADD A, B", 0x80u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(register.b)
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
         ADD_A_C("ADD A, C", 0x81u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(register.c)
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
         ADD_A_D("ADD A, D", 0x82u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(register.d)
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
         ADD_A_E("ADD A, E", 0x83u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(register.e)
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
         ADD_A_H("ADD A, H", 0x84u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(register.h)
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
         ADD_A_L("ADD A, L", 0x85u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(register.l)
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
-        ADD_A_HL("ADD A, HL", 0x86u, 8) {
+        ADD_A_HL("ADD A, (HL)", 0x86u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(mmu.readByte(register.hl))
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
         ADD_A_A("ADD A, A", 0x87u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(register.a)
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
 
@@ -847,7 +855,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        ADC_A_HL("ADC A, HL", 0x8Eu, 8) {
+        ADC_A_HL("ADC A, (HL)", 0x8Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -858,44 +866,52 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        SUB_B("SUB B", 0x90u, 4) {
+        SUB_A_B("SUB A, B", 0x90u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(register.b)
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
-        SUB_C("SUB C", 0x91u, 4) {
+        SUB_A_C("SUB A, C", 0x91u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(register.c)
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
-        SUB_D("SUB D", 0x92u, 4) {
+        SUB_A_D("SUB A, D", 0x92u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(register.d)
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
-        SUB_E("SUB E", 0x93u, 4) {
+        SUB_A_E("SUB A, E", 0x93u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(register.e)
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
-        SUB_H("SUB H", 0x94u, 4) {
+        SUB_A_H("SUB A, H", 0x94u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(register.h)
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
-        SUB_L("SUB L", 0x95u, 4) {
+        SUB_A_L("SUB A, L", 0x95u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(register.l)
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
-        SUB_HL("SUB HL", 0x96u, 8) {
+        SUB_A_HL("SUB A, (HL)", 0x96u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(mmu.readByte(register.hl))
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
-        SUB_A("SUB A", 0x97u, 4) {
+        SUB_A_A("SUB A, A", 0x97u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val minus = register.a.minus(register.a)
+                register.a = minus.and(0xFFu).toUByte()
             }
         },
 
@@ -929,7 +945,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        SBC_A_HL("SBC A,HL", 0x9Eu, 8) {
+        SBC_A_HL("SBC A, (HL)", 0x9Eu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -940,125 +956,124 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        AND_B("AND B", 0xA0u, 4) {
+        AND_A_B("AND A, B", 0xA0u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(register.b)
             }
         },
-        AND_C("AND C", 0xA1u, 4) {
+        AND_A_C("AND A, C", 0xA1u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(register.c)
             }
         },
-        AND_D("AND D", 0xA2u, 4) {
+        AND_A_D("AND A, D", 0xA2u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(register.d)
             }
         },
-        AND_E("AND E", 0xA3u, 4) {
+        AND_A_E("AND A, E", 0xA3u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(register.e)
             }
         },
-        AND_H("AND H", 0xA4u, 4) {
+        AND_A_H("AND A, H", 0xA4u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(register.h)
             }
         },
-        AND_L("AND L", 0xA5u, 4) {
+        AND_A_L("AND A, L", 0xA5u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(register.l)
             }
         },
-        AND_HL("AND HL", 0xA6u, 8) {
+        AND_A_HL("AND A, (HL)", 0xA6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(mmu.readByte(register.hl))
             }
         },
-        AND_A("AND A", 0xA7u, 4) {
+        AND_A_A("AND A, A", 0xA7u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(register.a)
             }
         },
-        XOR_B("XOR B", 0xA8u, 4) {
+        XOR_A_B("XOR A, B", 0xA8u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(register.b)
             }
         },
-        XOR_C("XOR C", 0xA9u, 4) {
+        XOR_A_C("XOR A, C", 0xA9u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(register.c)
             }
         },
-        XOR_D("XOR D", 0xAAu, 4) {
+        XOR_A_D("XOR A, D", 0xAAu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(register.d)
             }
         },
-        XOR_E("XOR E", 0xABu, 4) {
+        XOR_A_E("XOR A, E", 0xABu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(register.e)
             }
         },
-        XOR_H("XOR H", 0xACu, 4) {
+        XOR_A_H("XOR A, H", 0xACu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(register.h)
             }
         },
-        XOR_L("XOR L", 0xADu, 4) {
+        XOR_A_L("XOR A, L", 0xADu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(register.l)
             }
         },
-        XOR_HL("XOR HL", 0xAEu, 8) {
+        XOR_A_HL("XOR A, (HL)", 0xAEu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(mmu.readByte(register.hl))
             }
         },
-        XOR_A("XOR A", 0xAFu, 4) {
+        XOR_A_A("XOR A, A", 0xAFu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(register.a)
             }
         },
-
-        OR_B("OR B", 0xB0u, 4) {
+        OR_A_B("OR A, B", 0xB0u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(register.b)
             }
         },
-        OR_C("OR C", 0xB1u, 4) {
+        OR_A_C("OR A, C", 0xB1u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(register.c)
             }
         },
-        OR_D("OR D", 0xB2u, 4) {
+        OR_A_D("OR A, D", 0xB2u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(register.d)
             }
         },
-        OR_E("OR E", 0xB3u, 4) {
+        OR_A_E("OR A, E", 0xB3u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(register.e)
             }
         },
-        OR_H("OR H", 0xB4u, 4) {
+        OR_A_H("OR A, H", 0xB4u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(register.h)
             }
         },
-        OR_L("OR L", 0xB5u, 4) {
+        OR_A_L("OR A, L", 0xB5u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(register.l)
             }
         },
-        OR_HL("OR HL", 0xB6u, 8) {
+        OR_A_HL("OR A, (HL)", 0xB6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(mmu.readByte(register.hl))
             }
         },
-        OR_A("OR A", 0xB7u, 4) {
+        OR_A_A("OR A, A", 0xB7u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(register.a)
             }
         },
         CP_B("CP B", 0xB8u, 4) {
@@ -1134,9 +1149,10 @@ class Instruction : HashMap<UShort, Execute>() {
                 mmu.writeShort(register.sp, register.bc)
             }
         },
-        ADD_A_NUM("ADD A, #", 0xC6u, 8) {
+        ADD_A_d8("ADD A, d8", 0xC6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val plus = register.a.plus(mmu.readByte(opcode.inc()))
+                register.a = plus.and(0xFFu).toUByte()
             }
         },
         RST_00H("RST 00H", 0xC7u, 32) {
@@ -1201,9 +1217,10 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        SUB_NUM("SUB #", 0xD6u, 8) {
+        SUB_A_d8("SUB A, d8", 0xD6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sub = register.a.minus(mmu.readByte(opcode.inc()))
+                register.a = sub.and(0xFFu).toUByte()
             }
         },
         RST_10H("RST 10H", 0xD7u, 32) {
@@ -1267,9 +1284,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 mmu.writeShort(register.sp, register.hl)
             }
         },
-        AND_NUM("AND #", 0xE6u, 8) {
+        AND_A_d8("AND A, d8", 0xE6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.and(mmu.readByte(opcode.inc()))
             }
         },
         RST_20H("RST 20H", 0xE7u, 32) {
@@ -1293,9 +1310,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 mmu.writeByte(mmu.readShort(opcode.inc()), register.a)
             }
         },
-        XOR_NUM("XOR *", 0xEEu, 8) {
+        XOR_A_d8("XOR A, d8", 0xEEu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.xor(mmu.readByte(opcode.inc()))
             }
         },
         RST_28H("RST 28H", 0xEFu, 32) {
@@ -1331,9 +1348,9 @@ class Instruction : HashMap<UShort, Execute>() {
                 mmu.writeShort(register.sp, register.af)
             }
         },
-        OR_NUM("OR #", 0xF6u, 8) {
+        OR_A_d8("OR A, d8", 0xF6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.a = register.a.or(mmu.readByte(opcode.inc()))
             }
         },
         RST_30H("RST 30H", 0xF7u, 32) {

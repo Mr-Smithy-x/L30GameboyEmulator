@@ -115,3 +115,11 @@ fun Byte.toHexString(): String {
 fun Byte.toBinaryString(): String {
     return """0b${(Integer.toBinaryString(this.toInt() and 0xFF)).toUpperCase()}"""
 }
+
+fun UShort.toBinaryString(): String {
+    return """0b${(Integer.toBinaryString(this.toInt() and 0xFFFF)).toUpperCase()}"""
+}
+
+fun UInt.toBinaryString(): String {
+    return """0b${(Integer.toBinaryString(this.toInt())).toUpperCase()}"""
+}
