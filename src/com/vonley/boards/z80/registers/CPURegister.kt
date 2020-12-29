@@ -23,6 +23,12 @@ class CPURegister {
     //Program Counter
     var pc: UShort = 0x0u
 
+    var f: UByte
+        get() = fr.byte
+        set(value) {
+            fr.byte = value
+        }
+
     var hl: UShort
         get() = ((((h and 0xFFu).toUInt() shl 8) or (l and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
         set(value) {
@@ -45,10 +51,10 @@ class CPURegister {
         }
 
     var af: UShort
-        get() = ((((a and 0xFFu).toUInt() shl 8) or (fr.byte and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
+        get() = ((((a and 0xFFu).toUInt() shl 8) or (f and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
         set(value) {
             a = ((value.toUInt() shr 8) and 0xFFu).toUByte()
-            fr.byte = ((value.toUInt() and 0xFFu).toUByte())
+            f = ((value.toUInt() and 0xFFu).toUByte())
         }
 
     fun addPC(number: UShort) {
@@ -71,7 +77,7 @@ class CPURegister {
     override fun toString(): String {
         return """
             CPU:
-            A  :    ${a.toHexString()}        F : ${fr.byte.toHexString()}        / F  : ${fr.byte.toBinaryString()}
+            A  :    ${a.toHexString()}        F : ${f.toHexString()}        / F  : ${f.toBinaryString()}
             H  :    ${h.toHexString()}        L : ${l.toHexString()}        / HL : ${hl.toHexString()}
             B  :    ${b.toHexString()}        C : ${c.toHexString()}        / BC : ${bc.toHexString()}
             D  :    ${d.toHexString()}        E : ${e.toHexString()}        / DE : ${de.toHexString()}
