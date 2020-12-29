@@ -52,7 +52,11 @@ class InstructionTests : TestCase() {
 
     //z00c
     fun `testRLC AInstruction`(){
-
+        var binary = startValue
+        val carry = (binary shr 7) and 0b1u
+        binary = (binary shl 1) or carry
+        assert(carry == 0b1u.toUByte())
+        assert(binary == 0b00110011u.toUByte())
     }
 
     //z00c
@@ -67,12 +71,31 @@ class InstructionTests : TestCase() {
 
     //z00c
     fun `testRL AInstruction`(){
-
+        var binary = startValue
+        val tempCarryBit = carryBit
+        val carry = (binary shr 7) and 0b1u
+        binary = (binary shl 1) or tempCarryBit
+        assert(carry == 0b1u.toUByte())
+        assert(binary == 0b00110010u.toUByte())
     }
 
     //z00c
     fun `testSLA AInstruction`(){
+        var binary = startValue
+        val carry = (binary shr 7) and 0b1u
+        binary = binary shl 1
+        assert(carry == 0b1u.toUByte())
+        assert(binary == 0b00110010u.toUByte())
+    }
 
+
+    //z00c
+    fun `testSLL AInstruction`(){
+        var binary = startValue
+        val carry = (binary shr 7) and 0b1u
+        binary = binary shl 1 or 0b1.toUByte()
+        assert(carry == 0b1u.toUByte())
+        assert(binary == 0b00110011u.toUByte())
     }
 
     //z00c
