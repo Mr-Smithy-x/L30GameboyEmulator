@@ -33,6 +33,14 @@ infix fun UShort.shl(bitCount: Int): UShort {
     return (toUInt() shl bitCount).and(0xFFFFu).toUShort()
 }
 
+infix fun UByte.shr(bitCount: Int): UByte {
+    return (toUInt() shr bitCount).and(0xFFu).toUByte()
+}
+
+infix fun UByte.shl(bitCount: Int): UByte {
+    return (toUInt() shl bitCount).and(0xFFu).toUByte()
+}
+
 fun Int.Companion.fromBCD(bcd: Int): Int {
     //lets say bcd is 593
     //how do we calculate it?
