@@ -2,9 +2,7 @@ package tests
 
 import com.vonley.boards.z80.CPU
 import com.vonley.boards.z80.instructions.Instruction
-import com.vonley.extensions.shl
-import com.vonley.extensions.shr
-import com.vonley.extensions.toBinaryString
+import com.vonley.extensions.*
 import junit.framework.TestCase
 import org.junit.jupiter.api.assertThrows
 
@@ -42,78 +40,61 @@ class InstructionTests : TestCase() {
     }
 
     //z00c
-    fun `testRRC AInstruction`(){
-        var binary = startValue
-        val carry = binary and 0b1u
-        binary = (binary shr 1) or (carry shl 7)
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b11001100u.toUByte())
+    fun `testRRC AInstruction`() {
+        val rccA = startValue.rcc_a
+        assert(rccA.carry == 0b1u.toUByte())
+        assert(rccA.result == 0b11001100u.toUByte())
     }
 
     //z00c
-    fun `testRLC AInstruction`(){
-        var binary = startValue
-        val carry = (binary shr 7) and 0b1u
-        binary = (binary shl 1) or carry
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b00110011u.toUByte())
+    fun `testRLC AInstruction`() {
+        val rlcA = startValue.rlc_a
+        assert(rlcA.carry == 0b1u.toUByte())
+        assert(rlcA.result == 0b00110011u.toUByte())
     }
 
     //z00c
-    fun `testRR AInstruction`(){
-        var binary = startValue
-        val tempCarryBit = carryBit
-        val carry = binary and 0b1u
-        binary = (binary shr 1) or (tempCarryBit shl 7)
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b01001100u.toUByte())
+    fun `testRR AInstruction`() {
+        val rrA = startValue.rr_a(carryBit)
+        assert(rrA.carry == 0b1u.toUByte())
+        assert(rrA.result == 0b01001100u.toUByte())
     }
 
     //z00c
-    fun `testRL AInstruction`(){
-        var binary = startValue
-        val tempCarryBit = carryBit
-        val carry = (binary shr 7) and 0b1u
-        binary = (binary shl 1) or tempCarryBit
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b00110010u.toUByte())
+    fun `testRL AInstruction`() {
+        val rlA = startValue.rl_a(carryBit)
+        assert(rlA.carry == 0b1u.toUByte())
+        assert(rlA.result == 0b00110010u.toUByte())
     }
 
     //z00c
-    fun `testSLA AInstruction`(){
-        var binary = startValue
-        val carry = (binary shr 7) and 0b1u
-        binary = binary shl 1
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b00110010u.toUByte())
-    }
-
-
-    //z00c
-    fun `testSLL AInstruction`(){
-        var binary = startValue
-        val carry = (binary shr 7) and 0b1u
-        binary = binary shl 1 or 0b1.toUByte()
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b00110011u.toUByte())
+    fun `testSLA AInstruction`() {
+        val slaA = startValue.sla_a
+        assert(slaA.carry == 0b1u.toUByte())
+        assert(slaA.result == 0b00110010u.toUByte())
     }
 
     //z00c
-    fun `testSRA AInstruction`(){
-        var binary = startValue
-        val carry = binary and 0b1u.toUByte()
-        binary = (binary shr 1) or (binary and (binary shr 7 and 0b1u.toUByte()) shl 7)
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b11001100u.toUByte())
+    fun `testSLL AInstruction`() {
+        val sllA = startValue.sll_a
+        assert(sllA.carry == 0b1u.toUByte())
+        assert(sllA.result == 0b00110011u.toUByte())
     }
 
     //z00c
-    fun `testSRL AInstruction`(){
-        var binary = startValue
-        val carry = binary and 0b1u.toUByte()
-        binary = binary shr 1
-        assert(carry == 0b1u.toUByte())
-        assert(binary == 0b01001100u.toUByte())
+    fun `testSRA AInstruction`() {
+        val sraA = startValue.sra_a
+        println(sraA)
+        assert(sraA.carry == 0b1u.toUByte())
+        assert(sraA.result == 0b11001100u.toUByte())
+    }
+
+    //z00c
+    fun `testSRL AInstruction`() {
+        val srlA = startValue.srl_a
+        println(srlA)
+        assert(srlA.carry == 0b1u.toUByte())
+        assert(srlA.result == 0b01001100u.toUByte())
     }
 
     fun testThrowNotImplementedError() {
@@ -121,5 +102,5 @@ class InstructionTests : TestCase() {
             instruction[instruction.keys.first()]?.execute(cpu.mmu, cpu.cpuRegister)
         }
     }
-
 }
+
