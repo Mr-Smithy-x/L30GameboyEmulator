@@ -4,7 +4,6 @@ import com.vonley.boards.z80.CPU
 import com.vonley.boards.z80.instructions.Instruction
 import com.vonley.extensions.*
 import junit.framework.TestCase
-import org.junit.jupiter.api.assertThrows
 
 /**
  *
@@ -41,49 +40,49 @@ class InstructionTests : TestCase() {
 
     //z00c
     fun `testRRC AInstruction`() {
-        val rrcA = startValue.rrc_a
+        val rrcA = startValue.rrc
         assert(rrcA.carry == 0b1u.toUByte())
         assert(rrcA.result == 0b11001100u.toUByte())
     }
 
     //z00c
     fun `testRLC AInstruction`() {
-        val rlcA = startValue.rlc_a
+        val rlcA = startValue.rlc
         assert(rlcA.carry == 0b1u.toUByte())
         assert(rlcA.result == 0b00110011u.toUByte())
     }
 
     //z00c
     fun `testRR AInstruction`() {
-        val rrA = startValue.rr_a(carryBit)
+        val rrA = startValue.rr(carryBit)
         assert(rrA.carry == 0b1u.toUByte())
         assert(rrA.result == 0b01001100u.toUByte())
     }
 
     //z00c
     fun `testRL AInstruction`() {
-        val rlA = startValue.rl_a(carryBit)
+        val rlA = startValue.rl(carryBit)
         assert(rlA.carry == 0b1u.toUByte())
         assert(rlA.result == 0b00110010u.toUByte())
     }
 
     //z00c
     fun `testSLA AInstruction`() {
-        val slaA = startValue.sla_a
+        val slaA = startValue.sla
         assert(slaA.carry == 0b1u.toUByte())
         assert(slaA.result == 0b00110010u.toUByte())
     }
 
     //z00c
     fun `testSLL AInstruction`() {
-        val sllA = startValue.sll_a
+        val sllA = startValue.sll
         assert(sllA.carry == 0b1u.toUByte())
         assert(sllA.result == 0b00110011u.toUByte())
     }
 
     //z00c
     fun `testSRA AInstruction`() {
-        val sraA = startValue.sra_a
+        val sraA = startValue.sra
         println(sraA)
         assert(sraA.carry == 0b1u.toUByte())
         assert(sraA.result == 0b11001100u.toUByte())
@@ -91,7 +90,7 @@ class InstructionTests : TestCase() {
 
     //z00c
     fun `testSRL AInstruction`() {
-        val srlA = startValue.srl_a
+        val srlA = startValue.srl
         println(srlA)
         assert(srlA.carry == 0b1u.toUByte())
         assert(srlA.result == 0b01001100u.toUByte())

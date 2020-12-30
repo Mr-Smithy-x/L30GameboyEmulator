@@ -769,53 +769,69 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.a = register.a
             }
         },
-
+        //H SET IF CARRY FROM BIT 3, C SET IF CARRY FROM BIT 7
         ADD_A_B("ADD A, B", 0x80u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(register.b)
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
         ADD_A_C("ADD A, C", 0x81u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(register.c)
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
         ADD_A_D("ADD A, D", 0x82u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(register.d)
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
         ADD_A_E("ADD A, E", 0x83u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(register.e)
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
         ADD_A_H("ADD A, H", 0x84u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(register.h)
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
         ADD_A_L("ADD A, L", 0x85u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(register.l)
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
         ADD_A_HL("ADD A, (HL)", 0x86u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(mmu.readByte(register.hl))
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
         ADD_A_A("ADD A, A", 0x87u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(register.a)
                 register.a = plus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
             }
         },
 
@@ -863,49 +879,90 @@ class Instruction : HashMap<UShort, Execute>() {
         SUB_A_B("SUB A, B", 0x90u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val minus = register.a.minus(register.b)
+                register.fr.n = true
+                if(register.b > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
         SUB_A_C("SUB A, C", 0x91u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val minus = register.a.minus(register.c)
+                register.fr.n = true
+                if(register.c > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
         SUB_A_D("SUB A, D", 0x92u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val minus = register.a.minus(register.d)
+                register.fr.n = true
+                if(register.d > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
         SUB_A_E("SUB A, E", 0x93u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val minus = register.a.minus(register.e)
+                register.fr.n = true
+                if(register.e > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
         SUB_A_H("SUB A, H", 0x94u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val minus = register.a.minus(register.h)
+                register.fr.n = true
+                if(register.h > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
         SUB_A_L("SUB A, L", 0x95u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val minus = register.a.minus(register.l)
+                register.fr.n = true
+                if(register.l > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
         SUB_A_HL("SUB A, (HL)", 0x96u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val minus = register.a.minus(mmu.readByte(register.hl))
+                var hlAddr = mmu.readByte(register.hl)
+                val minus = register.a.minus(hlAddr)
+                register.fr.n = true
+                if(hlAddr > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
         SUB_A_A("SUB A, A", 0x97u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val minus = register.a.minus(register.a)
+                register.fr.n = true
+                if(register.a > register.a){
+                    register.fr.c = true
+                }
                 register.a = minus.and(0xFFu).toUByte()
+                register.fr.z = register.a.isZero()
             }
         },
 
@@ -953,121 +1010,217 @@ class Instruction : HashMap<UShort, Execute>() {
         AND_A_B("AND A, B", 0xA0u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(register.b)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         AND_A_C("AND A, C", 0xA1u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(register.c)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         AND_A_D("AND A, D", 0xA2u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(register.d)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         AND_A_E("AND A, E", 0xA3u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(register.e)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         AND_A_H("AND A, H", 0xA4u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(register.h)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         AND_A_L("AND A, L", 0xA5u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(register.l)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         AND_A_HL("AND A, (HL)", 0xA6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(mmu.readByte(register.hl))
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         AND_A_A("AND A, A", 0xA7u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.and(register.a)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
             }
         },
         XOR_A_B("XOR A, B", 0xA8u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(register.b)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         XOR_A_C("XOR A, C", 0xA9u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(register.c)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         XOR_A_D("XOR A, D", 0xAAu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(register.d)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         XOR_A_E("XOR A, E", 0xABu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(register.e)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         XOR_A_H("XOR A, H", 0xACu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(register.h)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         XOR_A_L("XOR A, L", 0xADu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(register.l)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         XOR_A_HL("XOR A, (HL)", 0xAEu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(mmu.readByte(register.hl))
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         XOR_A_A("XOR A, A", 0xAFu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(register.a)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_B("OR A, B", 0xB0u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(register.b)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_C("OR A, C", 0xB1u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(register.c)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_D("OR A, D", 0xB2u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(register.d)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_E("OR A, E", 0xB3u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(register.e)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_H("OR A, H", 0xB4u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(register.h)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_L("OR A, L", 0xB5u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(register.l)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_HL("OR A, (HL)", 0xB6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(mmu.readByte(register.hl))
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         OR_A_A("OR A, A", 0xB7u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(register.a)
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         CP_B("CP B", 0xB8u, 4) {
@@ -1147,6 +1300,10 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val plus = register.a.plus(mmu.readByte(opcode.inc()))
                 register.a = plus.and(0xFFu).toUByte()
+
+
+                register.fr.n = false
+                register.fr.z = register.a.isZero()
             }
         },
         RST_00H("RST 00H", 0xC7u, 32) {
@@ -1307,6 +1464,10 @@ class Instruction : HashMap<UShort, Execute>() {
         XOR_A_d8("XOR A, d8", 0xEEu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.xor(mmu.readByte(opcode.inc()))
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         RST_28H("RST 28H", 0xEFu, 32) {
@@ -1345,6 +1506,10 @@ class Instruction : HashMap<UShort, Execute>() {
         OR_A_d8("OR A, d8", 0xF6u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.a = register.a.or(mmu.readByte(opcode.inc()))
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
             }
         },
         RST_30H("RST 30H", 0xF7u, 32) {
@@ -1391,7 +1556,7 @@ class Instruction : HashMap<UShort, Execute>() {
 
         RLC_B("RLC B", 0xCB00u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = register.b.rlc_a
+                val rlcA = register.b.rlc
                 register.b = rlcA.result
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1401,7 +1566,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_C("RLC C", 0xCB01u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = register.c.rlc_a
+                val rlcA = register.c.rlc
                 register.c = rlcA.result
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1411,7 +1576,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_D("RLC D", 0xCB02u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = register.d.rlc_a
+                val rlcA = register.d.rlc
                 register.d = rlcA.result
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1421,7 +1586,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_E("RLC E", 0xCB03u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = register.e.rlc_a
+                val rlcA = register.e.rlc
                 register.e = rlcA.result
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1431,7 +1596,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_H("RLC H", 0xCB04u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = register.h.rlc_a
+                val rlcA = register.h.rlc
                 register.h = rlcA.result
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1441,7 +1606,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_L("RLC L", 0xCB05u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = register.l.rlc_a
+                val rlcA = register.l.rlc
                 register.l = rlcA.result
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1451,7 +1616,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_HL("RLC HL", 0xCB06u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = mmu.readByte(register.hl).rlc_a
+                val rlcA = mmu.readByte(register.hl).rlc
                 mmu.writeByte(register.hl, rlcA.result)
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1461,7 +1626,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_A("RLC A", 0xCB07u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlcA = register.a.rlc_a
+                val rlcA = register.a.rlc
                 register.a = rlcA.result
                 register.fr.z = rlcA.result.isZero()
                 register.fr.n = false
@@ -1472,7 +1637,7 @@ class Instruction : HashMap<UShort, Execute>() {
 
         RRC_B("RRC B", 0xCB08u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcB = register.b.rrc_a
+                val rrcB = register.b.rrc
                 register.b = rrcB.result
                 register.fr.z = rrcB.result.isZero()
                 register.fr.n = false
@@ -1482,7 +1647,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRC_C("RRC C", 0xCB09u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcC = register.c.rrc_a
+                val rrcC = register.c.rrc
                 register.c = rrcC.result
                 register.fr.z = rrcC.result.isZero()
                 register.fr.n = false
@@ -1492,7 +1657,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRC_D("RRC D", 0xCB0Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcD = register.d.rrc_a
+                val rrcD = register.d.rrc
                 register.d = rrcD.result
                 register.fr.z = rrcD.result.isZero()
                 register.fr.n = false
@@ -1502,7 +1667,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRC_E("RRC E", 0xCB0Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcE = register.e.rrc_a
+                val rrcE = register.e.rrc
                 register.e = rrcE.result
                 register.fr.z = rrcE.result.isZero()
                 register.fr.n = false
@@ -1512,7 +1677,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRC_H("RRC H", 0xCB0Cu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcH = register.h.rrc_a
+                val rrcH = register.h.rrc
                 register.h = rrcH.result
                 register.fr.z = rrcH.result.isZero()
                 register.fr.n = false
@@ -1522,7 +1687,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRC_L("RRC L", 0xCB0Du, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcL = register.l.rrc_a
+                val rrcL = register.l.rrc
                 register.l = rrcL.result
                 register.fr.z = rrcL.result.isZero()
                 register.fr.n = false
@@ -1532,7 +1697,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRC_HL("RRC HL", 0xCB0Eu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcHL = mmu.readByte(register.hl).rrc_a
+                val rrcHL = mmu.readByte(register.hl).rrc
                 mmu.writeByte(register.hl, rrcHL.result)
                 register.fr.z = rrcHL.result.isZero()
                 register.fr.n = false
@@ -1542,7 +1707,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRC_A("RRC A", 0xCB0Fu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrcA = register.a.rrc_a
+                val rrcA = register.a.rrc
                 register.a = rrcA.result
                 register.fr.z = rrcA.result.isZero()
                 register.fr.n = false
@@ -1553,7 +1718,7 @@ class Instruction : HashMap<UShort, Execute>() {
 
         RL_B("RL B", 0xCB10u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlB = register.b.rl_a(register.fr.c.asUByte)
+                val rlB = register.b.rl(register.fr.c.asUByte)
                 register.b = rlB.result
                 register.fr.z = rlB.result.isZero()
                 register.fr.n = false
@@ -1563,7 +1728,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RL_C("RL C", 0xCB11u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlC = register.c.rl_a(register.fr.c.asUByte)
+                val rlC = register.c.rl(register.fr.c.asUByte)
                 register.c = rlC.result
                 register.fr.z = rlC.result.isZero()
                 register.fr.n = false
@@ -1573,7 +1738,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RL_D("RL D", 0xCB12u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlD = register.d.rl_a(register.fr.c.asUByte)
+                val rlD = register.d.rl(register.fr.c.asUByte)
                 register.d = rlD.result
                 register.fr.z = rlD.result.isZero()
                 register.fr.n = false
@@ -1583,7 +1748,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RL_E("RL E", 0xCB13u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlE = register.e.rl_a(register.fr.c.asUByte)
+                val rlE = register.e.rl(register.fr.c.asUByte)
                 register.e = rlE.result
                 register.fr.z = rlE.result.isZero()
                 register.fr.n = false
@@ -1593,7 +1758,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RL_H("RL H", 0xCB14u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlH = register.h.rl_a(register.fr.c.asUByte)
+                val rlH = register.h.rl(register.fr.c.asUByte)
                 register.h = rlH.result
                 register.fr.z = rlH.result.isZero()
                 register.fr.n = false
@@ -1603,7 +1768,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RL_L("RL L", 0xCB15u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlL = register.l.rl_a(register.fr.c.asUByte)
+                val rlL = register.l.rl(register.fr.c.asUByte)
                 register.l = rlL.result
                 register.fr.z = rlL.result.isZero()
                 register.fr.n = false
@@ -1613,7 +1778,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RL_HL("RL HL", 0xCB16u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlHL = mmu.readByte(register.hl).rl_a(register.fr.c.asUByte)
+                val rlHL = mmu.readByte(register.hl).rl(register.fr.c.asUByte)
                 mmu.writeByte(register.hl, rlHL.carry)
                 register.fr.z = rlHL.result.isZero()
                 register.fr.n = false
@@ -1623,7 +1788,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RL_A("RL A", 0xCB17u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rlA = register.a.rl_a(register.fr.c.asUByte)
+                val rlA = register.a.rl(register.fr.c.asUByte)
                 register.a = rlA.result
                 register.fr.z = rlA.result.isZero()
                 register.fr.n = false
@@ -1634,7 +1799,7 @@ class Instruction : HashMap<UShort, Execute>() {
 
         RR_B("RR B", 0xCB18u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrB = register.b.rr_a(register.fr.c.asUByte)
+                val rrB = register.b.rr(register.fr.c.asUByte)
                 register.b = rrB.result
                 register.fr.z = rrB.result.isZero()
                 register.fr.n = false
@@ -1644,7 +1809,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RR_C("RR C", 0xCB19u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrC = register.c.rr_a(register.fr.c.asUByte)
+                val rrC = register.c.rr(register.fr.c.asUByte)
                 register.c = rrC.result
                 register.fr.z = rrC.result.isZero()
                 register.fr.n = false
@@ -1654,7 +1819,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RR_D("RR D", 0xCB1Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrD = register.d.rr_a(register.fr.c.asUByte)
+                val rrD = register.d.rr(register.fr.c.asUByte)
                 register.d = rrD.result
                 register.fr.z = rrD.result.isZero()
                 register.fr.n = false
@@ -1664,7 +1829,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RR_E("RR E", 0xCB1Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrE = register.e.rr_a(register.fr.c.asUByte)
+                val rrE = register.e.rr(register.fr.c.asUByte)
                 register.e = rrE.result
                 register.fr.z = rrE.result.isZero()
                 register.fr.n = false
@@ -1674,7 +1839,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RR_H("RR H", 0xCB1Cu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrH = register.h.rr_a(register.fr.c.asUByte)
+                val rrH = register.h.rr(register.fr.c.asUByte)
                 register.h = rrH.result
                 register.fr.z = rrH.result.isZero()
                 register.fr.n = false
@@ -1684,7 +1849,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RR_L("RR L", 0xCB1Du, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrL = register.l.rr_a(register.fr.c.asUByte)
+                val rrL = register.l.rr(register.fr.c.asUByte)
                 register.l = rrL.result
                 register.fr.z = rrL.result.isZero()
                 register.fr.n = false
@@ -1694,7 +1859,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RR_HL("RR HL", 0xCB1Eu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrHL = mmu.readByte(register.hl).rr_a(register.fr.c.asUByte)
+                val rrHL = mmu.readByte(register.hl).rr(register.fr.c.asUByte)
                 mmu.writeByte(register.hl, rrHL.result)
                 register.fr.z = rrHL.result.isZero()
                 register.fr.n = false
@@ -1704,7 +1869,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RR_A("RR A", 0xCB1Fu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrA = register.a.rr_a(register.fr.c.asUByte)
+                val rrA = register.a.rr(register.fr.c.asUByte)
                 register.a = rrA.result
                 register.fr.z = rrA.result.isZero()
                 register.fr.n = false
@@ -1715,7 +1880,7 @@ class Instruction : HashMap<UShort, Execute>() {
 
         SLA_B("SLA B", 0xCB20u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaB = register.b.sla_a
+                val slaB = register.b.sla
                 register.b = slaB.result
                 register.fr.z = slaB.result.isZero()
                 register.fr.n = false
@@ -1725,7 +1890,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SLA_C("SLA C", 0xCB21u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaC = register.c.sla_a
+                val slaC = register.c.sla
                 register.c = slaC.result
                 register.fr.z = slaC.result.isZero()
                 register.fr.n = false
@@ -1735,7 +1900,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SLA_D("SLA D", 0xCB22u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaD = register.d.sla_a
+                val slaD = register.d.sla
                 register.d = slaD.result
                 register.fr.z = slaD.result.isZero()
                 register.fr.n = false
@@ -1745,7 +1910,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SLA_E("SLA E", 0xCB23u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaE = register.e.sla_a
+                val slaE = register.e.sla
                 register.e = slaE.result
                 register.fr.z = slaE.result.isZero()
                 register.fr.n = false
@@ -1755,7 +1920,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SLA_H("SLA H", 0xCB24u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaH = register.h.sla_a
+                val slaH = register.h.sla
                 register.h = slaH.result
                 register.fr.z = slaH.result.isZero()
                 register.fr.n = false
@@ -1765,7 +1930,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SLA_L("SLA L", 0xCB25u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaL = register.l.sla_a
+                val slaL = register.l.sla
                 register.l = slaL.result
                 register.fr.z = slaL.result.isZero()
                 register.fr.n = false
@@ -1775,7 +1940,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SLA_HL("SLA HL", 0xCB26u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaHL = mmu.readByte(register.hl).sla_a
+                val slaHL = mmu.readByte(register.hl).sla
                 mmu.writeByte(register.hl, slaHL.result)
                 register.fr.z = slaHL.result.isZero()
                 register.fr.n = false
@@ -1785,7 +1950,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SLA_A("SLA A", 0xCB27u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val slaA = register.a.sla_a
+                val slaA = register.a.sla
                 register.a = slaA.result
                 register.fr.z = slaA.result.isZero()
                 register.fr.n = false
@@ -1796,7 +1961,7 @@ class Instruction : HashMap<UShort, Execute>() {
 
         SRA_B("SRA B", 0xCB28u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraB = register.b.sra_a
+                val sraB = register.b.sra
                 register.b = sraB.result
                 register.fr.z = sraB.result.isZero()
                 register.fr.n = false
@@ -1806,7 +1971,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SRA_C("SRA C", 0xCB29u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraC = register.c.sra_a
+                val sraC = register.c.sra
                 register.c = sraC.result
                 register.fr.z = sraC.result.isZero()
                 register.fr.n = false
@@ -1816,7 +1981,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SRA_D("SRA D", 0xCB2Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraD = register.d.sra_a
+                val sraD = register.d.sra
                 register.d = sraD.result
                 register.fr.z = sraD.result.isZero()
                 register.fr.n = false
@@ -1826,7 +1991,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SRA_E("SRA E", 0xCB2Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraE = register.e.sra_a
+                val sraE = register.e.sra
                 register.e = sraE.result
                 register.fr.z = sraE.result.isZero()
                 register.fr.n = false
@@ -1836,7 +2001,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SRA_H("SRA H", 0xCB2Cu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraH = register.h.sra_a
+                val sraH = register.h.sra
                 register.h = sraH.result
                 register.fr.z = sraH.result.isZero()
                 register.fr.n = false
@@ -1846,7 +2011,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SRA_L("SRA L", 0xCB2Du, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraL = register.l.sra_a
+                val sraL = register.l.sra
                 register.l = sraL.result
                 register.fr.z = sraL.result.isZero()
                 register.fr.n = false
@@ -1856,7 +2021,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SRA_HL("SRA HL", 0xCB2Eu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraHL = mmu.readByte(register.hl).sra_a
+                val sraHL = mmu.readByte(register.hl).sra
                 mmu.writeByte(register.hl, sraHL.result)
                 register.fr.z = sraHL.result.isZero()
                 register.fr.n = false
@@ -1866,7 +2031,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         SRA_A("SRA A", 0xCB2Fu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val sraA = register.a.sra_a
+                val sraA = register.a.sra
                 register.a = sraA.result
                 register.fr.z = sraA.result.isZero()
                 register.fr.n = false

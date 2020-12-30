@@ -2,7 +2,7 @@ package com.vonley.extensions
 
 import com.vonley.boards.z80.registers.BitCarryData
 
-fun UByte.rr_a(carryBit: UByte): BitCarryData {
+fun UByte.rr(carryBit: UByte): BitCarryData {
     var binary = this
     val tempCarryBit = carryBit
     val carry = binary and 0b1u
@@ -10,7 +10,7 @@ fun UByte.rr_a(carryBit: UByte): BitCarryData {
     return BitCarryData(carry, binary)
 }
 
-fun UByte.rl_a(carryBit: UByte): BitCarryData {
+fun UByte.rl(carryBit: UByte): BitCarryData {
     var binary = this
     val tempCarryBit = carryBit
     val carry = (binary shr 7) and 0b1u
@@ -18,7 +18,7 @@ fun UByte.rl_a(carryBit: UByte): BitCarryData {
     return BitCarryData(carry, binary)
 }
 
-val UByte.rrc_a: BitCarryData
+val UByte.rrc: BitCarryData
     get() {
         var binary = this
         val carry = binary and 0b1u
@@ -26,7 +26,7 @@ val UByte.rrc_a: BitCarryData
         return BitCarryData(carry, binary)
     }
 
-val UByte.rlc_a: BitCarryData
+val UByte.rlc: BitCarryData
     get() {
         var binary = this
         val carry = (binary shr 7) and 0b1u
@@ -34,7 +34,7 @@ val UByte.rlc_a: BitCarryData
         return BitCarryData(carry, binary)
     }
 
-val UByte.sla_a: BitCarryData
+val UByte.sla: BitCarryData
     get() {
         var binary = this
         val carry = (binary shr 7) and 0b1u
@@ -42,7 +42,7 @@ val UByte.sla_a: BitCarryData
         return BitCarryData(carry, binary)
     }
 
-val UByte.sll_a: BitCarryData
+val UByte.sll: BitCarryData
     get() {
         var binary = this
         val carry = (binary shr 7) and 0b1u
@@ -50,7 +50,7 @@ val UByte.sll_a: BitCarryData
         return BitCarryData(carry, binary)
     }
 
-val UByte.sra_a: BitCarryData
+val UByte.sra: BitCarryData
     get() {
         var binary = this
         val carry = binary and 0b1u.toUByte()
@@ -58,7 +58,7 @@ val UByte.sra_a: BitCarryData
         return BitCarryData(carry, binary)
     }
 
-val UByte.srl_a: BitCarryData
+val UByte.srl: BitCarryData
     get() {
         var binary = this
         val carry = this and 0b1u.toUByte()
