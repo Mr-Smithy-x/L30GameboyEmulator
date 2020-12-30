@@ -4,6 +4,7 @@ import com.vonley.contracts.UShortDifferenceImpl
 import com.vonley.extensions.getRegion
 import com.vonley.extensions.shl
 import com.vonley.extensions.shr
+import com.vonley.extensions.toHexString
 
 
 //MBC1
@@ -52,7 +53,7 @@ class MMU {
     private val hram = UByteArray(0x7F)
 
     //FFFF	FFFF	Interrupts Enable Register (IE)
-    private var interupt = 0
+    private var interupt = UByteArray(1) { 0x0u }
 
 
     enum class Region(
@@ -125,7 +126,14 @@ class MMU {
                 get() = range.last.and(0xFFFFu).toUShort()
             override val start: UShort
                 get() = range.first.and(0xFFFFu).toUShort()
-        }; //H Ram
+        }, //H Ram
+        IE_INTERRUPT(true, true, 0xFFFFu..0xFFFFu){
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
+
+        };
 
         companion object {
             fun parse(value: UShort, bootRomEnabled: Boolean = false): Region {
@@ -142,7 +150,9 @@ class MMU {
                     word in UNUSABLE -> UNUSABLE
                     word in IO_REG -> IO_REG
                     word in ZERO_PAGE_RAM -> ZERO_PAGE_RAM
+                    word in IE_INTERRUPT -> IE_INTERRUPT
                     else -> {
+                        println("$word - ${word.toHexString()}")
                         throw ArrayIndexOutOfBoundsException("You're out of bounds")
                     }
                 }
@@ -167,6 +177,7 @@ class MMU {
             Region.UNUSABLE -> unusable
             Region.IO_REG -> ioregs
             Region.ZERO_PAGE_RAM -> hram
+            Region.IE_INTERRUPT -> interupt
         }
     }
 
@@ -188,7 +199,6 @@ class MMU {
     fun readShort(address: UShort): UShort {
         val lo = readByte(address)
         val hi = readByte(address.inc())
-
         return (((lo and 0xFFu).toUShort() shl 8) or (hi and 0xFFu).toUShort()).and(0xFFFFu);
     }
 

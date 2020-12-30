@@ -98,9 +98,19 @@ class InstructionTests : TestCase() {
     }
 
     fun testThrowNotImplementedError() {
-        assertThrows<NotImplementedError> {
-            instruction[instruction.keys.first()]?.execute(cpu.mmu, cpu.cpuRegister)
+        var count = 0
+        var implemented = 0
+        instruction.values.forEach {
+            try {
+                it.execute(cpu.mmu, cpu.cpuRegister)
+                implemented = implemented.inc()
+            } catch (e: NotImplementedError) {
+                count = count.inc()
+            } catch (e: IllegalAccessException){
+                implemented = implemented.inc()
+            }
         }
+        print("LEFT TO IMPLEMENT: $count, Implemented: $implemented")
     }
 }
 
