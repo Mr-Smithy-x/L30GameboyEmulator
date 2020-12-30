@@ -2,6 +2,7 @@ package com.vonley.boards.z80.instructions
 
 import com.vonley.boards.z80.memory.MMU
 import com.vonley.boards.z80.registers.CPURegister
+import com.vonley.extensions.*
 
 //nn = signed byte
 /**
@@ -76,10 +77,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLCA("RLCA -/-", 0x07u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.fr.z = false
-                register.fr.n = false
-                register.fr.h = false
-                TODO("Something to C")
+                RLC_A.execute(mmu, register)
             }
         },
         LD_a16_SP("LD (a16), SP", 0x08u, 20, 3u) {
@@ -132,10 +130,7 @@ class Instruction : HashMap<UShort, Execute>() {
         //000c
         RRCA("RRCA -/-", 0x0Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.fr.z = false
-                register.fr.n = false
-                register.fr.h = false
-                TODO("Do something to C")
+                RRC_A.execute(mmu, register)
             }
         },
 
@@ -179,9 +174,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLA("RLA -/-", 0x17u, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                RL_A.execute(mmu, register)
             }
-
         },
         JR_r8("JR r8", 0x18u, 12, 2u) {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -223,7 +217,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RRA("RRA -/-", 0x1Fu, 4) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                RR_A.execute(mmu, register)
             }
         },
 
@@ -1396,169 +1390,334 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RLC_B("RLC B", 0xCB00u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = register.b.rlc_a
+                register.b = rlcA.result
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RLC_C("RLC C", 0xCB01u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = register.c.rlc_a
+                register.c = rlcA.result
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RLC_D("RLC D", 0xCB02u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = register.d.rlc_a
+                register.d = rlcA.result
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RLC_E("RLC E", 0xCB03u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = register.e.rlc_a
+                register.e = rlcA.result
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RLC_H("RLC H", 0xCB04u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = register.h.rlc_a
+                register.h = rlcA.result
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RLC_L("RLC L", 0xCB05u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = register.l.rlc_a
+                register.l = rlcA.result
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RLC_HL("RLC HL", 0xCB06u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = mmu.readByte(register.hl).rlc_a
+                mmu.writeByte(register.hl, rlcA.result)
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RLC_A("RLC A", 0xCB07u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlcA = register.a.rlc_a
+                register.a = rlcA.result
+                register.fr.z = rlcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlcA.carry.asBoolean
             }
         },
         RRC_B("RRC B", 0xCB08u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcB = register.b.rrc_a
+                register.b = rrcB.result
+                register.fr.z = rrcB.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcB.carry.asBoolean
             }
         },
         RRC_C("RRC C", 0xCB09u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcC = register.c.rrc_a
+                register.c = rrcC.result
+                register.fr.z = rrcC.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcC.carry.asBoolean
             }
         },
         RRC_D("RRC D", 0xCB0Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcD = register.d.rrc_a
+                register.d = rrcD.result
+                register.fr.z = rrcD.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcD.carry.asBoolean
             }
         },
         RRC_E("RRC E", 0xCB0Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcE = register.e.rrc_a
+                register.e = rrcE.result
+                register.fr.z = rrcE.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcE.carry.asBoolean
             }
         },
         RRC_H("RRC H", 0xCB0Cu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcH = register.h.rrc_a
+                register.h = rrcH.result
+                register.fr.z = rrcH.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcH.carry.asBoolean
             }
         },
         RRC_L("RRC L", 0xCB0Du, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcL = register.l.rrc_a
+                register.l = rrcL.result
+                register.fr.z = rrcL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcL.carry.asBoolean
             }
         },
         RRC_HL("RRC HL", 0xCB0Eu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcHL = mmu.readByte(register.hl).rrc_a
+                mmu.writeByte(register.hl, rrcHL.result)
+                register.fr.z = rrcHL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcHL.carry.asBoolean
             }
         },
         RRC_A("RRC A", 0xCB0Fu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrcA = register.a.rrc_a
+                register.a = rrcA.result
+                register.fr.z = rrcA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrcA.carry.asBoolean
             }
         },
 
         RL_B("RL B", 0xCB10u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlB = register.b.rl_a(register.fr.c.asUByte)
+                register.b = rlB.result
+                register.fr.z = rlB.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlB.carry.asBoolean
             }
         },
         RL_C("RL C", 0xCB11u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlC = register.c.rl_a(register.fr.c.asUByte)
+                register.c = rlC.result
+                register.fr.z = rlC.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlC.carry.asBoolean
             }
         },
         RL_D("RL D", 0xCB12u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlD = register.d.rl_a(register.fr.c.asUByte)
+                register.d = rlD.result
+                register.fr.z = rlD.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlD.carry.asBoolean
             }
         },
         RL_E("RL E", 0xCB13u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlE = register.e.rl_a(register.fr.c.asUByte)
+                register.e = rlE.result
+                register.fr.z = rlE.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlE.carry.asBoolean
             }
         },
         RL_H("RL H", 0xCB14u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlH = register.h.rl_a(register.fr.c.asUByte)
+                register.h = rlH.result
+                register.fr.z = rlH.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlH.carry.asBoolean
             }
         },
         RL_L("RL L", 0xCB15u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlL = register.l.rl_a(register.fr.c.asUByte)
+                register.l = rlL.result
+                register.fr.z = rlL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlL.carry.asBoolean
             }
         },
         RL_HL("RL HL", 0xCB16u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlHL = mmu.readByte(register.hl).rl_a(register.fr.c.asUByte)
+                mmu.writeByte(register.hl, rlHL.carry)
+                register.fr.z = rlHL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlHL.carry.asBoolean
             }
         },
         RL_A("RL A", 0xCB17u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rlA = register.a.rl_a(register.fr.c.asUByte)
+                register.a = rlA.result
+                register.fr.z = rlA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rlA.carry.asBoolean
             }
         },
         RR_B("RR B", 0xCB18u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrB = register.b.rr_a(register.fr.c.asUByte)
+                register.b = rrB.result
+                register.fr.z = rrB.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrB.carry.asBoolean
             }
         },
         RR_C("RR C", 0xCB19u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrC = register.c.rr_a(register.fr.c.asUByte)
+                register.c = rrC.result
+                register.fr.z = rrC.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrC.carry.asBoolean
             }
         },
         RR_D("RR D", 0xCB1Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrD = register.d.rr_a(register.fr.c.asUByte)
+                register.d = rrD.result
+                register.fr.z = rrD.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrD.carry.asBoolean
             }
         },
         RR_E("RR E", 0xCB1Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrE = register.e.rr_a(register.fr.c.asUByte)
+                register.e = rrE.result
+                register.fr.z = rrE.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrE.carry.asBoolean
             }
         },
         RR_H("RR H", 0xCB1Cu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrH = register.h.rr_a(register.fr.c.asUByte)
+                register.h = rrH.result
+                register.fr.z = rrH.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrH.carry.asBoolean
             }
         },
         RR_L("RR L", 0xCB1Du, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrL = register.l.rr_a(register.fr.c.asUByte)
+                register.l = rrL.result
+                register.fr.z = rrL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrL.carry.asBoolean
             }
         },
         RR_HL("RR HL", 0xCB1Eu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrHL = mmu.readByte(register.hl).rr_a(register.fr.c.asUByte)
+                mmu.writeByte(register.hl, rrHL.result)
+                register.fr.z = rrHL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrHL.carry.asBoolean
             }
         },
         RR_A("RR A", 0xCB1Fu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrA = register.a.rr_a(register.fr.c.asUByte)
+                register.a = rrA.result
+                register.fr.z = rrA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrA.carry.asBoolean
             }
         },
 
         SLA_B("SLA B", 0xCB20u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val rrB = register.b.sla_a
+                register.b = rrB.result
+                register.fr.z = rrB.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = rrB.carry.asBoolean
             }
         },
         SLA_C("SLA C", 0xCB21u, 8) {

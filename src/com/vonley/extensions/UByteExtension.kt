@@ -18,7 +18,7 @@ fun UByte.rl_a(carryBit: UByte): BitCarryData {
     return BitCarryData(carry, binary)
 }
 
-val UByte.rcc_a: BitCarryData
+val UByte.rrc_a: BitCarryData
     get() {
         var binary = this
         val carry = binary and 0b1u
@@ -72,5 +72,9 @@ infix fun UByte.shr(bitCount: Int): UByte {
 
 infix fun UByte.shl(bitCount: Int): UByte {
     return (toUInt() shl bitCount).and(0xFFu).toUByte()
+}
+
+fun UByte.isZero(): Boolean {
+    return this == 0x0u.toUByte()
 }
 

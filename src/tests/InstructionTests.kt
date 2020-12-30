@@ -41,9 +41,9 @@ class InstructionTests : TestCase() {
 
     //z00c
     fun `testRRC AInstruction`() {
-        val rccA = startValue.rcc_a
-        assert(rccA.carry == 0b1u.toUByte())
-        assert(rccA.result == 0b11001100u.toUByte())
+        val rrcA = startValue.rrc_a
+        assert(rrcA.carry == 0b1u.toUByte())
+        assert(rrcA.result == 0b11001100u.toUByte())
     }
 
     //z00c
