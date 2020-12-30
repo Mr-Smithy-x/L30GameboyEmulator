@@ -1388,6 +1388,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
+
         RLC_B("RLC B", 0xCB00u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val rlcA = register.b.rlc_a
@@ -1468,6 +1469,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = rlcA.carry.asBoolean
             }
         },
+
         RRC_B("RRC B", 0xCB08u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val rrcB = register.b.rrc_a
@@ -1629,6 +1631,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = rlA.carry.asBoolean
             }
         },
+
         RR_B("RR B", 0xCB18u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val rrB = register.b.rr_a(register.fr.c.asUByte)
@@ -1712,87 +1715,163 @@ class Instruction : HashMap<UShort, Execute>() {
 
         SLA_B("SLA B", 0xCB20u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                val rrB = register.b.sla_a
-                register.b = rrB.result
-                register.fr.z = rrB.result.isZero()
+                val slaB = register.b.sla_a
+                register.b = slaB.result
+                register.fr.z = slaB.result.isZero()
                 register.fr.n = false
                 register.fr.h = false
-                register.fr.c = rrB.carry.asBoolean
+                register.fr.c = slaB.carry.asBoolean
             }
         },
         SLA_C("SLA C", 0xCB21u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val slaC = register.c.sla_a
+                register.c = slaC.result
+                register.fr.z = slaC.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = slaC.carry.asBoolean
             }
         },
         SLA_D("SLA D", 0xCB22u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val slaD = register.d.sla_a
+                register.d = slaD.result
+                register.fr.z = slaD.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = slaD.carry.asBoolean
             }
         },
         SLA_E("SLA E", 0xCB23u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val slaE = register.e.sla_a
+                register.e = slaE.result
+                register.fr.z = slaE.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = slaE.carry.asBoolean
             }
         },
         SLA_H("SLA H", 0xCB24u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val slaH = register.h.sla_a
+                register.h = slaH.result
+                register.fr.z = slaH.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = slaH.carry.asBoolean
             }
         },
         SLA_L("SLA L", 0xCB25u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val slaL = register.l.sla_a
+                register.l = slaL.result
+                register.fr.z = slaL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = slaL.carry.asBoolean
             }
         },
         SLA_HL("SLA HL", 0xCB26u, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val slaHL = mmu.readByte(register.hl).sla_a
+                mmu.writeByte(register.hl, slaHL.result)
+                register.fr.z = slaHL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = slaHL.carry.asBoolean
             }
         },
         SLA_A("SLA A", 0xCB27u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val slaA = register.a.sla_a
+                register.a = slaA.result
+                register.fr.z = slaA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = slaA.carry.asBoolean
             }
         },
+
         SRA_B("SRA B", 0xCB28u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraB = register.b.sra_a
+                register.b = sraB.result
+                register.fr.z = sraB.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraB.carry.asBoolean
             }
         },
         SRA_C("SRA C", 0xCB29u, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraC = register.c.sra_a
+                register.c = sraC.result
+                register.fr.z = sraC.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraC.carry.asBoolean
             }
         },
         SRA_D("SRA D", 0xCB2Au, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraD = register.d.sra_a
+                register.d = sraD.result
+                register.fr.z = sraD.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraD.carry.asBoolean
             }
         },
         SRA_E("SRA E", 0xCB2Bu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraE = register.e.sra_a
+                register.e = sraE.result
+                register.fr.z = sraE.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraE.carry.asBoolean
             }
         },
         SRA_H("SRA H", 0xCB2Cu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraH = register.h.sra_a
+                register.h = sraH.result
+                register.fr.z = sraH.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraH.carry.asBoolean
             }
         },
         SRA_L("SRA L", 0xCB2Du, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraL = register.l.sra_a
+                register.l = sraL.result
+                register.fr.z = sraL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraL.carry.asBoolean
             }
         },
         SRA_HL("SRA HL", 0xCB2Eu, 16) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraHL = mmu.readByte(register.hl).sra_a
+                mmu.writeByte(register.hl, sraHL.result)
+                register.fr.z = sraHL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraHL.carry.asBoolean
             }
         },
         SRA_A("SRA A", 0xCB2Fu, 8) {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                val sraA = register.a.sra_a
+                register.a = sraA.result
+                register.fr.z = sraA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = sraA.carry.asBoolean
             }
         },
 
