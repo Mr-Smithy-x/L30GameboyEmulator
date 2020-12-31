@@ -1625,7 +1625,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = rlcA.carry.asBoolean
             }
         },
-        RLC_HL("RLC HL", 0xCB06u, 16, flagAffected = "z00c") {
+        RLC_HL("RLC (HL)", 0xCB06u, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val rlcA = mmu.readByte(register.hl).rlc
                 mmu.writeByte(register.hl, rlcA.result)
@@ -1706,7 +1706,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = rrcL.carry.asBoolean
             }
         },
-        RRC_HL("RRC HL", 0xCB0Eu, 16, flagAffected = "z00c") {
+        RRC_HL("RRC (HL)", 0xCB0Eu, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val rrcHL = mmu.readByte(register.hl).rrc
                 mmu.writeByte(register.hl, rrcHL.result)
@@ -1787,7 +1787,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = rlL.carry.asBoolean
             }
         },
-        RL_HL("RL HL", 0xCB16u, 16, flagAffected = "z00c") {
+        RL_HL("RL (HL)", 0xCB16u, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val rlHL = mmu.readByte(register.hl).rl(register.fr.c.asUByte)
                 mmu.writeByte(register.hl, rlHL.carry)
@@ -1868,7 +1868,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = rrL.carry.asBoolean
             }
         },
-        RR_HL("RR HL", 0xCB1Eu, 16, flagAffected = "z00c") {
+        RR_HL("RR (HL)", 0xCB1Eu, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val rrHL = mmu.readByte(register.hl).rr(register.fr.c.asUByte)
                 mmu.writeByte(register.hl, rrHL.result)
@@ -1949,7 +1949,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = slaL.carry.asBoolean
             }
         },
-        SLA_HL("SLA HL", 0xCB26u, 16, flagAffected = "z00c") {
+        SLA_HL("SLA (HL)", 0xCB26u, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val slaHL = mmu.readByte(register.hl).sla
                 mmu.writeByte(register.hl, slaHL.result)
@@ -2030,7 +2030,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.c = sraL.carry.asBoolean
             }
         },
-        SRA_HL("SRA HL", 0xCB2Eu, 16, flagAffected = "z00c") {
+        SRA_HL("SRA (HL)", 0xCB2Eu, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 val sraHL = mmu.readByte(register.hl).sra
                 mmu.writeByte(register.hl, sraHL.result)
@@ -2051,42 +2051,42 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        SWAP_B("SWAP B CB 37", 0xCB30u, 8, flagAffected = "z000") {
+        SWAP_B("SWAP B", 0xCB30u, 8, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_C("SWAP C CB 37", 0xCB31u, 8, flagAffected = "z000") {
+        SWAP_C("SWAP C", 0xCB31u, 8, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_D("SWAP D CB 37", 0xCB32u, 8, flagAffected = "z000") {
+        SWAP_D("SWAP D", 0xCB32u, 8, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_E("SWAP E CB 37", 0xCB33u, 8, flagAffected = "z000") {
+        SWAP_E("SWAP E", 0xCB33u, 8, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_H("SWAP H CB 37", 0xCB34u, 8, flagAffected = "z000") {
+        SWAP_H("SWAP H", 0xCB34u, 8, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_L("SWAP L CB 37", 0xCB35u, 8, flagAffected = "z000") {
+        SWAP_L("SWAP L", 0xCB35u, 8, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_HL("SWAP HL CB 37", 0xCB36u, 16, flagAffected = "z000") {
+        SWAP_HL("SWAP (HL)", 0xCB36u, 16, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SWAP_A("SWAP A CB 37", 0xCB37u, 8, flagAffected = "z000") {
+        SWAP_A("SWAP A", 0xCB37u, 8, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -2122,7 +2122,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        SRL_HL("SRL HL", 0xCB3Eu, 16, flagAffected = "z00c") {
+        SRL_HL("SRL (HL)", 0xCB3Eu, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -2215,7 +2215,6 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-
         BIT_2_B("BIT 2, B", 0xCB50u, 8, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
@@ -2297,8 +2296,6 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-
-
 
         BIT_4_B("BIT 4, B", 0xCB60u, 8, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister) {
@@ -2496,7 +2493,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 TODO("Not yet implemented")
             }
         },
-        RES_0_HL("RES 0, HL", 0xCB86u, 16, flagAffected = "----") {
+        RES_0_HL("RES 0, (HL)", 0xCB86u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
@@ -2507,43 +2504,330 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
+        RES_1_B("RES 1, B", 0xCB88u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_1_C("RES 1, C", 0xCB89u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_1_D("RES 1, D", 0xCB8Au, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_1_E("RES 1, E", 0xCB8Bu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_1_H("RES 1, H", 0xCB8Cu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_1_L("RES 1, L", 0xCB8Du, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_1_HL("RES 1, (HL)", 0xCB8Eu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_1_A("RES 1, A", 0xCB8Fu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
 
-        SET_B_B("SET b, B", 0xCBC0u, 8, flagAffected = "----") {
+        RES_2_B("RES 2, B", 0xCB90u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_C("SET b, C", 0xCBC1u, 8, flagAffected = "----") {
+        RES_2_C("RES 2, C", 0xCB91u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_D("SET b, D", 0xCBC2u, 8, flagAffected = "----") {
+        RES_2_D("RES 2, D", 0xCB92u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_E("SET b, E", 0xCBC3u, 8, flagAffected = "----") {
+        RES_2_E("RES 2, E", 0xCB93u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_H("SET b, H", 0xCBC4u, 8, flagAffected = "----") {
+        RES_2_H("RES 2, H", 0xCB94u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_L("SET b, L", 0xCBC5u, 8, flagAffected = "----") {
+        RES_2_L("RES 2, L", 0xCB95u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_HL("SET b, HL", 0xCBC6u, 16, flagAffected = "----") {
+        RES_2_HL("RES 2, (HL)", 0xCB96u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_A("SET b, A", 0xCBC7u, 8, flagAffected = "----") {
+        RES_2_A("RES 2, A", 0xCB97u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        RES_3_B("RES 3, B", 0xCB98u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_3_C("RES 3, C", 0xCB99u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_3_D("RES 3, D", 0xCB9Au, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_3_E("RES 3, E", 0xCB9Bu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_3_H("RES 3, H", 0xCB9Cu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_3_L("RES 3, L", 0xCB9Du, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_3_HL("RES 3, (HL)", 0xCB9Eu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_3_A("RES 3, A", 0xCB9Fu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        RES_4_B("RES 4, B", 0xCBA0u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_4_C("RES 4, C", 0xCBA1u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_4_D("RES 4, D", 0xCBA2u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_4_E("RES 4, E", 0xCBA3u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_4_H("RES 4, H", 0xCBA4u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_4_L("RES 4, L", 0xCBA5u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_4_HL("RES 4, (HL)", 0xCBA6u, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_4_A("RES 4, A", 0xCBA7u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        RES_5_B("RES 5, B", 0xCBA8u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_5_C("RES 5, C", 0xCBA9u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_5_D("RES 5, D", 0xCBAAu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_5_E("RES 5, E", 0xCBABu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_5_H("RES 5, H", 0xCBACu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_5_L("RES 5, L", 0xCBADu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_5_HL("RES 5, (HL)", 0xCBAEu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_5_A("RES 5, A", 0xCBAFu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        RES_6_B("RES 6, B", 0xCBB0u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_6_C("RES 6, C", 0xCBB1u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_6_D("RES 6, D", 0xCBB2u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_6_E("RES 6, E", 0xCBB3u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_6_H("RES 6, H", 0xCBB4u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_6_L("RES 6, L", 0xCBB5u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_6_HL("RES 6, (HL)", 0xCBB6u, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_6_A("RES 6, A", 0xCBB7u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        RES_7_B("RES 7, B", 0xCBB8u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_7_C("RES 7, C", 0xCBB9u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_7_D("RES 7, D", 0xCBBAu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_7_E("RES 7, E", 0xCBBBu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_7_H("RES 7, H", 0xCBBCu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_7_L("RES 7, L", 0xCBBDu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_7_HL("RES 7, (HL)", 0xCBBEu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        RES_7_A("RES 7, A", 0xCBBFu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+
+        SET_B_B("SET 1, B", 0xCBC0u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_C("SET 1, C", 0xCBC1u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_D("SET 1, D", 0xCBC2u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_E("SET 1, E", 0xCBC3u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_H("SET 1, H", 0xCBC4u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_L("SET 1, L", 0xCBC5u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_HL("SET 1, HL", 0xCBC6u, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_B_A("SET 1, A", 0xCBC7u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
