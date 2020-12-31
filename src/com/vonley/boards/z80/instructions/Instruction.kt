@@ -2792,47 +2792,334 @@ class Instruction : HashMap<UShort, Execute>() {
         },
 
 
-        SET_B_B("SET 1, B", 0xCBC0u, 8, flagAffected = "----") {
+        SET_0_B("SET 0, B", 0xCBC0u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_C("SET 1, C", 0xCBC1u, 8, flagAffected = "----") {
+        SET_0_C("SET 0, C", 0xCBC1u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_D("SET 1, D", 0xCBC2u, 8, flagAffected = "----") {
+        SET_0_D("SET 0, D", 0xCBC2u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_E("SET 1, E", 0xCBC3u, 8, flagAffected = "----") {
+        SET_0_E("SET 0, E", 0xCBC3u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_H("SET 1, H", 0xCBC4u, 8, flagAffected = "----") {
+        SET_0_H("SET 0, H", 0xCBC4u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_L("SET 1, L", 0xCBC5u, 8, flagAffected = "----") {
+        SET_0_L("SET 0, L", 0xCBC5u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_HL("SET 1, HL", 0xCBC6u, 16, flagAffected = "----") {
+        SET_0_HL("SET 0, (HL)", 0xCBC6u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
-        SET_B_A("SET 1, A", 0xCBC7u, 8, flagAffected = "----") {
+        SET_0_A("SET 0, A", 0xCBC7u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
             }
         },
 
+        SET_1_B("SET 1, B", 0xCBC8u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_1_C("SET 1, C", 0xCBC9u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_1_D("SET 1, D", 0xCBCAu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_1_E("SET 1, E", 0xCBCBu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_1_H("SET 1, H", 0xCBCCu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_1_L("SET 1, L", 0xCBCDu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_1_HL("SET 1, (HL)", 0xCBCEu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_1_A("SET 1, A", 0xCBCFu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        SET_2_B("SET 2, B", 0xCBD0u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_2_C("SET 2, C", 0xCBD1u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_2_D("SET 2, D", 0xCBD2u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_2_E("SET 2, E", 0xCBD3u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_2_H("SET 2, H", 0xCBD4u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_2_L("SET 2, L", 0xCBD5u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_2_HL("SET 2, (HL)", 0xCBD6u, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_2_A("SET 2, A", 0xCBD7u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        SET_3_B("SET 3, B", 0xCBD8u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_3_C("SET 3, C", 0xCBD9u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_3_D("SET 3, D", 0xCBDAu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_3_E("SET 3, E", 0xCBDBu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_3_H("SET 3, H", 0xCBDCu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_3_L("SET 3, L", 0xCBDDu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_3_HL("SET 3, (HL)", 0xCBDEu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_3_A("SET 3, A", 0xCBDFu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        SET_4_B("SET 4, B", 0xCBE0u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_4_C("SET 4, C", 0xCBE1u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_4_D("SET 4, D", 0xCBE2u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_4_E("SET 4, E", 0xCBE3u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_4_H("SET 4, H", 0xCBE4u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_4_L("SET 4, L", 0xCBE5u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_4_HL("SET 4, (HL)", 0xCBE6u, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_4_A("SET 4, A", 0xCBE7u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        SET_5_B("SET 5, B", 0xCBE8u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_5_C("SET 5, C", 0xCBE9u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_5_D("SET 5, D", 0xCBEAu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_5_E("SET 5, E", 0xCBEBu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_5_H("SET 5, H", 0xCBECu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_5_L("SET 5, L", 0xCBEDu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_5_HL("SET 5, (HL)", 0xCBEEu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_5_A("SET 5, A", 0xCBEFu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        SET_6_B("SET 6, B", 0xCBF0u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_6_C("SET 6, C", 0xCBF1u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_6_D("SET 6, D", 0xCBF2u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_6_E("SET 6, E", 0xCBF3u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_6_H("SET 6, H", 0xCBF4u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_6_L("SET 6, L", 0xCBF5u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_6_HL("SET 6, (HL)", 0xCBF6u, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_6_A("SET 6, A", 0xCBF7u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+
+        SET_7_B("SET 7, B", 0xCBF8u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_7_C("SET 7, C", 0xCBF9u, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_7_D("SET 7, D", 0xCBFAu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_7_E("SET 7, E", 0xCBFBu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_7_H("SET 7, H", 0xCBFCu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_7_L("SET 7, L", 0xCBFDu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_7_HL("SET 7, (HL)", 0xCBFEu, 16, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },
+        SET_7_A("SET 7, A", 0xCBFFu, 8, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister) {
+                TODO("Not yet implemented")
+            }
+        },        
+        
         STOP("STOP -/-", 0x1000u, 4, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 TODO("Not yet implemented")
