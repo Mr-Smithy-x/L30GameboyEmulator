@@ -105,11 +105,16 @@ class InstructionTests : TestCase() {
                 implemented = implemented.inc()
             } catch (e: NotImplementedError) {
                 count = count.inc()
-            } catch (e: IllegalAccessException){
+            } catch (e: IllegalAccessException) {
                 implemented = implemented.inc()
             }
         }
         print("LEFT TO IMPLEMENT: $count, Implemented: $implemented")
+    }
+
+    fun testHalfCarry() {
+        assert((0x07u).toUByte().checkHalfCarry(0x07u) == false) // does not overflow
+        assert((0x07u).toUByte().checkHalfCarry(0x09u) == true) //overflows
     }
 }
 

@@ -66,7 +66,7 @@ class CPURegister {
     }
 
     fun incHL() {
-        hl = hl.plus(1u).and(0xFFFFu).toUShort()
+        hl = hl.plus(0x1u).and(0xFFFFu).toUShort()
     }
 
     fun decHL() {

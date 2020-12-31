@@ -78,3 +78,25 @@ fun UByte.isZero(): Boolean {
     return this == 0x0u.toUByte()
 }
 
+/**
+ * Checks for a carry from bit 3 to bit 4
+ * mask off upper halves of bytes as we're really only interested in 4 bit addition for this
+ * AND the sum above against 0x10 (which in short checks if the 4th bit (0-7) was set,
+ * @param compare - Second byte being tested.
+ */
+fun UByte.halfCarry(compare: UByte, carryFlag: Boolean = false): UByte {
+    val sum = (this and 0xFu) + (compare and 0xFu) + carryFlag.asUByte
+    return (sum and 0x10u).toUByte()
+}
+
+fun UByte.checkHalfCarry(compare: UByte): Boolean {
+    return this.checkHalfCarryAdd(compare, false)
+}
+
+/**
+ * Checks for a carry from bit 3 to bit 4 during addition.
+ * @param compare - Second byte being tested.
+ */
+fun UByte.checkHalfCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean {
+    return halfCarry(compare, carryFlag) == 0x10u.toUByte()
+}
