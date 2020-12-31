@@ -21,13 +21,13 @@ import com.vonley.extensions.*
 
 @ExperimentalUnsignedTypes
 class Instruction : HashMap<UShort, Execute>() {
-    //3.3.1.1
+
     enum class OPS(
         override val mnemonic: String,
         override val opcode: UShort,
         override val cycles: Int,
         override val length: UShort = 1u,
-        val flagAffected: String = "----"
+        override val flagAffected: String = "----"
     ) : Execute {
 
         NOP("NOP -/-", 0x00u, 4, flagAffected = "----") {
@@ -3129,13 +3129,9 @@ class Instruction : HashMap<UShort, Execute>() {
     }
 
     init {
-
-
         OPS.values().forEach {
             if (!containsKey(it.opcode)) {
                 put(it.opcode, it)
-            } else {
-                //println("DUPLICATE WE FUCKED UP mnemonic: ${it.mnemonic} ${it.opcode.toHexString()}")
             }
         }
     }
@@ -3148,4 +3144,5 @@ interface Execute {
     val length: UShort
     val opcode: UShort
     val mnemonic: String
+    val flagAffected: String
 }
