@@ -42,7 +42,6 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LD_BC_A("LD (BC),A", 0x02u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                //TODO Is this valid?
                 mmu.writeByte(register.bc, register.a)
             }
         },
@@ -56,16 +55,15 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.h = register.b.checkHalfCarry(0x1u)
                 register.b = register.b.inc()
                 register.fr.z = register.b.isZero()
-                register.fr.n = true
-                TODO("Something to h flag")
+                register.fr.n = false
             }
         },
         DEC_B("DEC B", 0x05u, 4, flagAffected = "z1h-") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.b.dec()
-                register.fr.z = (register.b == 0x00u.toUByte())
-                register.fr.n = false
-                TODO("Something to h flag")
+                register.fr.h = register.b.checkHalfCarrySub(0x1u)
+                register.b = register.b.dec()
+                register.fr.z = register.b.isZero()
+                register.fr.n = true
             }
         },
         LD_B_d8("LD B,d8", 0x06u, 8, 2u, "----") {
@@ -76,6 +74,7 @@ class Instruction : HashMap<UShort, Execute>() {
         RLCA("RLCA -/-", 0x07u, 4, flagAffected = "000c") {
             override fun execute(mmu: MMU, register: CPURegister) {
                 RLC_A.execute(mmu, register)
+                register.fr.z = false
             }
         },
         LD_a16_SP("LD (a16), SP", 0x08u, 20, 3u, "----") {
@@ -85,7 +84,7 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         ADD_HL_BC("ADD HL, BC", 0x09u, 8, flagAffected = "-0hc") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                register.fr.n = true
+                register.fr.n = false
                 TODO("Do something to h & c flags")
             }
         },
@@ -103,15 +102,16 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.fr.h = register.c.checkHalfCarry(0x1u)
                 register.c = register.c.inc()
-                register.fr.z = (register.c == 0x00u.toUByte())
+                register.fr.z = register.c.isZero()
                 register.fr.n = false
-                TODO("Do something to z & h flags")
             }
         },
         DEC_C("DEC C", 0x0Du, 4, flagAffected = "z1h-") {
             override fun execute(mmu: MMU, register: CPURegister) {
+                register.fr.h = register.c.checkHalfCarrySub(0x1u)
+                register.c = register.c.dec()
+                register.fr.z = register.c.isZero()
                 register.fr.n = true
-                TODO("Do something to z & h flags")
             }
         },
         LD_C_d8("LD C,d8", 0x0Eu, 8, 2u, "----") {
@@ -148,14 +148,16 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.fr.h = register.d.checkHalfCarry(0x1u)
                 register.d = register.d.inc()
-                register.fr.z = (register.d == 0x00u.toUByte())
+                register.fr.z = register.d.isZero()
                 register.fr.n = false
-                TODO("h flag")
             }
         },
         DEC_D("DEC D", 0x15u, 4, flagAffected = "z1h-") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.h = register.d.checkHalfCarrySub(0x1u)
+                register.d = register.d.dec()
+                register.fr.z = register.d.isZero()
+                register.fr.n = true
             }
         },
         LD_D_d8("LD D,d8", 0x16u, 8, 2u, "----") {
@@ -192,14 +194,16 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.fr.h = register.e.checkHalfCarry(0x1u)
                 register.e = register.e.inc()
-                register.fr.z = (register.e == 0x00u.toUByte())
+                register.fr.z = register.e.isZero()
                 register.fr.n = false
-                TODO("h flag")
             }
         },
         DEC_E("DEC E", 0x1Du, 4, flagAffected = "z1h-") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.h = register.e.checkHalfCarrySub(0x1u)
+                register.e = register.e.dec()
+                register.fr.z = register.e.isZero()
+                register.fr.n = true
             }
         },
         LD_E_d8("LD E,d8", 0x1Eu, 8, 2u, "----") {
@@ -248,13 +252,16 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister) {
                 register.fr.h = register.h.checkHalfCarry(0x1u)
                 register.h = register.h.inc()
-                register.fr.z = (register.h == 0x00u.toUByte())
+                register.fr.z = register.h.isZero()
                 register.fr.n = false
             }
         },
         DEC_H("DEC H", 0x25u, 4, flagAffected = "z1h-") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.h = register.h.checkHalfCarrySub(0x1u)
+                register.h = register.h.dec()
+                register.fr.z = register.h.isZero()
+                register.fr.n = true
             }
         },
         LD_H_d8("LD H,d8", 0x26u, 8, 2u, "----") {
@@ -300,15 +307,18 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         INC_L("INC L", 0x2Cu, 4, flagAffected = "z0h-") {
             override fun execute(mmu: MMU, register: CPURegister) {
+                register.fr.h = register.l.checkHalfCarry(0x1u)
                 register.l = register.l.inc()
-                register.fr.z = (register.l == 0x00u.toUByte())
+                register.fr.z = register.l.isZero()
                 register.fr.n = false
-                TODO("h flag")
             }
         },
         DEC_L("DEC L", 0x2Du, 4, flagAffected = "z1h-") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.fr.h = register.l.checkHalfCarrySub(0x1u)
+                register.l = register.l.dec()
+                register.fr.z = register.l.isZero()
+                register.fr.n = true
             }
         },
         LD_L_d8("LD L,d8", 0x2Eu, 8, 2u, "----") {
@@ -321,7 +331,6 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.a = register.a xor 0xFFu
                 register.fr.n = true
                 register.fr.h = true
-
             }
         },
 
@@ -1316,7 +1325,8 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RET("RET -/-", 0xC9u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                register.addSP(0x2u)
+                register.pc = mmu.readShort(register.sp)
             }
         },
         JP_Z_a16("JP Z, a16", 0xCAu, 16/12, flagAffected = "----") {
@@ -1336,7 +1346,9 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         CALL_a16("CALL a16", 0xCDu, 24, 3u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister) {
-                TODO("Not yet implemented")
+                mmu.writeShort(register.sp, opcode.plus(length).toUShort())
+                register.minusSP(0x2u)
+                register.pc = mmu.readShort(register.pc.plus(0x1u).toUShort())
             }
         },
         ADC_A_d8("ADC A, d8", 0xCEu, 8, 2u, flagAffected = "z0hc") {

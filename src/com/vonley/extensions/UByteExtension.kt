@@ -100,3 +100,11 @@ fun UByte.checkHalfCarry(compare: UByte): Boolean {
 fun UByte.checkHalfCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean {
     return halfCarry(compare, carryFlag) == 0x10u.toUByte()
 }
+
+/**
+ * Checks for a carry from bit 3 to bit 4 during subtraction.
+ * @param compare - Second byte being tested.
+ */
+fun UByte.checkHalfCarrySub(compare: UByte): Boolean {
+    return (this and 0xFu) < (compare and 0xFu)
+}

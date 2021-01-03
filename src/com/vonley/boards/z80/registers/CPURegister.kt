@@ -65,6 +65,14 @@ class CPURegister {
         sp = sp.plus(number).and(0xFFFFu).toUShort()
     }
 
+    fun minusPC(number: UShort) {
+        pc = pc.minus(number).and(0xFFFFu).toUShort()
+    }
+
+    fun minusSP(number: UShort) {
+        sp = sp.minus(number).and(0xFFFFu).toUShort()
+    }
+
     fun incHL() {
         hl = hl.plus(0x1u).and(0xFFFFu).toUShort()
     }
