@@ -116,5 +116,24 @@ class InstructionTests : TestCase() {
         assert((0x07u).toUByte().checkHalfCarry(0x07u) == false) // does not overflow
         assert((0x07u).toUByte().checkHalfCarry(0x09u) == true) //overflows
     }
+
+    /**
+     * When reading next word, read the current program counter but increment by 2
+     * This assures that we can ready the curr
+     */
+    fun testReadNextWord(){
+        val hi: UByte = 0x52u
+        val lo: UByte = 0x1Au
+        val address: UShort = 0x8520u
+        cpu.cpuRegister.pc = address
+        cpu.mmu.writeByte(cpu.cpuRegister.pc, hi)
+        cpu.mmu.writeByte(cpu.cpuRegister.pc.inc(), lo)
+        val readShort = cpu.mmu.readShort(cpu.cpuRegister.pc)
+        val readShort2 = cpu.mmu.readShort(cpu.cpuRegister.fetchIncWord)
+        assert(readShort == readShort2)
+        assert(cpu.cpuRegister.pc != address)
+        assert(cpu.cpuRegister.pc == address.plus(0x2u).toUShort())
+
+    }
 }
 

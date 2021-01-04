@@ -93,6 +93,21 @@ fun UByte.checkHalfCarry(compare: UByte): Boolean {
     return this.checkHalfCarryAdd(compare, false)
 }
 
+
+/**
+ * Checks for a carry from bit 7 to bit 8 during addition.
+ * @param compare - Second byte being tested.
+ * @param carryFlag - For ADC: If carry flag is 1, set true, false if 0
+ */
+fun UByte.checkCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean {
+    return (this + compare + if (carryFlag) 1u else 0u) > 0xFFu
+}
+
+fun UByte.checkCarry(compare: UByte): Boolean {
+    return this.checkHalfCarryAdd(compare, false)
+}
+
+
 /**
  * Checks for a carry from bit 3 to bit 4 during addition.
  * @param compare - Second byte being tested.
@@ -107,4 +122,25 @@ fun UByte.checkHalfCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean
  */
 fun UByte.checkHalfCarrySub(compare: UByte): Boolean {
     return (this and 0xFu) < (compare and 0xFu)
+}
+
+val UByte.isSignedNeg: Boolean
+    get() {
+        return this !in 0u..127u
+    }
+
+val UByte.signed: UByte
+    get() {
+        if (this !in 0u..127u) {
+            return (((this xor 0x7Fu) and 0x7Fu).inv() * ((-1).toUByte()) and 0xFFu).toUByte()
+        }
+        return this
+    }
+
+fun UByte.jump(pc: UShort): UShort {
+    return if (this.isSignedNeg) {
+        pc.minus(this.signed)
+    } else {
+        pc.plus(this)
+    }.toUShort()
 }
