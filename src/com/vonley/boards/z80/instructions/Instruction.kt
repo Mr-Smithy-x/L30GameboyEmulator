@@ -1817,12 +1817,18 @@ class Instruction : HashMap<UShort, Execute>() {
 
         RET_NZ("RET NZ", 0xC0u, 20 / 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
+                register.incPC()
+                if(!register.fr.z){
+                    register.pc = (mmu.readByte(register.sp.inc()).toUShort().and(0xFFu) shl 8) or mmu.readByte(register.sp).toUShort().and(0xFFu)
+                    register.addSP(0x2u)
+                    return 20
+                }
+                return 8
             }
         },
         POP_BC("POP BC", 0xC1u, 12, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
+                register.incPC()
                 register.bc = mmu.readShort(register.sp)
                 register.addSP(0x2u)
                 return cycles

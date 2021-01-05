@@ -27,8 +27,10 @@ class ReadWriteTest : TestCase() {
         val valueToWrite: UShort = 0x4FA0u
         mmu.writeShort(address, valueToWrite)
         val readShort = mmu.readShort(address)
-        val readHiByte = mmu.readByte(address)
-        val readLoByte = mmu.readByte(address.inc())
+        val readLoByte = mmu.readByte(address)
+        val readHiByte = mmu.readByte(address.inc())
+        //little endian order
+        //0x4FA0 looks like - 0xA04F when written
         assert(readHiByte == (valueToWrite.toUInt() shr 8 and 0xFFu).toUByte())
         assert(readLoByte == (valueToWrite.toUInt() and 0xFFu).toUByte())
         println((readShort and 0xFFFFu).toHexString())
@@ -36,12 +38,13 @@ class ReadWriteTest : TestCase() {
 
     }
 
+    //read via little endian
     fun testReadShort() {
         val address: UShort = 0x8FDEu
         val hiValueToWrite: UByte = 0x4Fu
         val loValueToWrite: UByte = 0xFFu
-        mmu.writeByte(address, hiValueToWrite)
-        mmu.writeByte(address.inc(), loValueToWrite)
+        mmu.writeByte(address, loValueToWrite)
+        mmu.writeByte(address.inc(), hiValueToWrite)
         val readShort: UShort = mmu.readShort(address)
         assert(readShort == (0x4FFFu).toUShort())
     }

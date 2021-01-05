@@ -189,16 +189,18 @@ class MMU {
         return byte.and(0xFFu)
     }
 
+    //LE
     fun writeShort(address: UShort, value: UShort) {
-        val left = ((value shr 8) and 0xFFu).toUByte()
-        val right = (value and 0xFFu).toUByte()
-        writeByte(address, left)
-        writeByte(address.inc(), right)
+        val hi = ((value shr 8) and 0xFFu).toUByte()
+        val lo = (value and 0xFFu).toUByte()
+        writeByte(address, lo)
+        writeByte(address.inc(), hi)
     }
 
+    //LE
     fun readShort(address: UShort): UShort {
-        val lo = readByte(address)
-        val hi = readByte(address.inc())
+        val hi = readByte(address)
+        val lo = readByte(address.inc())
         return (((lo and 0xFFu).toUShort() shl 8) or (hi and 0xFFu).toUShort()).and(0xFFFFu);
     }
 
