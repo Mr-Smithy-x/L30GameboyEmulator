@@ -5,7 +5,8 @@ import com.vonley.extensions.toHexString
 
 class CPURegister {
 
-    val fetchIncWord: UShort = fetchIncLength(0x2u)
+    val fetchIncWord: UShort
+        get() = fetchIncLength(0x2u)
 
     fun fetchIncLength(length: UShort): UShort {
         val result = pc
@@ -13,7 +14,8 @@ class CPURegister {
         return result
     }
 
-    val fetchIncByte: UShort = fetchIncLength(0x1u)
+    val fetchIncByte: UShort
+        get() = fetchIncLength(0x1u)
 
 
     val fr = FlagRegister()
@@ -84,7 +86,7 @@ class CPURegister {
         sp = sp.minus(number).and(0xFFFFu).toUShort()
     }
 
-    fun incPC(){
+    fun incPC() {
         addPC(0x1u)
     }
 

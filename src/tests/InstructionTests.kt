@@ -126,10 +126,11 @@ class InstructionTests : TestCase() {
         val lo: UByte = 0x1Au
         val address: UShort = 0x8520u
         cpu.cpuRegister.pc = address
-        cpu.mmu.writeByte(cpu.cpuRegister.pc, hi)
-        cpu.mmu.writeByte(cpu.cpuRegister.pc.inc(), lo)
+        cpu.mmu.writeByte(cpu.cpuRegister.pc, lo)
+        cpu.mmu.writeByte(cpu.cpuRegister.pc.inc(), hi)
         val readShort = cpu.mmu.readShort(cpu.cpuRegister.pc)
-        val readShort2 = cpu.mmu.readShort(cpu.cpuRegister.fetchIncWord)
+        val address1 = cpu.cpuRegister.fetchIncWord
+        val readShort2 = cpu.mmu.readShort(address1)
         assert(readShort == readShort2)
         assert(cpu.cpuRegister.pc != address)
         assert(cpu.cpuRegister.pc == address.plus(0x2u).toUShort())
