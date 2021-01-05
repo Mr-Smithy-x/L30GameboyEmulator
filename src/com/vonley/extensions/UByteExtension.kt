@@ -104,7 +104,15 @@ fun UByte.checkCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean {
 }
 
 fun UByte.checkCarry(compare: UByte): Boolean {
-    return this.checkHalfCarryAdd(compare, false)
+    return this.checkCarryAdd(compare, false)
+}
+
+/**
+ * Checks for a carry from bit 7 to bit 8 during subtraction.
+ * @param compare - Second byte being tested.
+ */
+fun UByte.checkCarrySub(compare: UByte): Boolean {
+    return compare > this
 }
 
 
@@ -123,6 +131,17 @@ fun UByte.checkHalfCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean
 fun UByte.checkHalfCarrySub(compare: UByte): Boolean {
     return (this and 0xFu) < (compare and 0xFu)
 }
+
+fun UByte.checkHalfCarrySBC(compare: UByte, carryFlag: Boolean = false): Boolean {
+    val result = this - compare - carryFlag.asUByte
+    val check = (this xor compare xor (result and 0xFFu).toUByte()) and (0x1u shl 4).toUByte()  != 0x0u.toUByte()
+    return check
+}
+
+fun UByte.checkCarrySBC(compare: UByte, carryFlag: Boolean = false): Boolean {
+    return compare + carryFlag.asUByte > this
+}
+
 
 val UByte.isSignedNeg: Boolean
     get() {

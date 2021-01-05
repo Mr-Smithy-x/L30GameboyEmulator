@@ -84,12 +84,16 @@ class CPURegister {
         sp = sp.minus(number).and(0xFFFFu).toUShort()
     }
 
+    fun incPC(){
+        addPC(0x1u)
+    }
+
     fun incHL() {
         hl = hl.plus(0x1u).and(0xFFFFu).toUShort()
     }
 
     fun decHL() {
-        hl = hl.minus(1u).and(0xFFFFu).toUShort()
+        hl = hl.minus(0x1u).and(0xFFFFu).toUShort()
     }
 
 
