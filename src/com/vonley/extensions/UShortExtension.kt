@@ -27,7 +27,7 @@ fun UShort.halfCarry(compare: UShort, carryFlag: Boolean = false): UShort {
 }
 
 fun UShort.checkHalfCarry(compare: UShort): Boolean {
-    return this.checkHalfCarryAdd(compare, false)
+    return this.checkHalfCarryADC(compare, false)
 }
 
 /**
@@ -35,12 +35,12 @@ fun UShort.checkHalfCarry(compare: UShort): Boolean {
  * @param compare - Second byte being tested.
  * @param carryFlag - For ADC: If carry flag is 1, set true, false if 0
  */
-fun UShort.checkCarryAdd(compare: UShort, carryFlag: Boolean = false): Boolean {
+fun UShort.checkCarryADC(compare: UShort, carryFlag: Boolean = false): Boolean {
     return (this + compare + if (carryFlag) 1u else 0u) > 0xFFFFu
 }
 
-fun UShort.checkCarry(compare: UShort): Boolean {
-    return this.checkCarryAdd(compare, false)
+fun UShort.checkCarryAdd(compare: UShort): Boolean {
+    return this.checkCarryADC(compare, false)
 }
 
 
@@ -48,7 +48,7 @@ fun UShort.checkCarry(compare: UShort): Boolean {
  * Checks for a carry from bit 3 to bit 4 during addition.
  * @param compare - Second byte being tested.
  */
-fun UShort.checkHalfCarryAdd(compare: UShort, carryFlag: Boolean = false): Boolean {
+fun UShort.checkHalfCarryADC(compare: UShort, carryFlag: Boolean = false): Boolean {
     return halfCarry(compare, carryFlag) > 0x0FFFu
 }
 

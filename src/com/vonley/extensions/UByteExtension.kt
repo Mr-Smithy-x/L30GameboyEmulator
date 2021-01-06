@@ -78,6 +78,30 @@ fun UByte.isZero(): Boolean {
     return this == 0x0u.toUByte()
 }
 
+
+/**
+ * Checks for a carry from bit 7 to bit 8 during addition.
+ * @param compare - Second byte being tested.
+ * @param carryFlag - For ADC: If carry flag is 1, set true, false if 0
+ */
+fun UByte.checkCarryADC(compare: UByte, carryFlag: Boolean = false): Boolean {
+    return (this + compare + if (carryFlag) 1u else 0u) > 0xFFu
+}
+
+fun UByte.checkCarryAdd(compare: UByte): Boolean {
+    return this.checkCarryADC(compare, false)
+}
+
+/**
+ * Checks for a carry from bit 7 to bit 8 during subtraction.
+ * @param compare - Second byte being tested.
+ */
+fun UByte.checkCarrySub(compare: UByte): Boolean {
+    return compare > this
+}
+
+
+
 /**
  * Checks for a carry from bit 3 to bit 4
  * mask off upper halves of bytes as we're really only interested in 4 bit addition for this
@@ -90,37 +114,14 @@ fun UByte.halfCarry(compare: UByte, carryFlag: Boolean = false): UByte {
 }
 
 fun UByte.checkHalfCarry(compare: UByte): Boolean {
-    return this.checkHalfCarryAdd(compare, false)
+    return this.checkHalfCarryADC(compare, false)
 }
-
-
-/**
- * Checks for a carry from bit 7 to bit 8 during addition.
- * @param compare - Second byte being tested.
- * @param carryFlag - For ADC: If carry flag is 1, set true, false if 0
- */
-fun UByte.checkCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean {
-    return (this + compare + if (carryFlag) 1u else 0u) > 0xFFu
-}
-
-fun UByte.checkCarry(compare: UByte): Boolean {
-    return this.checkCarryAdd(compare, false)
-}
-
-/**
- * Checks for a carry from bit 7 to bit 8 during subtraction.
- * @param compare - Second byte being tested.
- */
-fun UByte.checkCarrySub(compare: UByte): Boolean {
-    return compare > this
-}
-
 
 /**
  * Checks for a carry from bit 3 to bit 4 during addition.
  * @param compare - Second byte being tested.
  */
-fun UByte.checkHalfCarryAdd(compare: UByte, carryFlag: Boolean = false): Boolean {
+fun UByte.checkHalfCarryADC(compare: UByte, carryFlag: Boolean = false): Boolean {
     return halfCarry(compare, carryFlag) == 0x10u.toUByte()
 }
 
@@ -141,7 +142,6 @@ fun UByte.checkHalfCarrySBC(compare: UByte, carryFlag: Boolean = false): Boolean
 fun UByte.checkCarrySBC(compare: UByte, carryFlag: Boolean = false): Boolean {
     return compare + carryFlag.asUByte > this
 }
-
 
 val UByte.isSignedNeg: Boolean
     get() {

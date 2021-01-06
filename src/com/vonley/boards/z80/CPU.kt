@@ -19,7 +19,6 @@ class CPU {
         val pc = cpuRegister.pc
         val op = instruction[pc]
         op!!.execute(mmu, cpuRegister)
-        cpuRegister.addPC(op.length)
     }
 
     fun power(on: Boolean) {

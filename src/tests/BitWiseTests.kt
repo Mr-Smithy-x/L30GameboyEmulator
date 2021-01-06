@@ -1,5 +1,6 @@
 package tests
 
+import com.vonley.extensions.toHexString
 import org.junit.Test
 /**
  * To understand calculations you need to understand Signed Magnitude
@@ -134,5 +135,11 @@ class BitWiseTests {
         assert(b shr 2 == 22)
     }
 
+
+    @Test
+    fun testCombine(){
+        val instruction = (0xCB00u.toUShort() or (0x2F).toUShort().and(0x00FFu))
+        assert(instruction == 0xCB2Fu.toUShort())
+    }
 
 }
