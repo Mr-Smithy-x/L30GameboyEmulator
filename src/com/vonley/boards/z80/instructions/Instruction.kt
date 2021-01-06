@@ -2911,49 +2911,89 @@ class Instruction : HashMap<UShort, Execute>() {
 
         SRL_B("SRL B", 0xCB38u, 8, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlB = register.b.srl
+                register.b = srlB.result
+                register.fr.z = srlB.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlB.carry.asBoolean
                 return cycles
             }
         },
         SRL_C("SRL C", 0xCB39u, 8, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlC = register.c.srl
+                register.c = srlC.result
+                register.fr.z = srlC.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlC.carry.asBoolean
                 return cycles
             }
         },
         SRL_D("SRL D", 0xCB3Au, 8, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlD = register.d.srl
+                register.d = srlD.result
+                register.fr.z = srlD.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlD.carry.asBoolean
                 return cycles
             }
         },
         SRL_E("SRL E", 0xCB3Bu, 8, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlE = register.e.srl
+                register.e = srlE.result
+                register.fr.z = srlE.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlE.carry.asBoolean
                 return cycles
             }
         },
         SRL_H("SRL H", 0xCB3Cu, 8, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlH = register.h.srl
+                register.h = srlH.result
+                register.fr.z = srlH.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlH.carry.asBoolean
                 return cycles
             }
         },
         SRL_L("SRL L", 0xCB3Du, 8, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlL = register.l.srl
+                register.l = srlL.result
+                register.fr.z = srlL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlL.carry.asBoolean
                 return cycles
             }
         },
         SRL_HL("SRL (HL)", 0xCB3Eu, 16, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlHL = mmu.readByte(register.hl).srl
+                register.fr.z = srlHL.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlHL.carry.asBoolean
+                mmu.writeByte(register.hl, srlHL.result)
                 return cycles
             }
         },
         SRL_A("SRL A", 0xCB3Fu, 8, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val srlA = register.a.srl
+                register.a = srlA.result
+                register.fr.z = srlA.result.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = srlA.carry.asBoolean
                 return cycles
             }
         },
