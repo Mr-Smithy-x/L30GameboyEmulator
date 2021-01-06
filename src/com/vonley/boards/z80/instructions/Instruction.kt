@@ -2322,7 +2322,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        RLC_B("RLC B", 0xCB00u, 8, flagAffected = "z00c") {
+        RLC_B("RLC B", 0xCB00u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlcA = register.b.rlc
                 register.b = rlcA.result
@@ -2333,7 +2333,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RLC_C("RLC C", 0xCB01u, 8, flagAffected = "z00c") {
+        RLC_C("RLC C", 0xCB01u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlcA = register.c.rlc
                 register.c = rlcA.result
@@ -2344,7 +2344,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RLC_D("RLC D", 0xCB02u, 8, flagAffected = "z00c") {
+        RLC_D("RLC D", 0xCB02u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlcA = register.d.rlc
                 register.d = rlcA.result
@@ -2355,7 +2355,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RLC_E("RLC E", 0xCB03u, 8, flagAffected = "z00c") {
+        RLC_E("RLC E", 0xCB03u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlcA = register.e.rlc
                 register.e = rlcA.result
@@ -2366,7 +2366,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RLC_H("RLC H", 0xCB04u, 8, flagAffected = "z00c") {
+        RLC_H("RLC H", 0xCB04u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlcA = register.h.rlc
                 register.h = rlcA.result
@@ -2377,7 +2377,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RLC_L("RLC L", 0xCB05u, 8, flagAffected = "z00c") {
+        RLC_L("RLC L", 0xCB05u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlcA = register.l.rlc
                 register.l = rlcA.result
@@ -2388,7 +2388,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RLC_HL("RLC (HL)", 0xCB06u, 16, flagAffected = "z00c") {
+        RLC_HL("RLC (HL)", 0xCB06u, 16, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlcA = mmu.readByte(register.hl).rlc
                 mmu.writeByte(register.hl, rlcA.result)
@@ -2399,7 +2399,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RLC_A("RLC A", 0xCB07u, 8, flagAffected = "z00c") {
+        RLC_A("RLC A", 0xCB07u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
                 val rlcA = register.a.rlc
@@ -2412,7 +2412,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        RRC_B("RRC B", 0xCB08u, 8, flagAffected = "z00c") {
+        RRC_B("RRC B", 0xCB08u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrcB = register.b.rrc
                 register.b = rrcB.result
@@ -2423,7 +2423,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RRC_C("RRC C", 0xCB09u, 8, flagAffected = "z00c") {
+        RRC_C("RRC C", 0xCB09u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrcC = register.c.rrc
                 register.c = rrcC.result
@@ -2434,7 +2434,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RRC_D("RRC D", 0xCB0Au, 8, flagAffected = "z00c") {
+        RRC_D("RRC D", 0xCB0Au, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrcD = register.d.rrc
                 register.d = rrcD.result
@@ -2445,7 +2445,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RRC_E("RRC E", 0xCB0Bu, 8, flagAffected = "z00c") {
+        RRC_E("RRC E", 0xCB0Bu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrcE = register.e.rrc
                 register.e = rrcE.result
@@ -2456,7 +2456,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RRC_H("RRC H", 0xCB0Cu, 8, flagAffected = "z00c") {
+        RRC_H("RRC H", 0xCB0Cu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrcH = register.h.rrc
                 register.h = rrcH.result
@@ -2467,7 +2467,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RRC_L("RRC L", 0xCB0Du, 8, flagAffected = "z00c") {
+        RRC_L("RRC L", 0xCB0Du, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrcL = register.l.rrc
                 register.l = rrcL.result
@@ -2478,7 +2478,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RRC_HL("RRC (HL)", 0xCB0Eu, 16, flagAffected = "z00c") {
+        RRC_HL("RRC (HL)", 0xCB0Eu, 16, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrcHL = mmu.readByte(register.hl).rrc
                 mmu.writeByte(register.hl, rrcHL.result)
@@ -2489,7 +2489,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RRC_A("RRC A", 0xCB0Fu, 8, flagAffected = "z00c") {
+        RRC_A("RRC A", 0xCB0Fu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
                 val rrcA = register.a.rrc
@@ -2502,7 +2502,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        RL_B("RL B", 0xCB10u, 8, flagAffected = "z00c") {
+        RL_B("RL B", 0xCB10u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlB = register.b.rl(register.fr.c.asUByte)
                 register.b = rlB.result
@@ -2513,7 +2513,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RL_C("RL C", 0xCB11u, 8, flagAffected = "z00c") {
+        RL_C("RL C", 0xCB11u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlC = register.c.rl(register.fr.c.asUByte)
                 register.c = rlC.result
@@ -2524,7 +2524,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RL_D("RL D", 0xCB12u, 8, flagAffected = "z00c") {
+        RL_D("RL D", 0xCB12u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlD = register.d.rl(register.fr.c.asUByte)
                 register.d = rlD.result
@@ -2535,7 +2535,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RL_E("RL E", 0xCB13u, 8, flagAffected = "z00c") {
+        RL_E("RL E", 0xCB13u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlE = register.e.rl(register.fr.c.asUByte)
                 register.e = rlE.result
@@ -2546,7 +2546,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RL_H("RL H", 0xCB14u, 8, flagAffected = "z00c") {
+        RL_H("RL H", 0xCB14u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlH = register.h.rl(register.fr.c.asUByte)
                 register.h = rlH.result
@@ -2557,7 +2557,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RL_L("RL L", 0xCB15u, 8, flagAffected = "z00c") {
+        RL_L("RL L", 0xCB15u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlL = register.l.rl(register.fr.c.asUByte)
                 register.l = rlL.result
@@ -2568,7 +2568,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RL_HL("RL (HL)", 0xCB16u, 16, flagAffected = "z00c") {
+        RL_HL("RL (HL)", 0xCB16u, 16, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rlHL = mmu.readByte(register.hl).rl(register.fr.c.asUByte)
                 mmu.writeByte(register.hl, rlHL.carry)
@@ -2579,7 +2579,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RL_A("RL A", 0xCB17u, 8, flagAffected = "z00c") {
+        RL_A("RL A", 0xCB17u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
                 val rlA = register.a.rl(register.fr.c.asUByte)
@@ -2592,7 +2592,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        RR_B("RR B", 0xCB18u, 8, flagAffected = "z00c") {
+        RR_B("RR B", 0xCB18u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrB = register.b.rr(register.fr.c.asUByte)
                 register.b = rrB.result
@@ -2603,7 +2603,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RR_C("RR C", 0xCB19u, 8, flagAffected = "z00c") {
+        RR_C("RR C", 0xCB19u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrC = register.c.rr(register.fr.c.asUByte)
                 register.c = rrC.result
@@ -2614,7 +2614,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RR_D("RR D", 0xCB1Au, 8, flagAffected = "z00c") {
+        RR_D("RR D", 0xCB1Au, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrD = register.d.rr(register.fr.c.asUByte)
                 register.d = rrD.result
@@ -2625,7 +2625,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RR_E("RR E", 0xCB1Bu, 8, flagAffected = "z00c") {
+        RR_E("RR E", 0xCB1Bu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrE = register.e.rr(register.fr.c.asUByte)
                 register.e = rrE.result
@@ -2636,7 +2636,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RR_H("RR H", 0xCB1Cu, 8, flagAffected = "z00c") {
+        RR_H("RR H", 0xCB1Cu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrH = register.h.rr(register.fr.c.asUByte)
                 register.h = rrH.result
@@ -2647,7 +2647,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RR_L("RR L", 0xCB1Du, 8, flagAffected = "z00c") {
+        RR_L("RR L", 0xCB1Du, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrL = register.l.rr(register.fr.c.asUByte)
                 register.l = rrL.result
@@ -2658,7 +2658,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RR_HL("RR (HL)", 0xCB1Eu, 16, flagAffected = "z00c") {
+        RR_HL("RR (HL)", 0xCB1Eu, 16, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val rrHL = mmu.readByte(register.hl).rr(register.fr.c.asUByte)
                 mmu.writeByte(register.hl, rrHL.result)
@@ -2669,7 +2669,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        RR_A("RR A", 0xCB1Fu, 8, flagAffected = "z00c") {
+        RR_A("RR A", 0xCB1Fu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
                 val rrA = register.a.rr(register.fr.c.asUByte)
@@ -2682,7 +2682,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        SLA_B("SLA B", 0xCB20u, 8, flagAffected = "z00c") {
+        SLA_B("SLA B", 0xCB20u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaB = register.b.sla
                 register.b = slaB.result
@@ -2693,7 +2693,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SLA_C("SLA C", 0xCB21u, 8, flagAffected = "z00c") {
+        SLA_C("SLA C", 0xCB21u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaC = register.c.sla
                 register.c = slaC.result
@@ -2704,7 +2704,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SLA_D("SLA D", 0xCB22u, 8, flagAffected = "z00c") {
+        SLA_D("SLA D", 0xCB22u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaD = register.d.sla
                 register.d = slaD.result
@@ -2715,7 +2715,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SLA_E("SLA E", 0xCB23u, 8, flagAffected = "z00c") {
+        SLA_E("SLA E", 0xCB23u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaE = register.e.sla
                 register.e = slaE.result
@@ -2726,7 +2726,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SLA_H("SLA H", 0xCB24u, 8, flagAffected = "z00c") {
+        SLA_H("SLA H", 0xCB24u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaH = register.h.sla
                 register.h = slaH.result
@@ -2737,7 +2737,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SLA_L("SLA L", 0xCB25u, 8, flagAffected = "z00c") {
+        SLA_L("SLA L", 0xCB25u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaL = register.l.sla
                 register.l = slaL.result
@@ -2748,7 +2748,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SLA_HL("SLA (HL)", 0xCB26u, 16, flagAffected = "z00c") {
+        SLA_HL("SLA (HL)", 0xCB26u, 16, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaHL = mmu.readByte(register.hl).sla
                 mmu.writeByte(register.hl, slaHL.result)
@@ -2759,7 +2759,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SLA_A("SLA A", 0xCB27u, 8, flagAffected = "z00c") {
+        SLA_A("SLA A", 0xCB27u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val slaA = register.a.sla
                 register.a = slaA.result
@@ -2771,7 +2771,7 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        SRA_B("SRA B", 0xCB28u, 8, flagAffected = "z00c") {
+        SRA_B("SRA B", 0xCB28u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraB = register.b.sra
                 register.b = sraB.result
@@ -2782,7 +2782,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRA_C("SRA C", 0xCB29u, 8, flagAffected = "z00c") {
+        SRA_C("SRA C", 0xCB29u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraC = register.c.sra
                 register.c = sraC.result
@@ -2793,7 +2793,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRA_D("SRA D", 0xCB2Au, 8, flagAffected = "z00c") {
+        SRA_D("SRA D", 0xCB2Au, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraD = register.d.sra
                 register.d = sraD.result
@@ -2804,7 +2804,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRA_E("SRA E", 0xCB2Bu, 8, flagAffected = "z00c") {
+        SRA_E("SRA E", 0xCB2Bu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraE = register.e.sra
                 register.e = sraE.result
@@ -2815,7 +2815,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRA_H("SRA H", 0xCB2Cu, 8, flagAffected = "z00c") {
+        SRA_H("SRA H", 0xCB2Cu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraH = register.h.sra
                 register.h = sraH.result
@@ -2826,7 +2826,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRA_L("SRA L", 0xCB2Du, 8, flagAffected = "z00c") {
+        SRA_L("SRA L", 0xCB2Du, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraL = register.l.sra
                 register.l = sraL.result
@@ -2837,7 +2837,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRA_HL("SRA (HL)", 0xCB2Eu, 16, flagAffected = "z00c") {
+        SRA_HL("SRA (HL)", 0xCB2Eu, 16, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraHL = mmu.readByte(register.hl).sra
                 mmu.writeByte(register.hl, sraHL.result)
@@ -2848,7 +2848,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRA_A("SRA A", 0xCB2Fu, 8, flagAffected = "z00c") {
+        SRA_A("SRA A", 0xCB2Fu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val sraA = register.a.sra
                 register.a = sraA.result
@@ -2860,56 +2860,97 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        SWAP_B("SWAP B", 0xCB30u, 8, flagAffected = "z000") {
+        SWAP_B("SWAP B", 0xCB30u, 8, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                register.b = register.b.swap
+                register.fr.z = register.b.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
-        SWAP_C("SWAP C", 0xCB31u, 8, flagAffected = "z000") {
+        SWAP_C("SWAP C", 0xCB31u, 8, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                register.c = register.c.swap
+                register.fr.z = register.c.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
-        SWAP_D("SWAP D", 0xCB32u, 8, flagAffected = "z000") {
+        SWAP_D("SWAP D", 0xCB32u, 8, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                register.d = register.d.swap
+                register.fr.z = register.d.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
-        SWAP_E("SWAP E", 0xCB33u, 8, flagAffected = "z000") {
+        SWAP_E("SWAP E", 0xCB33u, 8, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                register.e = register.e.swap
+                register.fr.z = register.e.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
-        SWAP_H("SWAP H", 0xCB34u, 8, flagAffected = "z000") {
+        SWAP_H("SWAP H", 0xCB34u, 8, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                register.h = register.h.swap
+                register.fr.z = register.h.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
-        SWAP_L("SWAP L", 0xCB35u, 8, flagAffected = "z000") {
+        SWAP_L("SWAP L", 0xCB35u, 8, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                register.l = register.l.swap
+                register.fr.z = register.l.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
-        SWAP_HL("SWAP (HL)", 0xCB36u, 16, flagAffected = "z000") {
+        SWAP_HL("SWAP (HL)", 0xCB36u, 16, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                var swap = mmu.readByte(register.hl).swap
+                mmu.writeByte(register.hl, swap)
+                register.fr.z = swap.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
-        SWAP_A("SWAP A", 0xCB37u, 8, flagAffected = "z000") {
+        SWAP_A("SWAP A", 0xCB37u, 8, 0x2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                register.a = register.a.swap
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = false
+                register.fr.c = false
                 return cycles
             }
         },
 
-        SRL_B("SRL B", 0xCB38u, 8, flagAffected = "z00c") {
+        SRL_B("SRL B", 0xCB38u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlB = register.b.srl
                 register.b = srlB.result
@@ -2920,7 +2961,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRL_C("SRL C", 0xCB39u, 8, flagAffected = "z00c") {
+        SRL_C("SRL C", 0xCB39u, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlC = register.c.srl
                 register.c = srlC.result
@@ -2931,7 +2972,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRL_D("SRL D", 0xCB3Au, 8, flagAffected = "z00c") {
+        SRL_D("SRL D", 0xCB3Au, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlD = register.d.srl
                 register.d = srlD.result
@@ -2942,7 +2983,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRL_E("SRL E", 0xCB3Bu, 8, flagAffected = "z00c") {
+        SRL_E("SRL E", 0xCB3Bu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlE = register.e.srl
                 register.e = srlE.result
@@ -2953,7 +2994,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRL_H("SRL H", 0xCB3Cu, 8, flagAffected = "z00c") {
+        SRL_H("SRL H", 0xCB3Cu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlH = register.h.srl
                 register.h = srlH.result
@@ -2964,7 +3005,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRL_L("SRL L", 0xCB3Du, 8, flagAffected = "z00c") {
+        SRL_L("SRL L", 0xCB3Du, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlL = register.l.srl
                 register.l = srlL.result
@@ -2975,7 +3016,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRL_HL("SRL (HL)", 0xCB3Eu, 16, flagAffected = "z00c") {
+        SRL_HL("SRL (HL)", 0xCB3Eu, 16, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlHL = mmu.readByte(register.hl).srl
                 register.fr.z = srlHL.result.isZero()
@@ -2986,7 +3027,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 return cycles
             }
         },
-        SRL_A("SRL A", 0xCB3Fu, 8, flagAffected = "z00c") {
+        SRL_A("SRL A", 0xCB3Fu, 8, 0x2u, flagAffected = "z00c") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 val srlA = register.a.srl
                 register.a = srlA.result
@@ -2998,393 +3039,294 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        BIT_0_B("BIT 0, B", 0xCB40u, 8, flagAffected = "z01-") {
+        BIT_0_B("BIT 0, B", 0xCB40u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_0_C("BIT 0, C", 0xCB41u, 8, flagAffected = "z01-") {
+        BIT_0_C("BIT 0, C", 0xCB41u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_0_D("BIT 0, D", 0xCB42u, 8, flagAffected = "z01-") {
+        BIT_0_D("BIT 0, D", 0xCB42u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_0_E("BIT 0, E", 0xCB43u, 8, flagAffected = "z01-") {
+        BIT_0_E("BIT 0, E", 0xCB43u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_0_H("BIT 0, H", 0xCB44u, 8, flagAffected = "z01-") {
+        BIT_0_H("BIT 0, H", 0xCB44u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_0_L("BIT 0, L", 0xCB45u, 8, flagAffected = "z01-") {
+        BIT_0_L("BIT 0, L", 0xCB45u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_0_HL("BIT 0, (HL)", 0xCB46u, 16, flagAffected = "z01-") {
+        BIT_0_HL("BIT 0, (HL)", 0xCB46u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_0_A("BIT 0, A", 0xCB47u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        BIT_1_B("BIT 1, B", 0xCB48u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_1_C("BIT 1, C", 0xCB49u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_1_D("BIT 1, D", 0xCB4Au, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_1_E("BIT 1, E", 0xCB4Bu, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_1_H("BIT 1, H", 0xCB4Cu, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_1_L("BIT 1, L", 0xCB4Du, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_1_HL("BIT 1, (HL)", 0xCB4Eu, 16, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_1_A("BIT 1, A", 0xCB4Fu, 8, flagAffected = "z01-") {
+        BIT_0_A("BIT 0, A", 0xCB47u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        BIT_2_B("BIT 2, B", 0xCB50u, 8, flagAffected = "z01-") {
+        BIT_1_B("BIT 1, B", 0xCB48u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_2_C("BIT 2, C", 0xCB51u, 8, flagAffected = "z01-") {
+        BIT_1_C("BIT 1, C", 0xCB49u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_2_D("BIT 2, D", 0xCB52u, 8, flagAffected = "z01-") {
+        BIT_1_D("BIT 1, D", 0xCB4Au, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_2_E("BIT 2, E", 0xCB53u, 8, flagAffected = "z01-") {
+        BIT_1_E("BIT 1, E", 0xCB4Bu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_2_H("BIT 2, H", 0xCB54u, 8, flagAffected = "z01-") {
+        BIT_1_H("BIT 1, H", 0xCB4Cu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_2_L("BIT 2, L", 0xCB55u, 8, flagAffected = "z01-") {
+        BIT_1_L("BIT 1, L", 0xCB4Du, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_2_HL("BIT 2, (HL)", 0xCB56u, 16, flagAffected = "z01-") {
+        BIT_1_HL("BIT 1, (HL)", 0xCB4Eu, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_2_A("BIT 2, A", 0xCB57u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        BIT_3_B("BIT 3, B", 0xCB58u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_3_C("BIT 3, C", 0xCB59u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_3_D("BIT 3, D", 0xCB5Au, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_3_E("BIT 3, E", 0xCB5Bu, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_3_H("BIT 3, H", 0xCB5Cu, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_3_L("BIT 3, L", 0xCB5Du, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_3_HL("BIT 3, (HL)", 0xCB5Eu, 16, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_3_A("BIT 3, A", 0xCB5Fu, 8, flagAffected = "z01-") {
+        BIT_1_A("BIT 1, A", 0xCB4Fu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        BIT_4_B("BIT 4, B", 0xCB60u, 8, flagAffected = "z01-") {
+        BIT_2_B("BIT 2, B", 0xCB50u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_4_C("BIT 4, C", 0xCB61u, 8, flagAffected = "z01-") {
+        BIT_2_C("BIT 2, C", 0xCB51u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_4_D("BIT 4, D", 0xCB62u, 8, flagAffected = "z01-") {
+        BIT_2_D("BIT 2, D", 0xCB52u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_4_E("BIT 4, E", 0xCB63u, 8, flagAffected = "z01-") {
+        BIT_2_E("BIT 2, E", 0xCB53u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_4_H("BIT 4, H", 0xCB64u, 8, flagAffected = "z01-") {
+        BIT_2_H("BIT 2, H", 0xCB54u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_4_L("BIT 4, L", 0xCB65u, 8, flagAffected = "z01-") {
+        BIT_2_L("BIT 2, L", 0xCB55u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_4_HL("BIT 4, (HL)", 0xCB66u, 16, flagAffected = "z01-") {
+        BIT_2_HL("BIT 2, (HL)", 0xCB56u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_4_A("BIT 4, A", 0xCB67u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        BIT_5_B("BIT 5, B", 0xCB68u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_5_C("BIT 5, C", 0xCB69u, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_5_D("BIT 5, D", 0xCB6Au, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_5_E("BIT 5, E", 0xCB6Bu, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_5_H("BIT 5, H", 0xCB6Cu, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_5_L("BIT 5, L", 0xCB6Du, 8, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_5_HL("BIT 5, (HL)", 0xCB6Eu, 16, flagAffected = "z01-") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        BIT_5_A("BIT 5, A", 0xCB6Fu, 8, flagAffected = "z01-") {
+        BIT_2_A("BIT 2, A", 0xCB57u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
+        BIT_3_B("BIT 3, B", 0xCB58u, 8, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        BIT_3_C("BIT 3, C", 0xCB59u, 8, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        BIT_3_D("BIT 3, D", 0xCB5Au, 8, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        BIT_3_E("BIT 3, E", 0xCB5Bu, 8, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        BIT_3_H("BIT 3, H", 0xCB5Cu, 8, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        BIT_3_L("BIT 3, L", 0xCB5Du, 8, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        BIT_3_HL("BIT 3, (HL)", 0xCB5Eu, 16, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        BIT_3_A("BIT 3, A", 0xCB5Fu, 8, 0x2u, flagAffected = "z01-") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
 
-        BIT_6_B("BIT 6, B", 0xCB70u, 8, flagAffected = "z01-") {
+        BIT_4_B("BIT 4, B", 0xCB60u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_6_C("BIT 6, C", 0xCB71u, 8, flagAffected = "z01-") {
+        BIT_4_C("BIT 4, C", 0xCB61u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_6_D("BIT 6, D", 0xCB72u, 8, flagAffected = "z01-") {
+        BIT_4_D("BIT 4, D", 0xCB62u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_6_E("BIT 6, E", 0xCB73u, 8, flagAffected = "z01-") {
+        BIT_4_E("BIT 4, E", 0xCB63u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_6_H("BIT 6, H", 0xCB74u, 8, flagAffected = "z01-") {
+        BIT_4_H("BIT 4, H", 0xCB64u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_6_L("BIT 6, L", 0xCB75u, 8, flagAffected = "z01-") {
+        BIT_4_L("BIT 4, L", 0xCB65u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_6_HL("BIT 6, (HL)", 0xCB76u, 16, flagAffected = "z01-") {
+        BIT_4_HL("BIT 4, (HL)", 0xCB66u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_6_A("BIT 6, A", 0xCB77u, 8, flagAffected = "z01-") {
+        BIT_4_A("BIT 4, A", 0xCB67u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        BIT_7_B("BIT 7, B", 0xCB78u, 8, flagAffected = "z01-") {
+        BIT_5_B("BIT 5, B", 0xCB68u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_7_C("BIT 7, C", 0xCB79u, 8, flagAffected = "z01-") {
+        BIT_5_C("BIT 5, C", 0xCB69u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_7_D("BIT 7, D", 0xCB7Au, 8, flagAffected = "z01-") {
+        BIT_5_D("BIT 5, D", 0xCB6Au, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_7_E("BIT 7, E", 0xCB7Bu, 8, flagAffected = "z01-") {
+        BIT_5_E("BIT 5, E", 0xCB6Bu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_7_H("BIT 7, H", 0xCB7Cu, 8, flagAffected = "z01-") {
+        BIT_5_H("BIT 5, H", 0xCB6Cu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_7_L("BIT 7, L", 0xCB7Du, 8, flagAffected = "z01-") {
+        BIT_5_L("BIT 5, L", 0xCB6Du, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_7_HL("BIT 7, (HL)", 0xCB7Eu, 16, flagAffected = "z01-") {
+        BIT_5_HL("BIT 5, (HL)", 0xCB6Eu, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        BIT_7_A("BIT 7, A", 0xCB7Fu, 8, flagAffected = "z01-") {
+        BIT_5_A("BIT 5, A", 0xCB6Fu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
@@ -3392,392 +3334,98 @@ class Instruction : HashMap<UShort, Execute>() {
         },
 
 
-        RES_0_B("RES 0, B", 0xCB80u, 8, flagAffected = "----") {
+        BIT_6_B("BIT 6, B", 0xCB70u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_0_C("RES 0, C", 0xCB81u, 8, flagAffected = "----") {
+        BIT_6_C("BIT 6, C", 0xCB71u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_0_D("RES 0, D", 0xCB82u, 8, flagAffected = "----") {
+        BIT_6_D("BIT 6, D", 0xCB72u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_0_E("RES 0, E", 0xCB83u, 8, flagAffected = "----") {
+        BIT_6_E("BIT 6, E", 0xCB73u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_0_H("RES 0, H", 0xCB84u, 8, flagAffected = "----") {
+        BIT_6_H("BIT 6, H", 0xCB74u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_0_L("RES 0, L", 0xCB85u, 8, flagAffected = "----") {
+        BIT_6_L("BIT 6, L", 0xCB75u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_0_HL("RES 0, (HL)", 0xCB86u, 16, flagAffected = "----") {
+        BIT_6_HL("BIT 6, (HL)", 0xCB76u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_0_A("RES 0, A", 0xCB87u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        RES_1_B("RES 1, B", 0xCB88u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_1_C("RES 1, C", 0xCB89u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_1_D("RES 1, D", 0xCB8Au, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_1_E("RES 1, E", 0xCB8Bu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_1_H("RES 1, H", 0xCB8Cu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_1_L("RES 1, L", 0xCB8Du, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_1_HL("RES 1, (HL)", 0xCB8Eu, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_1_A("RES 1, A", 0xCB8Fu, 8, flagAffected = "----") {
+        BIT_6_A("BIT 6, A", 0xCB77u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        RES_2_B("RES 2, B", 0xCB90u, 8, flagAffected = "----") {
+        BIT_7_B("BIT 7, B", 0xCB78u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_2_C("RES 2, C", 0xCB91u, 8, flagAffected = "----") {
+        BIT_7_C("BIT 7, C", 0xCB79u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_2_D("RES 2, D", 0xCB92u, 8, flagAffected = "----") {
+        BIT_7_D("BIT 7, D", 0xCB7Au, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_2_E("RES 2, E", 0xCB93u, 8, flagAffected = "----") {
+        BIT_7_E("BIT 7, E", 0xCB7Bu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_2_H("RES 2, H", 0xCB94u, 8, flagAffected = "----") {
+        BIT_7_H("BIT 7, H", 0xCB7Cu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_2_L("RES 2, L", 0xCB95u, 8, flagAffected = "----") {
+        BIT_7_L("BIT 7, L", 0xCB7Du, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_2_HL("RES 2, (HL)", 0xCB96u, 16, flagAffected = "----") {
+        BIT_7_HL("BIT 7, (HL)", 0xCB7Eu, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        RES_2_A("RES 2, A", 0xCB97u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        RES_3_B("RES 3, B", 0xCB98u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_3_C("RES 3, C", 0xCB99u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_3_D("RES 3, D", 0xCB9Au, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_3_E("RES 3, E", 0xCB9Bu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_3_H("RES 3, H", 0xCB9Cu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_3_L("RES 3, L", 0xCB9Du, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_3_HL("RES 3, (HL)", 0xCB9Eu, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_3_A("RES 3, A", 0xCB9Fu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        RES_4_B("RES 4, B", 0xCBA0u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_4_C("RES 4, C", 0xCBA1u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_4_D("RES 4, D", 0xCBA2u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_4_E("RES 4, E", 0xCBA3u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_4_H("RES 4, H", 0xCBA4u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_4_L("RES 4, L", 0xCBA5u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_4_HL("RES 4, (HL)", 0xCBA6u, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_4_A("RES 4, A", 0xCBA7u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        RES_5_B("RES 5, B", 0xCBA8u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_5_C("RES 5, C", 0xCBA9u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_5_D("RES 5, D", 0xCBAAu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_5_E("RES 5, E", 0xCBABu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_5_H("RES 5, H", 0xCBACu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_5_L("RES 5, L", 0xCBADu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_5_HL("RES 5, (HL)", 0xCBAEu, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_5_A("RES 5, A", 0xCBAFu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        RES_6_B("RES 6, B", 0xCBB0u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_6_C("RES 6, C", 0xCBB1u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_6_D("RES 6, D", 0xCBB2u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_6_E("RES 6, E", 0xCBB3u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_6_H("RES 6, H", 0xCBB4u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_6_L("RES 6, L", 0xCBB5u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_6_HL("RES 6, (HL)", 0xCBB6u, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_6_A("RES 6, A", 0xCBB7u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        RES_7_B("RES 7, B", 0xCBB8u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_7_C("RES 7, C", 0xCBB9u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_7_D("RES 7, D", 0xCBBAu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_7_E("RES 7, E", 0xCBBBu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_7_H("RES 7, H", 0xCBBCu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_7_L("RES 7, L", 0xCBBDu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_7_HL("RES 7, (HL)", 0xCBBEu, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        RES_7_A("RES 7, A", 0xCBBFu, 8, flagAffected = "----") {
+        BIT_7_A("BIT 7, A", 0xCB7Fu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
@@ -3785,392 +3433,785 @@ class Instruction : HashMap<UShort, Execute>() {
         },
 
 
-        SET_0_B("SET 0, B", 0xCBC0u, 8, flagAffected = "----") {
+        RES_0_B("RES 0, B", 0xCB80u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_0_C("SET 0, C", 0xCBC1u, 8, flagAffected = "----") {
+        RES_0_C("RES 0, C", 0xCB81u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_0_D("SET 0, D", 0xCBC2u, 8, flagAffected = "----") {
+        RES_0_D("RES 0, D", 0xCB82u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_0_E("SET 0, E", 0xCBC3u, 8, flagAffected = "----") {
+        RES_0_E("RES 0, E", 0xCB83u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_0_H("SET 0, H", 0xCBC4u, 8, flagAffected = "----") {
+        RES_0_H("RES 0, H", 0xCB84u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_0_L("SET 0, L", 0xCBC5u, 8, flagAffected = "----") {
+        RES_0_L("RES 0, L", 0xCB85u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_0_HL("SET 0, (HL)", 0xCBC6u, 16, flagAffected = "----") {
+        RES_0_HL("RES 0, (HL)", 0xCB86u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_0_A("SET 0, A", 0xCBC7u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        SET_1_B("SET 1, B", 0xCBC8u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_1_C("SET 1, C", 0xCBC9u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_1_D("SET 1, D", 0xCBCAu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_1_E("SET 1, E", 0xCBCBu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_1_H("SET 1, H", 0xCBCCu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_1_L("SET 1, L", 0xCBCDu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_1_HL("SET 1, (HL)", 0xCBCEu, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_1_A("SET 1, A", 0xCBCFu, 8, flagAffected = "----") {
+        RES_0_A("RES 0, A", 0xCB87u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        SET_2_B("SET 2, B", 0xCBD0u, 8, flagAffected = "----") {
+        RES_1_B("RES 1, B", 0xCB88u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_2_C("SET 2, C", 0xCBD1u, 8, flagAffected = "----") {
+        RES_1_C("RES 1, C", 0xCB89u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_2_D("SET 2, D", 0xCBD2u, 8, flagAffected = "----") {
+        RES_1_D("RES 1, D", 0xCB8Au, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_2_E("SET 2, E", 0xCBD3u, 8, flagAffected = "----") {
+        RES_1_E("RES 1, E", 0xCB8Bu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_2_H("SET 2, H", 0xCBD4u, 8, flagAffected = "----") {
+        RES_1_H("RES 1, H", 0xCB8Cu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_2_L("SET 2, L", 0xCBD5u, 8, flagAffected = "----") {
+        RES_1_L("RES 1, L", 0xCB8Du, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_2_HL("SET 2, (HL)", 0xCBD6u, 16, flagAffected = "----") {
+        RES_1_HL("RES 1, (HL)", 0xCB8Eu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_2_A("SET 2, A", 0xCBD7u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        SET_3_B("SET 3, B", 0xCBD8u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_3_C("SET 3, C", 0xCBD9u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_3_D("SET 3, D", 0xCBDAu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_3_E("SET 3, E", 0xCBDBu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_3_H("SET 3, H", 0xCBDCu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_3_L("SET 3, L", 0xCBDDu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_3_HL("SET 3, (HL)", 0xCBDEu, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_3_A("SET 3, A", 0xCBDFu, 8, flagAffected = "----") {
+        RES_1_A("RES 1, A", 0xCB8Fu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        SET_4_B("SET 4, B", 0xCBE0u, 8, flagAffected = "----") {
+        RES_2_B("RES 2, B", 0xCB90u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_4_C("SET 4, C", 0xCBE1u, 8, flagAffected = "----") {
+        RES_2_C("RES 2, C", 0xCB91u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_4_D("SET 4, D", 0xCBE2u, 8, flagAffected = "----") {
+        RES_2_D("RES 2, D", 0xCB92u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_4_E("SET 4, E", 0xCBE3u, 8, flagAffected = "----") {
+        RES_2_E("RES 2, E", 0xCB93u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_4_H("SET 4, H", 0xCBE4u, 8, flagAffected = "----") {
+        RES_2_H("RES 2, H", 0xCB94u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_4_L("SET 4, L", 0xCBE5u, 8, flagAffected = "----") {
+        RES_2_L("RES 2, L", 0xCB95u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_4_HL("SET 4, (HL)", 0xCBE6u, 16, flagAffected = "----") {
+        RES_2_HL("RES 2, (HL)", 0xCB96u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_4_A("SET 4, A", 0xCBE7u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
-        SET_5_B("SET 5, B", 0xCBE8u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_5_C("SET 5, C", 0xCBE9u, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_5_D("SET 5, D", 0xCBEAu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_5_E("SET 5, E", 0xCBEBu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_5_H("SET 5, H", 0xCBECu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_5_L("SET 5, L", 0xCBEDu, 8, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_5_HL("SET 5, (HL)", 0xCBEEu, 16, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-        SET_5_A("SET 5, A", 0xCBEFu, 8, flagAffected = "----") {
+        RES_2_A("RES 2, A", 0xCB97u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        SET_6_B("SET 6, B", 0xCBF0u, 8, flagAffected = "----") {
+        RES_3_B("RES 3, B", 0xCB98u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_6_C("SET 6, C", 0xCBF1u, 8, flagAffected = "----") {
+        RES_3_C("RES 3, C", 0xCB99u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_6_D("SET 6, D", 0xCBF2u, 8, flagAffected = "----") {
+        RES_3_D("RES 3, D", 0xCB9Au, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_6_E("SET 6, E", 0xCBF3u, 8, flagAffected = "----") {
+        RES_3_E("RES 3, E", 0xCB9Bu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_6_H("SET 6, H", 0xCBF4u, 8, flagAffected = "----") {
+        RES_3_H("RES 3, H", 0xCB9Cu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_6_L("SET 6, L", 0xCBF5u, 8, flagAffected = "----") {
+        RES_3_L("RES 3, L", 0xCB9Du, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_6_HL("SET 6, (HL)", 0xCBF6u, 16, flagAffected = "----") {
+        RES_3_HL("RES 3, (HL)", 0xCB9Eu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_6_A("SET 6, A", 0xCBF7u, 8, flagAffected = "----") {
+        RES_3_A("RES 3, A", 0xCB9Fu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
 
-        SET_7_B("SET 7, B", 0xCBF8u, 8, flagAffected = "----") {
+        RES_4_B("RES 4, B", 0xCBA0u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_7_C("SET 7, C", 0xCBF9u, 8, flagAffected = "----") {
+        RES_4_C("RES 4, C", 0xCBA1u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_7_D("SET 7, D", 0xCBFAu, 8, flagAffected = "----") {
+        RES_4_D("RES 4, D", 0xCBA2u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_7_E("SET 7, E", 0xCBFBu, 8, flagAffected = "----") {
+        RES_4_E("RES 4, E", 0xCBA3u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_7_H("SET 7, H", 0xCBFCu, 8, flagAffected = "----") {
+        RES_4_H("RES 4, H", 0xCBA4u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_7_L("SET 7, L", 0xCBFDu, 8, flagAffected = "----") {
+        RES_4_L("RES 4, L", 0xCBA5u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_7_HL("SET 7, (HL)", 0xCBFEu, 16, flagAffected = "----") {
+        RES_4_HL("RES 4, (HL)", 0xCBA6u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles
             }
         },
-        SET_7_A("SET 7, A", 0xCBFFu, 8, flagAffected = "----") {
+        RES_4_A("RES 4, A", 0xCBA7u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        RES_5_B("RES 5, B", 0xCBA8u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_5_C("RES 5, C", 0xCBA9u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_5_D("RES 5, D", 0xCBAAu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_5_E("RES 5, E", 0xCBABu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_5_H("RES 5, H", 0xCBACu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_5_L("RES 5, L", 0xCBADu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_5_HL("RES 5, (HL)", 0xCBAEu, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_5_A("RES 5, A", 0xCBAFu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        RES_6_B("RES 6, B", 0xCBB0u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_6_C("RES 6, C", 0xCBB1u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_6_D("RES 6, D", 0xCBB2u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_6_E("RES 6, E", 0xCBB3u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_6_H("RES 6, H", 0xCBB4u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_6_L("RES 6, L", 0xCBB5u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_6_HL("RES 6, (HL)", 0xCBB6u, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_6_A("RES 6, A", 0xCBB7u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        RES_7_B("RES 7, B", 0xCBB8u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_7_C("RES 7, C", 0xCBB9u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_7_D("RES 7, D", 0xCBBAu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_7_E("RES 7, E", 0xCBBBu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_7_H("RES 7, H", 0xCBBCu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_7_L("RES 7, L", 0xCBBDu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_7_HL("RES 7, (HL)", 0xCBBEu, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        RES_7_A("RES 7, A", 0xCBBFu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+
+        SET_0_B("SET 0, B", 0xCBC0u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_0_C("SET 0, C", 0xCBC1u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_0_D("SET 0, D", 0xCBC2u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_0_E("SET 0, E", 0xCBC3u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_0_H("SET 0, H", 0xCBC4u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_0_L("SET 0, L", 0xCBC5u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_0_HL("SET 0, (HL)", 0xCBC6u, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_0_A("SET 0, A", 0xCBC7u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        SET_1_B("SET 1, B", 0xCBC8u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_1_C("SET 1, C", 0xCBC9u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_1_D("SET 1, D", 0xCBCAu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_1_E("SET 1, E", 0xCBCBu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_1_H("SET 1, H", 0xCBCCu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_1_L("SET 1, L", 0xCBCDu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_1_HL("SET 1, (HL)", 0xCBCEu, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_1_A("SET 1, A", 0xCBCFu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        SET_2_B("SET 2, B", 0xCBD0u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_2_C("SET 2, C", 0xCBD1u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_2_D("SET 2, D", 0xCBD2u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_2_E("SET 2, E", 0xCBD3u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_2_H("SET 2, H", 0xCBD4u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_2_L("SET 2, L", 0xCBD5u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_2_HL("SET 2, (HL)", 0xCBD6u, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_2_A("SET 2, A", 0xCBD7u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        SET_3_B("SET 3, B", 0xCBD8u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_3_C("SET 3, C", 0xCBD9u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_3_D("SET 3, D", 0xCBDAu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_3_E("SET 3, E", 0xCBDBu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_3_H("SET 3, H", 0xCBDCu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_3_L("SET 3, L", 0xCBDDu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_3_HL("SET 3, (HL)", 0xCBDEu, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_3_A("SET 3, A", 0xCBDFu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        SET_4_B("SET 4, B", 0xCBE0u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_4_C("SET 4, C", 0xCBE1u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_4_D("SET 4, D", 0xCBE2u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_4_E("SET 4, E", 0xCBE3u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_4_H("SET 4, H", 0xCBE4u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_4_L("SET 4, L", 0xCBE5u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_4_HL("SET 4, (HL)", 0xCBE6u, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_4_A("SET 4, A", 0xCBE7u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        SET_5_B("SET 5, B", 0xCBE8u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_5_C("SET 5, C", 0xCBE9u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_5_D("SET 5, D", 0xCBEAu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_5_E("SET 5, E", 0xCBEBu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_5_H("SET 5, H", 0xCBECu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_5_L("SET 5, L", 0xCBEDu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_5_HL("SET 5, (HL)", 0xCBEEu, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_5_A("SET 5, A", 0xCBEFu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        SET_6_B("SET 6, B", 0xCBF0u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_6_C("SET 6, C", 0xCBF1u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_6_D("SET 6, D", 0xCBF2u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_6_E("SET 6, E", 0xCBF3u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_6_H("SET 6, H", 0xCBF4u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_6_L("SET 6, L", 0xCBF5u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_6_HL("SET 6, (HL)", 0xCBF6u, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_6_A("SET 6, A", 0xCBF7u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+
+        SET_7_B("SET 7, B", 0xCBF8u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_7_C("SET 7, C", 0xCBF9u, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_7_D("SET 7, D", 0xCBFAu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_7_E("SET 7, E", 0xCBFBu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_7_H("SET 7, H", 0xCBFCu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_7_L("SET 7, L", 0xCBFDu, 8, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_7_HL("SET 7, (HL)", 0xCBFEu, 16, 0x2u, flagAffected = "----") {
+            override fun execute(mmu: MMU, register: CPURegister): Int {
+                TODO("Not yet implemented")
+                return cycles
+            }
+        },
+        SET_7_A("SET 7, A", 0xCBFFu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 TODO("Not yet implemented")
                 return cycles

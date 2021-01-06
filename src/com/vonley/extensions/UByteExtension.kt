@@ -79,6 +79,11 @@ fun UByte.isZero(): Boolean {
 }
 
 
+val UByte.swap: UByte
+    get() {
+        return ((this and 0x0Fu) shl 4) or ((this and 0xF0u) shr 4)
+    }
+
 /**
  * Checks for a carry from bit 7 to bit 8 during addition.
  * @param compare - Second byte being tested.
@@ -99,7 +104,6 @@ fun UByte.checkCarryAddSigned(compare: UByte): Boolean {
 fun UByte.checkCarrySub(compare: UByte): Boolean {
     return this < compare
 }
-
 
 
 /**
@@ -135,7 +139,7 @@ fun UByte.checkHalfCarrySub(compare: UByte): Boolean {
 
 fun UByte.checkHalfCarrySBC(compare: UByte, carryFlag: Boolean = false): Boolean {
     val result = this - compare - carryFlag.asUByte
-    val check = (this xor compare xor (result and 0xFFu).toUByte()) and (0x1u shl 4).toUByte()  != 0x0u.toUByte()
+    val check = (this xor compare xor (result and 0xFFu).toUByte()) and (0x1u shl 4).toUByte() != 0x0u.toUByte()
     return check
 }
 
