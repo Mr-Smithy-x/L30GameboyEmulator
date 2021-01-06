@@ -138,8 +138,8 @@ class BitWiseTests {
 
     @Test
     fun testCombine(){
-        val instruction = (0xCB00u.toUShort() or (0x2F).toUShort().and(0x00FFu))
-        assert(instruction == 0xCB2Fu.toUShort())
+        val instruction = (0xCB00u.toUShort() or (0x13u).toUShort().and(0x00FFu))
+        assert(instruction == 0xCB13u.toUShort())
     }
 
 }

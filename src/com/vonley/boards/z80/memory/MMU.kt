@@ -55,6 +55,8 @@ class MMU {
     //FFFF	FFFF	Interrupts Enable Register (IE)
     private var interupt = UByteArray(1) { 0x0u }
 
+    var ime: Boolean = false
+
 
     enum class Region(
         val canRead: Boolean = false,

@@ -88,7 +88,7 @@ fun UByte.checkCarryADC(compare: UByte, carryFlag: Boolean = false): Boolean {
     return (this + compare + if (carryFlag) 1u else 0u) > 0xFFu
 }
 
-fun UByte.checkCarryAdd(compare: UByte): Boolean {
+fun UByte.checkCarryAddSigned(compare: UByte): Boolean {
     return this.checkCarryADC(compare, false)
 }
 
@@ -97,7 +97,7 @@ fun UByte.checkCarryAdd(compare: UByte): Boolean {
  * @param compare - Second byte being tested.
  */
 fun UByte.checkCarrySub(compare: UByte): Boolean {
-    return compare > this
+    return this < compare
 }
 
 

@@ -1,4 +1,5 @@
 package com.vonley.extensions
+
 import com.vonley.boards.z80.memory.MMU
 
 infix fun UShort.shr(bitCount: Int): UShort {
@@ -12,7 +13,6 @@ infix fun UShort.shl(bitCount: Int): UShort {
 fun UShort.getRegion(bootRomEnabled: Boolean = false): MMU.Region {
     return MMU.Region.parse(this, bootRomEnabled)
 }
-
 
 
 /**
@@ -39,7 +39,7 @@ fun UShort.checkCarryADC(compare: UShort, carryFlag: Boolean = false): Boolean {
     return (this + compare + if (carryFlag) 1u else 0u) > 0xFFFFu
 }
 
-fun UShort.checkCarryAdd(compare: UShort): Boolean {
+fun UShort.checkCarryAddSigned(compare: UShort): Boolean {
     return this.checkCarryADC(compare, false)
 }
 
@@ -58,4 +58,21 @@ fun UShort.checkHalfCarryADC(compare: UShort, carryFlag: Boolean = false): Boole
  */
 fun UShort.checkHalfCarrySub(compare: UShort): Boolean {
     return (this and 0xFu) < (compare and 0xFu)
+}
+
+
+fun UShort.checkHalfCarryAddSigned(compare: UByte): Boolean {
+    return if (compare.isSignedNeg) {
+        ((this and 0x0Fu) - (compare.signed and 0x0Fu)) > 0xFu
+    } else {
+        ((this and 0x0Fu) + (compare.signed and 0x0Fu)) > 0xFu
+    }
+}
+
+fun UShort.checkCarryAddSigned(compare: UByte): Boolean {
+    return if (compare.isSignedNeg) {
+        ((this and 0xFFu) - (compare.signed and 0xFFu)) > 0xFFu
+    } else {
+        ((this and 0xFFu) + (compare.signed and 0xFFu)) > 0xFFu
+    }
 }

@@ -99,7 +99,7 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
                 register.fr.n = false
-                register.fr.c = register.hl.checkCarryAdd(register.bc)
+                register.fr.c = register.hl.checkCarryAddSigned(register.bc)
                 register.fr.h = register.hl.checkHalfCarry(register.bc)
                 register.hl = (register.hl + register.bc).and(0xFFFFu).toUShort()
                 return cycles
@@ -223,7 +223,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 val value = ((register.hl + register.de) and 0xFFFFu).toUShort()
                 register.fr.n = false
                 register.fr.h = register.hl.checkHalfCarry(register.de)
-                register.fr.c = register.hl.checkCarryAdd(register.de)
+                register.fr.c = register.hl.checkCarryAddSigned(register.de)
                 register.hl = value
                 return cycles
             }
@@ -383,7 +383,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 val value = ((register.hl + register.hl) and 0xFFFFu).toUShort()
                 register.fr.n = false
                 register.fr.h = register.hl.checkHalfCarry(register.hl)
-                register.fr.c = register.hl.checkCarryAdd(register.hl)
+                register.fr.c = register.hl.checkCarryAddSigned(register.hl)
                 register.hl = value
                 return cycles
             }
@@ -545,7 +545,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 val value = ((register.hl + register.sp) and 0xFFFFu).toUShort()
                 register.fr.n = false
                 register.fr.h = register.hl.checkHalfCarry(register.sp)
-                register.fr.c = register.hl.checkCarryAdd(register.sp)
+                register.fr.c = register.hl.checkCarryAddSigned(register.sp)
                 register.hl = value
                 return cycles
             }
@@ -1074,7 +1074,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(register.b)
-                register.fr.c = register.a.checkCarryAdd(register.b)
+                register.fr.c = register.a.checkCarryAddSigned(register.b)
                 register.a = value
                 return cycles
             }
@@ -1086,7 +1086,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(register.c)
-                register.fr.c = register.a.checkCarryAdd(register.c)
+                register.fr.c = register.a.checkCarryAddSigned(register.c)
                 register.a = value
                 return cycles
             }
@@ -1098,7 +1098,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(register.d)
-                register.fr.c = register.a.checkCarryAdd(register.d)
+                register.fr.c = register.a.checkCarryAddSigned(register.d)
                 register.a = value
                 return cycles
             }
@@ -1110,7 +1110,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(register.e)
-                register.fr.c = register.a.checkCarryAdd(register.e)
+                register.fr.c = register.a.checkCarryAddSigned(register.e)
                 register.a = value
                 return cycles
             }
@@ -1122,7 +1122,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(register.h)
-                register.fr.c = register.a.checkCarryAdd(register.h)
+                register.fr.c = register.a.checkCarryAddSigned(register.h)
                 register.a = value
                 return cycles
             }
@@ -1134,7 +1134,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(register.l)
-                register.fr.c = register.a.checkCarryAdd(register.l)
+                register.fr.c = register.a.checkCarryAddSigned(register.l)
                 register.a = value
                 return cycles
             }
@@ -1147,7 +1147,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(hlValue)
-                register.fr.c = register.a.checkCarryAdd(hlValue)
+                register.fr.c = register.a.checkCarryAddSigned(hlValue)
                 register.a = value
                 return cycles
             }
@@ -1159,7 +1159,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(register.a)
-                register.fr.c = register.a.checkCarryAdd(register.a)
+                register.fr.c = register.a.checkCarryAddSigned(register.a)
                 register.a = value
                 return cycles
             }
@@ -1271,109 +1271,92 @@ class Instruction : HashMap<UShort, Execute>() {
             }
         },
 
-        //TODO: work on hc FLAGS
         SUB_A_B("SUB A,B", 0x90u, 4, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                val minus = register.a.minus(register.b)
+                register.fr.z = register.a == register.b
                 register.fr.n = true
-                if (register.b > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(register.b)
+                register.fr.c = register.a.checkCarrySub(register.b)
+                register.a = register.a.minus(register.b).and(0xFFu).toUByte()
                 return cycles
             }
         },
         SUB_A_C("SUB A,C", 0x91u, 4, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                val minus = register.a.minus(register.c)
+                register.fr.z = register.a == register.c
                 register.fr.n = true
-                if (register.c > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(register.c)
+                register.fr.c = register.a.checkCarrySub(register.c)
+                register.a = register.a.minus(register.c).and(0xFFu).toUByte()
                 return cycles
             }
         },
         SUB_A_D("SUB A,D", 0x92u, 4, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                val minus = register.a.minus(register.d)
+                register.fr.z = register.a == register.d
                 register.fr.n = true
-                if (register.d > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(register.d)
+                register.fr.c = register.a.checkCarrySub(register.d)
+                register.a = register.a.minus(register.d).and(0xFFu).toUByte()
                 return cycles
             }
         },
         SUB_A_E("SUB A,E", 0x93u, 4, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                val minus = register.a.minus(register.e)
+                register.fr.z = register.a == register.e
                 register.fr.n = true
-                if (register.e > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(register.e)
+                register.fr.c = register.a.checkCarrySub(register.e)
+                register.a = register.a.minus(register.e).and(0xFFu).toUByte()
                 return cycles
             }
         },
         SUB_A_H("SUB A,H", 0x94u, 4, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                val minus = register.a.minus(register.h)
+                register.fr.z = register.a == register.h
                 register.fr.n = true
-                if (register.h > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(register.h)
+                register.fr.c = register.a.checkCarrySub(register.h)
+                register.a = register.a.minus(register.h).and(0xFFu).toUByte()
                 return cycles
             }
         },
         SUB_A_L("SUB A,L", 0x95u, 4, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                val minus = register.a.minus(register.l)
+                register.fr.z = register.a == register.l
                 register.fr.n = true
-                if (register.l > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(register.l)
+                register.fr.c = register.a.checkCarrySub(register.l)
+                register.a = register.a.minus(register.l).and(0xFFu).toUByte()
                 return cycles
             }
         },
         SUB_A_HL("SUB A,(HL)", 0x96u, 8, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                var hlAddr = mmu.readByte(register.hl)
-                val minus = register.a.minus(hlAddr)
+                val hlAddr = mmu.readByte(register.hl)
+                register.fr.z = register.a == hlAddr
                 register.fr.n = true
-                if (hlAddr > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(hlAddr)
+                register.fr.c = register.a.checkCarrySub(hlAddr)
+                register.a = register.a.minus(hlAddr).and(0xFFu).toUByte()
                 return cycles
             }
         },
-        SUB_A_A("SUB A,A", 0x97u, 4, flagAffected = "z1hc") {
+        SUB_A_A("SUB A,A", 0x97u, 4, flagAffected = "11hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
-                val minus = register.a.minus(register.a)
+                register.fr.z = true
                 register.fr.n = true
-                if (register.a > register.a) {
-                    register.fr.c = true
-                }
-                register.a = minus.and(0xFFu).toUByte()
-                register.fr.z = register.a.isZero()
+                register.fr.h = register.a.checkHalfCarrySub(register.a)
+                register.fr.c = register.a.checkCarrySub(register.a)
+                register.a = register.a.minus(register.a).and(0xFFu).toUByte()
                 return cycles
             }
         },
@@ -1837,9 +1820,7 @@ class Instruction : HashMap<UShort, Execute>() {
             override fun execute(mmu: MMU, register: CPURegister): Int {
                 register.incPC()
                 if (!register.fr.z) {
-                    register.pc =
-                        (mmu.readByte(register.sp.inc()).toUShort().and(0xFFu) shl 8) or mmu.readByte(register.sp)
-                            .toUShort().and(0xFFu)
+                    register.pc = mmu.readShort(register.sp)
                     register.addSP(0x2u)
                     return 20
                 }
@@ -1898,7 +1879,7 @@ class Instruction : HashMap<UShort, Execute>() {
                 register.fr.z = value.isZero()
                 register.fr.n = false
                 register.fr.h = register.a.checkHalfCarry(d8Byte)
-                register.fr.c = register.a.checkCarryAdd(d8Byte)
+                register.fr.c = register.a.checkCarryAddSigned(d8Byte)
                 register.a = value
                 return cycles
             }
@@ -1994,12 +1975,18 @@ class Instruction : HashMap<UShort, Execute>() {
 
         RET_NC("RET NC", 0xD0u, 20 / 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
+                register.incPC()
+                if (!register.fr.c) {
+                    register.pc = mmu.readShort(register.sp)
+                    register.minusSP(0x2u)
+                    return 20
+                }
+                return 8
             }
         },
         POP_DE("POP DE", 0xD1u, 12, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
+                register.incPC()
                 register.de = mmu.readShort(register.sp)
                 register.addSP(0x2u)
                 return cycles
@@ -2007,19 +1994,30 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         JP_NC_a16("JP NC, a16", 0xD2u, 16 / 12, 3u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
+                val addressVal = mmu.readShort(register.fetchIncLength(length))
+                if (!register.fr.c) {
+                    register.pc = addressVal
+                    return 16
+                }
+                return 12
             }
         },
         CALL_NC_a16("CALL NC, a16", 0xD4u, 24 / 12, 3u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
+                val addressValue = mmu.readShort(register.fetchIncLength(length))
+                if (!register.fr.c) {
+                    register.minusSP(0x2u)
+                    mmu.writeShort(register.sp, register.pc)
+                    register.pc = addressValue
+                    return 24
+                }
+                return 12
             }
         },
         PUSH_DE("PUSH DE", 0xD5u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.addSP(0x2u)
+                register.incPC()
+                register.minusSP(0x2u)
                 mmu.writeShort(register.sp, register.de)
                 return cycles
             }
@@ -2027,64 +2025,104 @@ class Instruction : HashMap<UShort, Execute>() {
 
         SUB_A_d8("SUB A, d8", 0xD6u, 8, 2u, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                val sub = register.a.minus(mmu.readByte(opcode.inc()))
-                register.a = sub.and(0xFFu).toUByte()
+                val value = mmu.readByte(register.fetchIncLength(length))
+                register.fr.z = register.a == value
+                register.fr.n = true
+                register.fr.h = register.a.checkHalfCarrySub(value)
+                register.fr.c = register.a.checkCarrySub(value)
+                register.a = (register.a - value).and(0xFFu).toUByte()
                 return cycles
             }
         },
         RST_10H("RST 10H", 0xD7u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                register.minusSP(0x2u)
+                mmu.writeShort(register.sp, register.pc)
+                register.pc = 16u
                 return cycles
             }
         },
         RET_C("RET C", 0xD8u, 20 / 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                if (register.fr.c) {
+                    register.pc = mmu.readShort(register.sp)
+                    register.addSP(0x2u)
+                    return 20
+                } else {
+                    return 8
+                }
                 return cycles
             }
         },
         RETI("RETI -/-", 0xD9u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                mmu.ime = true //TODO: Move to CPU?
+                register.pc = mmu.readShort(register.sp)
+                register.minusSP(0x2u)
                 return cycles
             }
         },
         JP_C_a16("JP C, a16", 0xDAu, 16 / 12, 3u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
+                val addressValue = mmu.readShort(register.fetchIncLength(length))
+                if (register.fr.c) {
+                    register.pc = addressValue
+                    return 16
+                }
+                return 12
             }
         },
         CALL_C_a16("CALL C, a16", 0xDCu, 24 / 12, 3u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
+                val addressValue = mmu.readShort(register.fetchIncLength(length))
+                if (register.fr.c) {
+                    register.minusSP(0x2u)
+                    mmu.writeShort(register.sp, register.pc)
+                    register.pc = addressValue
+                    return 24
+                }
+                return 12
             }
         },
-        SBC_A_d8("SBC A, d8", 0xDEu, 8, 2u, flagAffected = "z0hc") {
+        SBC_A_d8("SBC A, d8", 0xDEu, 8, 2u, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.addSP(0x2u)
+                val d8Value = mmu.readByte(register.fetchIncLength(length))
+                val value = register.a - d8Value - register.fr.c.asUByte
+                var byteValue = (value and 0xFFu).toUByte()
+                register.fr.z = byteValue.isZero()
+                register.fr.n = true
+                register.fr.h = register.a.checkHalfCarrySBC(d8Value, register.fr.c)
+                register.fr.c = register.a.checkCarrySBC(d8Value, register.fr.c)
                 mmu.writeShort(register.sp, register.de)
+                register.a = byteValue
                 return cycles
             }
         },
         RST_18H("RST 18H", 0xDFu, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                register.minusSP(0x2u)
+                mmu.writeShort(register.sp, register.pc)
+                register.pc = 24u
                 return cycles
             }
         },
 
         LDH_a8_A("LDH (a8), A // LD (FF00+a8), A", 0xE0u, 12, 2u, "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                val addr: UShort = 0xFF00u.plus(mmu.readByte(opcode.inc())).and(0xFFFFu).toUShort()
-                mmu.writeByte(addr, register.a)
+                var pcAddress = register.fetchIncLength(length)
+                val valueAddress = mmu.readByte(pcAddress).toUShort().and(0x00FFu)
+                val realAddress: UShort = (0xFF00u.toUShort() or valueAddress).and(0xFFFFu)
+                mmu.writeByte(realAddress, register.a and 0xFFu)
                 return cycles
             }
         },
         POP_HL("POP HL", 0xE1u, 12, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
+                register.incPC()
                 register.hl = mmu.readShort(register.sp)
                 register.addSP(0x2u)
                 return cycles
@@ -2092,53 +2130,67 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LD_Ca_A("LD (C),A", 0xE2u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                val addr: UShort = 0xFF00u.plus(register.c).and(0xFFFFu).toUShort()
-                mmu.writeByte(addr, register.a)
+                register.incPC()
+                val addr: UShort = (0xFF00u.toUShort() or register.c.toUShort() and 0x00FFu).and(0xFFFFu).toUShort()
+                mmu.writeByte(addr, register.a and 0xFFu)
                 return cycles
             }
         },
         PUSH_HL("PUSH HL", 0xE5u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.addSP(0x2u)
+                register.incPC()
+                register.minusSP(0x2u)
                 mmu.writeShort(register.sp, register.hl)
                 return cycles
             }
         },
         AND_A_d8("AND A, d8", 0xE6u, 8, 2u, flagAffected = "z010") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.a = register.a.and(mmu.readByte(opcode.inc()))
+                register.a = register.a.and(mmu.readByte(register.fetchIncLength(length)))
+                register.fr.z = register.a.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.fr.c = false
                 return cycles
             }
         },
         RST_20H("RST 20H", 0xE7u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                register.minusSP(0x2u)
+                mmu.writeShort(register.sp, register.pc)
+                register.pc = 32u
                 return cycles
             }
         },
 
-        //00hc
         ADD_SP_r8("ADD SP, r8", 0xE8u, 16, 2u, flagAffected = "00hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val value = mmu.readByte(register.fetchIncLength(length))
+                register.fr.z = false
+                register.fr.n = false
+                register.fr.h = register.sp.checkHalfCarryAddSigned(value)
+                register.fr.c = register.sp.checkCarryAddSigned(value)
+                register.sp = value.jump(register.sp)
                 return cycles
             }
         },
         JP_HL("JP HL", 0xE9u, 4, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                register.pc = register.hl
                 return cycles
             }
         },
         LD_a16_A("LD (a16),A", 0xEAu, 16, 3u, "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                mmu.writeByte(mmu.readShort(opcode.inc()), register.a)
+                mmu.writeByte(mmu.readShort(register.fetchIncLength(length)), register.a)
                 return cycles
             }
         },
         XOR_A_d8("XOR A, d8", 0xEEu, 8, 2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.a = register.a.xor(mmu.readByte(opcode.inc()))
+                register.a = register.a.xor(mmu.readByte(register.fetchIncLength(length)))
                 register.fr.z = register.a.isZero()
                 register.fr.n = false
                 register.fr.h = false
@@ -2148,19 +2200,25 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RST_28H("RST 28H", 0xEFu, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                register.minusSP(0x2u)
+                mmu.writeShort(register.sp, register.pc)
+                register.pc = 40u
                 return cycles
             }
         },
 
         LDH_A_a8("LDH A,(a8) // LD A,(FF00+n)", 0xF0u, 12, 2u, "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.a = mmu.readByte(0xFF00u.plus(mmu.readByte(opcode.inc())).and(0xFFFFu).toUShort())
+                val byte = mmu.readByte(register.fetchIncLength(length))
+                val value = 0xFF00u.toUShort() or byte.toUShort().and(0x00FFu)
+                register.a = mmu.readByte(value)
                 return cycles
             }
         },
         POP_AF("POP AF", 0xF1u, 12, flagAffected = "znhc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
+                register.incPC()
                 register.af = mmu.readShort(register.sp)
                 register.addSP(0x2u)
                 return cycles
@@ -2168,26 +2226,29 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LD_A_Ca("LD A,(C)", 0xF2u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.a = mmu.readByte((0xFF00u).plus(register.c).and(0xFFFFu).toUShort())
+                var address = 0xFF00u.toUShort() or register.c.toUShort().and(0x00FFu)
+                register.a = mmu.readByte(address)
                 return cycles
             }
         },
         DI("DI -/-", 0xF3u, 4, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                mmu.ime = false
                 return cycles
             }
         },
         PUSH_AF("PUSH AF", 0xF5u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.addSP(0x2u)
+                register.incPC()
+                register.minusSP(0x2u)
                 mmu.writeShort(register.sp, register.af)
                 return cycles
             }
         },
-        OR_A_d8("OR A, d8", 0xF6u, 8, 2u, flagAffected = "z0000") {
+        OR_A_d8("OR A, d8", 0xF6u, 8, 2u, flagAffected = "z000") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.a = register.a.or(mmu.readByte(opcode.inc()))
+                register.a = register.a or mmu.readByte(register.fetchIncLength(length))
                 register.fr.z = register.a.isZero()
                 register.fr.n = false
                 register.fr.h = false
@@ -2197,7 +2258,10 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         RST_30H("RST 30H", 0xF7u, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                register.minusSP(0x2u)
+                mmu.writeShort(register.sp, register.pc)
+                register.pc = 48u
                 return cycles
             }
         },
@@ -2209,38 +2273,51 @@ class Instruction : HashMap<UShort, Execute>() {
         },
         LDHL_SP_r8("LD HL,SP+r8", 0xF8u, 12, 2u, "00hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                val sp_n = mmu.readByte(opcode.inc()).minus(128u)
-                register.hl = register.sp.plus(sp_n).and(0xFFFFu).toUShort()
+                val value = mmu.readByte(register.fetchIncLength(length))
+                register.hl = value.jump(register.sp)
+                register.fr.z = false
+                register.fr.n = false
+                register.fr.h = register.sp.checkHalfCarryAddSigned(value)
+                register.fr.c = register.sp.checkCarryAddSigned(value)
                 return cycles
             }
         },
         LD_SP_HL("LD SP,HL", 0xF9u, 8, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
+                register.incPC()
                 register.sp = register.hl
                 return cycles
             }
         },
         LD_A_a16("LD A,a16", 0xFAu, 16, 3u, "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                register.a = mmu.readByte(mmu.readShort(opcode.inc()))
+                register.a = mmu.readByte(mmu.readShort(register.fetchIncLength(length)))
                 return cycles
             }
         },
         EI("EI -/-", 0xFBu, 4, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                mmu.ime = true
                 return cycles
             }
         },
         CP_d8("CP d8", 0xFEu, 8, 2u, flagAffected = "z1hc") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                val value = mmu.readByte(register.fetchIncLength(length))
+                register.fr.z = register.a == value
+                register.fr.n = true
+                register.fr.h = register.a.checkHalfCarrySub(value)
+                register.fr.c = register.a.checkCarrySub(value)
                 return cycles
             }
         },
         RST_38H("RST 38H", 0xFFu, 16, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.incPC()
+                register.minusSP(0x2u)
+                mmu.writeShort(register.sp, register.pc)
+                register.pc = 56u
                 return cycles
             }
         },
