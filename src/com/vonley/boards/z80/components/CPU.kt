@@ -1,24 +1,29 @@
-package com.vonley.boards.z80
+package com.vonley.boards.z80.components
 
 import com.vonley.boards.z80.instructions.Instruction
 import com.vonley.boards.z80.memory.MMU
 import com.vonley.boards.z80.registers.CPURegister
-import com.vonley.boards.z80.registers.FlagRegister
 
-class CPU {
+class CPU(private val mmu: MMU, private val cpuRegister: CPURegister) {
 
-    val mmu = MMU()
-    val cpuRegister = CPURegister()
-    val instruction = Instruction()
     var running = false
-    val flagRegister: FlagRegister
-        get() = cpuRegister.fr
+        private set
+    var cycles: Int = 0
+        private set
+    private val instruction = Instruction()
+    val gpu = GPU(mmu, cpuRegister)
 
+
+    init {
+        cycles = 0
+        running = true
+        mmu.bootRom = true
+    }
 
     fun step() {
         val pc = cpuRegister.pc
         val op = instruction[pc]
-        op!!.execute(mmu, cpuRegister)
+        this.cycles += op!!.execute(mmu, cpuRegister)
     }
 
     fun power(on: Boolean, sgb: Boolean = false) {

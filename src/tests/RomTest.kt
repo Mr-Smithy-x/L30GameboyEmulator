@@ -1,6 +1,6 @@
 package tests
 
-import com.vonley.boards.z80.Rom
+import com.vonley.boards.z80.components.Rom
 import junit.framework.TestCase
 import java.io.File
 import java.io.FileNotFoundException

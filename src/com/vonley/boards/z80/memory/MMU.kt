@@ -1,10 +1,8 @@
 package com.vonley.boards.z80.memory
 
+import com.vonley.boards.z80.components.Rom
 import com.vonley.contracts.UShortDifferenceImpl
-import com.vonley.extensions.getRegion
-import com.vonley.extensions.shl
-import com.vonley.extensions.shr
-import com.vonley.extensions.toHexString
+import com.vonley.extensions.*
 
 
 //MBC1
@@ -17,6 +15,9 @@ import com.vonley.extensions.toHexString
 
 //MBC2
 class MMU {
+
+    var bootRom: Boolean = false
+
     //Start	End	    Description	Notes
     //0000  00FF - The bootrom
     private val bootrom = UByteArray(0x100)
@@ -220,6 +221,11 @@ class MMU {
 
     fun reset() {
 
+    }
+
+    fun loadROM(rom: Rom) {
+        rom.romBank0.copyInto(rombank0)
+        rom.romBank1.copyInto(rombank1)
     }
 
     companion object {

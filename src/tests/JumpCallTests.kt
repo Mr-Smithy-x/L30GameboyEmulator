@@ -1,6 +1,5 @@
 package tests
 
-import com.vonley.boards.z80.CPU
 import com.vonley.boards.z80.instructions.Instruction
 import com.vonley.boards.z80.memory.MMU
 import com.vonley.boards.z80.registers.CPURegister
@@ -12,27 +11,19 @@ import junit.framework.TestCase
 
 class JumpCallTests : TestCase() {
 
-    lateinit var cpu: CPU
-    val mmu: MMU
-        get() {
-            return cpu.mmu
-        }
-    val register: CPURegister
-        get() {
-            return cpu.cpuRegister
-        }
+    lateinit var mmu: MMU
+    lateinit var register: CPURegister
+    lateinit var instruction: Instruction
     val fr: FlagRegister
         get() {
             return register.fr
         }
-    val instruction: Instruction
-        get() {
-            return cpu.instruction
-        }
 
     override fun setUp() {
         super.setUp()
-        cpu = CPU()
+        mmu = MMU()
+        register = CPURegister()
+        instruction = Instruction()
         mmu.writeShort(0x82FDu, 0xED1Du)
         register.pc = 0x82FDu
     }

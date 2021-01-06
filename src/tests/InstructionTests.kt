@@ -1,7 +1,8 @@
 package tests
 
-import com.vonley.boards.z80.CPU
 import com.vonley.boards.z80.instructions.Instruction
+import com.vonley.boards.z80.memory.MMU
+import com.vonley.boards.z80.registers.CPURegister
 import com.vonley.extensions.*
 import junit.framework.TestCase
 
@@ -11,7 +12,8 @@ import junit.framework.TestCase
  */
 class InstructionTests : TestCase() {
 
-    lateinit var cpu: CPU
+    lateinit var cpuRegister: CPURegister
+    lateinit var mmu: MMU
     lateinit var instruction: Instruction
 
     val startValue: UByte = 0b10011001u
@@ -19,8 +21,9 @@ class InstructionTests : TestCase() {
 
     override fun setUp() {
         super.setUp()
-        cpu = CPU()
         instruction = Instruction()
+        cpuRegister = CPURegister()
+        mmu = MMU()
     }
 
     fun testCPLInstructions() {
@@ -101,7 +104,7 @@ class InstructionTests : TestCase() {
         var implemented = 0
         instruction.values.forEach {
             try {
-                it.execute(cpu.mmu, cpu.cpuRegister)
+                it.execute(mmu, cpuRegister)
                 implemented = implemented.inc()
             } catch (e: NotImplementedError) {
                 count = count.inc()
@@ -125,15 +128,15 @@ class InstructionTests : TestCase() {
         val hi: UByte = 0x52u
         val lo: UByte = 0x1Au
         val address: UShort = 0x8520u
-        cpu.cpuRegister.pc = address
-        cpu.mmu.writeByte(cpu.cpuRegister.pc, lo)
-        cpu.mmu.writeByte(cpu.cpuRegister.pc.inc(), hi)
-        val readShort = cpu.mmu.readShort(cpu.cpuRegister.pc)
-        val address1 = cpu.cpuRegister.fetchIncWord
-        val readShort2 = cpu.mmu.readShort(address1)
+        cpuRegister.pc = address
+        mmu.writeByte(cpuRegister.pc, lo)
+        mmu.writeByte(cpuRegister.pc.inc(), hi)
+        val readShort = mmu.readShort(cpuRegister.pc)
+        val address1 = cpuRegister.fetchIncWord
+        val readShort2 = mmu.readShort(address1)
         assert(readShort == readShort2)
-        assert(cpu.cpuRegister.pc != address)
-        assert(cpu.cpuRegister.pc == address.plus(0x2u).toUShort())
+        assert(cpuRegister.pc != address)
+        assert(cpuRegister.pc == address.plus(0x2u).toUShort())
 
     }
 }

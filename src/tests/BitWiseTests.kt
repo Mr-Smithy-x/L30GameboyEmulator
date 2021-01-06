@@ -1,7 +1,7 @@
 package tests
 
-import com.vonley.extensions.toHexString
 import org.junit.Test
+
 /**
  * To understand calculations you need to understand Signed Magnitude
  * Left most bit tells you whether its a negative or positive. 0 for positive 1 for negative
