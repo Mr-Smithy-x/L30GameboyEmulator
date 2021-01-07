@@ -1,5 +1,6 @@
 package com.vonley.extensions
 
+import com.vonley.boards.z80.components.GPU
 import com.vonley.boards.z80.registers.BitCarryData
 
 fun UByte.rr(carryBit: UByte): BitCarryData {
@@ -78,15 +79,15 @@ fun UByte.isZero(): Boolean {
     return this == 0x0u.toUByte()
 }
 
-infix fun UByte.bit(position: Int): UByte{
+infix fun UByte.bit(position: Int): UByte {
     return this and (0b1u.toUByte() shl position)
 }
 
-infix fun UByte.res(position: Int): UByte{
+infix fun UByte.res(position: Int): UByte {
     return this and (0b1u.toUByte() shl position).inv()
 }
 
-infix fun UByte.set(position: Int): UByte{
+infix fun UByte.set(position: Int): UByte {
     return this or (0b1u.toUByte() shl position)
 }
 
@@ -162,6 +163,18 @@ fun UByte.checkCarrySBC(compare: UByte, carryFlag: Boolean = false): Boolean {
 val UByte.isSignedNeg: Boolean
     get() {
         return this !in 0u..127u
+    }
+
+val UByte.lcdColor: GPU.LCDMonoChromePalette.LCDColor
+    get() {
+        return GPU.LCDMonoChromePalette.LCDColor.values().find { it.colorByte == this and 0x3u }!!
+    }
+
+val UByte.toLCDMonoChromePalette: GPU.LCDMonoChromePalette
+    get() {
+        return GPU.LCDMonoChromePalette().also {
+            it.byte = this
+        }
     }
 
 val UByte.signed: UByte
