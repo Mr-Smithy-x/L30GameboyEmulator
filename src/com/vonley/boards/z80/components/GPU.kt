@@ -35,22 +35,109 @@ class GPU(private val mmu: MMU, private val cpuRegister: CPURegister) {
             mmu.writeByte(0xFF40u, lcdControlRegister)
         }
 
+    //region Setters
     //bit 7
     var lcdDisplayEnable: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+
     //bit 6
     var windowTileMapDisplaySelect: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+
     //bit 5
     var windowDisplayEnable: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+
     //bit 4
     var bgWindowTileDataSelect: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+
     //bit 3
     var bgTIleMapDisplaySelect: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+
     //bit 2
     var objSpriteSize: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+
     //bit 1
     var objSpriteDisplayEnable: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+
     //bit 0
     var bgWindowDisplayPriority: Boolean = false
+        set(value) {
+            field = value
+            mmu.writeByte(0xFF40u, lcdControlRegister)
+        }
+    //endregion
 
+    //0xFF41
+    var lcdStatusRegister: UByte
+        get() {
+
+            return 0u
+        }
+        set(value) {}
+
+    var lyc: Boolean = true //lyc interrupt
+    var mode_2: Boolean = true //oam interrupt
+    var mode_1: Boolean = true //v-blank interrupt
+    var mode_0: Boolean = true //h-blank interrupt
+    var coincidence_flag = false //0: LYC<>LY, 1:LYC=LY
+    //0 = h-blank, 1=vblank, 2: search oam,
+    //3 transfer data to lcd driver
+    var mode_flag: UByte = 0x0u
+
+
+    //LCD Interrupts
+    //40
+    var vblank_interrupt: UInt = 0x0u
+    //48
+    var hblank_interrupt: UInt = 0x0u
+
+
+    //LCD Position and Scrolling
+    //FF42
+    var scrollY: UByte = 0x0u
+    //FF43
+    var scrollX: UByte = 0x0u
+
+
+    //LY
+    //FF44
+    //0 - 153
+    var lcdc: UByte = 0x0u
+
+    //LYC
+    //FF45
+    //0 - 153
+    var lyc: UByte = 0x0u //ly compare
+
+    //FF4A
+    var windowY: UByte = 0x0u
+    //FF4B - windows x position -7
+    var windowX: UByte = 0x0u
 
 }
