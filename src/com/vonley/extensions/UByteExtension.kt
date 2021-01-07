@@ -78,6 +78,18 @@ fun UByte.isZero(): Boolean {
     return this == 0x0u.toUByte()
 }
 
+infix fun UByte.bit(position: Int): UByte{
+    return this and (0b1u.toUByte() shl position)
+}
+
+infix fun UByte.res(position: Int): UByte{
+    return this and (0b1u.toUByte() shl position).inv()
+}
+
+infix fun UByte.set(position: Int): UByte{
+    return this or (0b1u.toUByte() shl position)
+}
+
 
 val UByte.swap: UByte
     get() {

@@ -3041,294 +3041,486 @@ class Instruction : HashMap<UShort, Execute>() {
 
         BIT_0_B("BIT 0, B", 0xCB40u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_0_C("BIT 0, C", 0xCB41u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_0_D("BIT 0, D", 0xCB42u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_0_E("BIT 0, E", 0xCB43u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_0_H("BIT 0, H", 0xCB44u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_0_L("BIT 0, L", 0xCB45u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_0_HL("BIT 0, (HL)", 0xCB46u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_0_A("BIT 0, A", 0xCB47u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
 
         BIT_1_B("BIT 1, B", 0xCB48u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_1_C("BIT 1, C", 0xCB49u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_1_D("BIT 1, D", 0xCB4Au, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_1_E("BIT 1, E", 0xCB4Bu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_1_H("BIT 1, H", 0xCB4Cu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_1_L("BIT 1, L", 0xCB4Du, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_1_HL("BIT 1, (HL)", 0xCB4Eu, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_1_A("BIT 1, A", 0xCB4Fu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
 
         BIT_2_B("BIT 2, B", 0xCB50u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_2_C("BIT 2, C", 0xCB51u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_2_D("BIT 2, D", 0xCB52u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_2_E("BIT 2, E", 0xCB53u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_2_H("BIT 2, H", 0xCB54u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_2_L("BIT 2, L", 0xCB55u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_2_HL("BIT 2, (HL)", 0xCB56u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_2_A("BIT 2, A", 0xCB57u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
 
         BIT_3_B("BIT 3, B", 0xCB58u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_3_C("BIT 3, C", 0xCB59u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_3_D("BIT 3, D", 0xCB5Au, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_3_E("BIT 3, E", 0xCB5Bu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_3_H("BIT 3, H", 0xCB5Cu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_3_L("BIT 3, L", 0xCB5Du, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_3_HL("BIT 3, (HL)", 0xCB5Eu, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_3_A("BIT 3, A", 0xCB5Fu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
 
         BIT_4_B("BIT 4, B", 0xCB60u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_4_C("BIT 4, C", 0xCB61u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_4_D("BIT 4, D", 0xCB62u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_4_E("BIT 4, E", 0xCB63u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_4_H("BIT 4, H", 0xCB64u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_4_L("BIT 4, L", 0xCB65u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_4_HL("BIT 4, (HL)", 0xCB66u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_4_A("BIT 4, A", 0xCB67u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
 
         BIT_5_B("BIT 5, B", 0xCB68u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_5_C("BIT 5, C", 0xCB69u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_5_D("BIT 5, D", 0xCB6Au, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_5_E("BIT 5, E", 0xCB6Bu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_5_H("BIT 5, H", 0xCB6Cu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_5_L("BIT 5, L", 0xCB6Du, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_5_HL("BIT 5, (HL)", 0xCB6Eu, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_5_A("BIT 5, A", 0xCB6Fu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
@@ -3336,98 +3528,162 @@ class Instruction : HashMap<UShort, Execute>() {
 
         BIT_6_B("BIT 6, B", 0xCB70u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_6_C("BIT 6, C", 0xCB71u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_6_D("BIT 6, D", 0xCB72u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_6_E("BIT 6, E", 0xCB73u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_6_H("BIT 6, H", 0xCB74u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_6_L("BIT 6, L", 0xCB75u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_6_HL("BIT 6, (HL)", 0xCB76u, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_6_A("BIT 6, A", 0xCB77u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
 
         BIT_7_B("BIT 7, B", 0xCB78u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_7_C("BIT 7, C", 0xCB79u, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_7_D("BIT 7, D", 0xCB7Au, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_7_E("BIT 7, E", 0xCB7Bu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_7_H("BIT 7, H", 0xCB7Cu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_7_L("BIT 7, L", 0xCB7Du, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_7_HL("BIT 7, (HL)", 0xCB7Eu, 16, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         BIT_7_A("BIT 7, A", 0xCB7Fu, 8, 0x2u, flagAffected = "z01-") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a bit 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
@@ -3435,392 +3691,711 @@ class Instruction : HashMap<UShort, Execute>() {
 
         RES_0_B("RES 0, B", 0xCB80u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_0_C("RES 0, C", 0xCB81u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_0_D("RES 0, D", 0xCB82u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_0_E("RES 0, E", 0xCB83u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         RES_0_H("RES 0, H", 0xCB84u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_0_L("RES 0, L", 0xCB85u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_0_HL("RES 0, (HL)", 0xCB86u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_0_A("RES 0, A", 0xCB87u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         RES_1_B("RES 1, B", 0xCB88u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_1_C("RES 1, C", 0xCB89u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_1_D("RES 1, D", 0xCB8Au, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_1_E("RES 1, E", 0xCB8Bu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         RES_1_H("RES 1, H", 0xCB8Cu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_1_L("RES 1, L", 0xCB8Du, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_1_HL("RES 1, (HL)", 0xCB8Eu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_1_A("RES 1, A", 0xCB8Fu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         RES_2_B("RES 2, B", 0xCB90u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_2_C("RES 2, C", 0xCB91u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_2_D("RES 2, D", 0xCB92u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_2_E("RES 2, E", 0xCB93u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         RES_2_H("RES 2, H", 0xCB94u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_2_L("RES 2, L", 0xCB95u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_2_HL("RES 2, (HL)", 0xCB96u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_2_A("RES 2, A", 0xCB97u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         RES_3_B("RES 3, B", 0xCB98u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_3_C("RES 3, C", 0xCB99u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_3_D("RES 3, D", 0xCB9Au, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_3_E("RES 3, E", 0xCB9Bu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         RES_3_H("RES 3, H", 0xCB9Cu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_3_L("RES 3, L", 0xCB9Du, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_3_HL("RES 3, (HL)", 0xCB9Eu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_3_A("RES 3, A", 0xCB9Fu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         RES_4_B("RES 4, B", 0xCBA0u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_4_C("RES 4, C", 0xCBA1u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_4_D("RES 4, D", 0xCBA2u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_4_E("RES 4, E", 0xCBA3u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         RES_4_H("RES 4, H", 0xCBA4u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_4_L("RES 4, L", 0xCBA5u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_4_HL("RES 4, (HL)", 0xCBA6u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_4_A("RES 4, A", 0xCBA7u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         RES_5_B("RES 5, B", 0xCBA8u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_5_C("RES 5, C", 0xCBA9u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_5_D("RES 5, D", 0xCBAAu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_5_E("RES 5, E", 0xCBABu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         RES_5_H("RES 5, H", 0xCBACu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_5_L("RES 5, L", 0xCBADu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_5_HL("RES 5, (HL)", 0xCBAEu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_5_A("RES 5, A", 0xCBAFu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         RES_6_B("RES 6, B", 0xCBB0u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_6_C("RES 6, C", 0xCBB1u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_6_D("RES 6, D", 0xCBB2u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_6_E("RES 6, E", 0xCBB3u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         RES_6_H("RES 6, H", 0xCBB4u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_6_L("RES 6, L", 0xCBB5u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_6_HL("RES 6, (HL)", 0xCBB6u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_6_A("RES 6, A", 0xCBB7u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         RES_7_B("RES 7, B", 0xCBB8u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         RES_7_C("RES 7, C", 0xCBB9u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         RES_7_D("RES 7, D", 0xCBBAu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         RES_7_E("RES 7, E", 0xCBBBu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         RES_7_H("RES 7, H", 0xCBBCu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         RES_7_L("RES 7, L", 0xCBBDu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         RES_7_HL("RES 7, (HL)", 0xCBBEu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         RES_7_A("RES 7, A", 0xCBBFu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a res 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
@@ -3828,403 +4403,714 @@ class Instruction : HashMap<UShort, Execute>() {
 
         SET_0_B("SET 0, B", 0xCBC0u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_0_C("SET 0, C", 0xCBC1u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_0_D("SET 0, D", 0xCBC2u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_0_E("SET 0, E", 0xCBC3u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_0_H("SET 0, H", 0xCBC4u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
                 return cycles
             }
         },
         SET_0_L("SET 0, L", 0xCBC5u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_0_HL("SET 0, (HL)", 0xCBC6u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_0_A("SET 0, A", 0xCBC7u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 0
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         SET_1_B("SET 1, B", 0xCBC8u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_1_C("SET 1, C", 0xCBC9u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_1_D("SET 1, D", 0xCBCAu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_1_E("SET 1, E", 0xCBCBu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_1_H("SET 1, H", 0xCBCCu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         SET_1_L("SET 1, L", 0xCBCDu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_1_HL("SET 1, (HL)", 0xCBCEu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_1_A("SET 1, A", 0xCBCFu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 1
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         SET_2_B("SET 2, B", 0xCBD0u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_2_C("SET 2, C", 0xCBD1u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_2_D("SET 2, D", 0xCBD2u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_2_E("SET 2, E", 0xCBD3u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_2_H("SET 2, H", 0xCBD4u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         SET_2_L("SET 2, L", 0xCBD5u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_2_HL("SET 2, (HL)", 0xCBD6u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_2_A("SET 2, A", 0xCBD7u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 2
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         SET_3_B("SET 3, B", 0xCBD8u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_3_C("SET 3, C", 0xCBD9u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_3_D("SET 3, D", 0xCBDAu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_3_E("SET 3, E", 0xCBDBu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_3_H("SET 3, H", 0xCBDCu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         SET_3_L("SET 3, L", 0xCBDDu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_3_HL("SET 3, (HL)", 0xCBDEu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_3_A("SET 3, A", 0xCBDFu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 3
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         SET_4_B("SET 4, B", 0xCBE0u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_4_C("SET 4, C", 0xCBE1u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_4_D("SET 4, D", 0xCBE2u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_4_E("SET 4, E", 0xCBE3u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_4_H("SET 4, H", 0xCBE4u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         SET_4_L("SET 4, L", 0xCBE5u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_4_HL("SET 4, (HL)", 0xCBE6u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_4_A("SET 4, A", 0xCBE7u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 4
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         SET_5_B("SET 5, B", 0xCBE8u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_5_C("SET 5, C", 0xCBE9u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_5_D("SET 5, D", 0xCBEAu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_5_E("SET 5, E", 0xCBEBu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_5_H("SET 5, H", 0xCBECu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         SET_5_L("SET 5, L", 0xCBEDu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_5_HL("SET 5, (HL)", 0xCBEEu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_5_A("SET 5, A", 0xCBEFu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 5
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         SET_6_B("SET 6, B", 0xCBF0u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_6_C("SET 6, C", 0xCBF1u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_6_D("SET 6, D", 0xCBF2u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_6_E("SET 6, E", 0xCBF3u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_6_H("SET 6, H", 0xCBF4u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         SET_6_L("SET 6, L", 0xCBF5u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_6_HL("SET 6, (HL)", 0xCBF6u, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_6_A("SET 6, A", 0xCBF7u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 6
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
 
         SET_7_B("SET 7, B", 0xCBF8u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.b set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.b = result
                 return cycles
             }
         },
         SET_7_C("SET 7, C", 0xCBF9u, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.c set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.c = result
                 return cycles
             }
         },
         SET_7_D("SET 7, D", 0xCBFAu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.d set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.d = result
                 return cycles
             }
         },
         SET_7_E("SET 7, E", 0xCBFBu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.e set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.e = result
                 return cycles
             }
         },
         SET_7_H("SET 7, H", 0xCBFCu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.h set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.h = result
                 return cycles
             }
         },
         SET_7_L("SET 7, L", 0xCBFDu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.l set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.l = result
                 return cycles
             }
         },
         SET_7_HL("SET 7, (HL)", 0xCBFEu, 16, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = mmu.readByte(register.hl) set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                mmu.writeByte(register.hl, result)
                 return cycles
             }
         },
         SET_7_A("SET 7, A", 0xCBFFu, 8, 0x2u, flagAffected = "----") {
             override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
+                register.addPC(length)
+                val result = register.a set 7
+                register.fr.z = result.isZero()
+                register.fr.n = false
+                register.fr.h = true
+                register.a = result
                 return cycles
             }
         },
-
-        STOP("STOP -/-", 0x1000u, 4, flagAffected = "----") {
-            override fun execute(mmu: MMU, register: CPURegister): Int {
-                TODO("Not yet implemented")
-                return cycles
-            }
-        },
-
     }
 
     init {
