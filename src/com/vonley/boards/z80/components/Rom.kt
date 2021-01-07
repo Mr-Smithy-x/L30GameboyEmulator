@@ -1,8 +1,8 @@
-package com.vonley.boards.z80
+package com.vonley.boards.z80.components
 
 import java.io.File
 
-class Rom constructor(private var data: UByteArray) {
+class Rom constructor(val data: UByteArray) {
 
     enum class CGB(val byte: UByte) {
         NONE(0x0u),
@@ -174,6 +174,3 @@ class Rom constructor(private var data: UByteArray) {
         }
     }
 }
-
-
-

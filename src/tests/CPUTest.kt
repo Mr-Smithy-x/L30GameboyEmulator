@@ -93,4 +93,16 @@ class CPUTest : TestCase() {
         println(cpuRegister)
     }
 
+
+    fun testIncrementRegister() {
+        assert(cpuRegister.b == 0x00u.toUByte())
+        assert(cpuRegister.b.inc() == 0x01u.toUByte())
+        assert(cpuRegister.b == 0x00u.toUByte())
+        //notice that incrementing register doesn't affect the value,
+        //it only returns the respected value
+        //so we have to actually assign the value
+        cpuRegister.b = cpuRegister.b.inc()
+        assert(cpuRegister.b == 0x01u.toUByte())
+    }
+
 }

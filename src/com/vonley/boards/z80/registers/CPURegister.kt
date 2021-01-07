@@ -5,6 +5,19 @@ import com.vonley.extensions.toHexString
 
 class CPURegister {
 
+    val fetchIncWord: UShort
+        get() = fetchIncLength(0x2u)
+
+    fun fetchIncLength(length: UShort): UShort {
+        val result = pc
+        addPC(length)
+        return result
+    }
+
+    val fetchIncByte: UShort
+        get() = fetchIncLength(0x1u)
+
+
     val fr = FlagRegister()
 
     //HI            //LO
@@ -22,6 +35,12 @@ class CPURegister {
 
     //Program Counter
     var pc: UShort = 0x0u
+
+    var f: UByte
+        get() = fr.byte
+        set(value) {
+            fr.byte = value
+        }
 
     var hl: UShort
         get() = ((((h and 0xFFu).toUInt() shl 8) or (l and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
@@ -45,16 +64,45 @@ class CPURegister {
         }
 
     var af: UShort
-        get() = ((((a and 0xFFu).toUInt() shl 8) or (fr.byte and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
+        get() = ((((a and 0xFFu).toUInt() shl 8) or (f and 0xFFu).toUInt()) and 0xFFFFu).toUShort()
         set(value) {
             a = ((value.toUInt() shr 8) and 0xFFu).toUByte()
-            fr.byte = ((value.toUInt() and 0xFFu).toUByte())
+            f = ((value.toUInt() and 0xFFu).toUByte())
         }
+
+    fun addPC(number: UShort) {
+        pc = pc.plus(number).and(0xFFFFu).toUShort()
+    }
+
+    fun addSP(number: UShort) {
+        sp = sp.plus(number).and(0xFFFFu).toUShort()
+    }
+
+    fun minusPC(number: UShort) {
+        pc = pc.minus(number).and(0xFFFFu).toUShort()
+    }
+
+    fun minusSP(number: UShort) {
+        sp = sp.minus(number).and(0xFFFFu).toUShort()
+    }
+
+    fun incPC() {
+        addPC(0x1u)
+    }
+
+    fun incHL() {
+        hl = hl.plus(0x1u).and(0xFFFFu).toUShort()
+    }
+
+    fun decHL() {
+        hl = hl.minus(0x1u).and(0xFFFFu).toUShort()
+    }
+
 
     override fun toString(): String {
         return """
             CPU:
-            A  :    ${a.toHexString()}        F : ${fr.byte.toHexString()}        / F  : ${fr.byte.toBinaryString()}
+            A  :    ${a.toHexString()}        F : ${f.toHexString()}        / F  : ${f.toBinaryString()}
             H  :    ${h.toHexString()}        L : ${l.toHexString()}        / HL : ${hl.toHexString()}
             B  :    ${b.toHexString()}        C : ${c.toHexString()}        / BC : ${bc.toHexString()}
             D  :    ${d.toHexString()}        E : ${e.toHexString()}        / DE : ${de.toHexString()}
@@ -63,4 +111,10 @@ class CPURegister {
             
         """.trimIndent() + fr
     }
+
+    fun reset() {
+        fr.reset()
+    }
+
+
 }

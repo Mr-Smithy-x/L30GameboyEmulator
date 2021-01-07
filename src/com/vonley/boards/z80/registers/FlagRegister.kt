@@ -53,4 +53,8 @@ class FlagRegister {
         """.trimIndent()
     }
 
+    fun reset() {
+
+    }
+
 }

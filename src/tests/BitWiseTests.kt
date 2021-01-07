@@ -1,6 +1,7 @@
 package tests
 
 import org.junit.Test
+
 /**
  * To understand calculations you need to understand Signed Magnitude
  * Left most bit tells you whether its a negative or positive. 0 for positive 1 for negative
@@ -132,6 +133,13 @@ class BitWiseTests {
         // 0    0   0   0  1  0 1 1 0 = 16 + 4 + 2 = 22
         assert(a shr 2 == 21)
         assert(b shr 2 == 22)
+    }
+
+
+    @Test
+    fun testCombine(){
+        val instruction = (0xCB00u.toUShort() or (0x13u).toUShort().and(0x00FFu))
+        assert(instruction == 0xCB13u.toUShort())
     }
 
 }

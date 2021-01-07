@@ -1,7 +1,8 @@
 package com.vonley.boards.z80.memory
 
-import com.vonley.contracts.IntDifferenceImpl
-import com.vonley.extensions.getRegion
+import com.vonley.boards.z80.components.Rom
+import com.vonley.contracts.UShortDifferenceImpl
+import com.vonley.extensions.*
 
 
 //MBC1
@@ -14,6 +15,9 @@ import com.vonley.extensions.getRegion
 
 //MBC2
 class MMU {
+
+    var bootRom: Boolean = false
+
     //Start	End	    Description	Notes
     //0000  00FF - The bootrom
     private val bootrom = UByteArray(0x100)
@@ -50,96 +54,108 @@ class MMU {
     private val hram = UByteArray(0x7F)
 
     //FFFF	FFFF	Interrupts Enable Register (IE)
-    private var interupt = 0
+    private var interupt = UByteArray(1) { 0x0u }
+
+    var ime: Boolean = false
 
 
     enum class Region(
         val canRead: Boolean = false,
         val canWrite: Boolean = false,
-        protected val range: IntRange = -1..-1
-    ) : IntDifferenceImpl {
-        BOOT_ROM(true, true, 0x0000..0x00FF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        protected val range: UIntRange = 0xF0000u..0xFF000u
+    ) : UShortDifferenceImpl {
+        BOOT_ROM(true, true, 0x0000u..0x00FFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        ROM_BANK_0(true, false, 0x0000..0x3FFF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        ROM_BANK_0(true, false, 0x0000u..0x3FFFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        ROM_BANK_1(true, false, 0x4000..0x7FFF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        ROM_BANK_1(true, false, 0x4000u..0x7FFFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        VIDEO_RAM(true, true, 0x8000..0x9FFF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        VIDEO_RAM(true, true, 0x8000u..0x9FFFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        EXTERNAL_RAM(true, true, 0xA000..0xBFFF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        EXTERNAL_RAM(true, true, 0xA000u..0xBFFFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        WORK_RAM(true, true, 0xC000..0xDFFF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        WORK_RAM(true, true, 0xC000u..0xDFFFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        ECHO_RAM(true, false, 0xE000..0xFDFF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        ECHO_RAM(true, false, 0xE000u..0xFDFFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        OAM_SPRITE(true, true, 0xFE00..0xFE9F) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        OAM_SPRITE(true, true, 0xFE00u..0xFE9Fu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        UNUSABLE(true, false, 0xFEA0..0xFEFF) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        UNUSABLE(true, false, 0xFEA0u..0xFEFFu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         },
-        IO_REG(true, true, 0xFF00..0xFF7F) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
+        IO_REG(true, true, 0xFF00u..0xFF7Fu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
         }, //Joy Pad
-        ZERO_PAGE_RAM(true, true, 0xFF80..0xFFFE) {
-            override val endInclusive: Int
-                get() = range.last
-            override val start: Int
-                get() = range.first
-        }; //H Ram
+        ZERO_PAGE_RAM(true, true, 0xFF80u..0xFFFEu) {
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
+        }, //H Ram
+        IE_INTERRUPT(true, true, 0xFFFFu..0xFFFFu){
+            override val endInclusive: UShort
+                get() = range.last.and(0xFFFFu).toUShort()
+            override val start: UShort
+                get() = range.first.and(0xFFFFu).toUShort()
+
+        };
 
         companion object {
-            fun parse(value: Int, bootRomEnabled: Boolean = false): Region {
+            fun parse(value: UShort, bootRomEnabled: Boolean = false): Region {
+                val word: UShort = value
                 return when {
-                    bootRomEnabled && value in BOOT_ROM -> BOOT_ROM
-                    value in ROM_BANK_0 -> ROM_BANK_0
-                    value in ROM_BANK_1 -> ROM_BANK_1
-                    value in VIDEO_RAM -> VIDEO_RAM
-                    value in EXTERNAL_RAM -> EXTERNAL_RAM
-                    value in WORK_RAM -> WORK_RAM
-                    value in ECHO_RAM -> ECHO_RAM
-                    value in OAM_SPRITE -> OAM_SPRITE
-                    value in UNUSABLE -> UNUSABLE
-                    value in IO_REG -> IO_REG
-                    value in ZERO_PAGE_RAM -> ZERO_PAGE_RAM
+                    bootRomEnabled && word in BOOT_ROM -> BOOT_ROM
+                    word in ROM_BANK_0 -> ROM_BANK_0
+                    word in ROM_BANK_1 -> ROM_BANK_1
+                    word in VIDEO_RAM -> VIDEO_RAM
+                    word in EXTERNAL_RAM -> EXTERNAL_RAM
+                    word in WORK_RAM -> WORK_RAM
+                    word in ECHO_RAM -> ECHO_RAM
+                    word in OAM_SPRITE -> OAM_SPRITE
+                    word in UNUSABLE -> UNUSABLE
+                    word in IO_REG -> IO_REG
+                    word in ZERO_PAGE_RAM -> ZERO_PAGE_RAM
+                    word in IE_INTERRUPT -> IE_INTERRUPT
                     else -> {
+                        println("$word - ${word.toHexString()}")
                         throw ArrayIndexOutOfBoundsException("You're out of bounds")
                     }
                 }
@@ -151,7 +167,7 @@ class MMU {
     /**
      * Returns the region to return at where we're righting to the MMU
      */
-    private fun getByteArrayAtRegion(address: Int): UByteArray {
+    private fun getByteArrayAtRegion(address: UShort): UByteArray {
         return when (address.getRegion()) {
             Region.BOOT_ROM -> bootrom
             Region.ROM_BANK_0 -> rombank0
@@ -164,42 +180,52 @@ class MMU {
             Region.UNUSABLE -> unusable
             Region.IO_REG -> ioregs
             Region.ZERO_PAGE_RAM -> hram
+            Region.IE_INTERRUPT -> interupt
         }
     }
 
-    fun readByte(address: Int): UByte {
+    fun readByte(address: UShort): UByte {
         val region = address.getRegion()
         val regionArray = getByteArrayAtRegion(address)
         val index = address and region.difference
-        val byte = regionArray[index]
+        val byte = regionArray[index.toInt()]
         return byte.and(0xFFu)
     }
 
-    fun writeShort(address: Int, value: UShort) {
-        val left = ((value.toUInt() shr 8) and 0xFFu).toUByte()
-        val right = (value.toUInt() and 0xFFu).toUByte()
-        writeByte(address, left)
-        writeByte(address + 1, right)
+    //LE
+    fun writeShort(address: UShort, value: UShort) {
+        val hi = ((value shr 8) and 0xFFu).toUByte()
+        val lo = (value and 0xFFu).toUByte()
+        writeByte(address, lo)
+        writeByte(address.inc(), hi)
     }
 
-    fun readShort(address: Int): UShort {
-        val lo = readByte(address)
-        val hi = readByte(address + 1)
-        return (((lo and 0xFFu).toUInt() shl 8) or (hi and 0xFFu).toUInt()).and(0xFFFFu).toUShort();//We are taking the byte, upscaling it to a short
-        //short is a signed word -32768 to +32767, Word is 0 - 65535, we are just representing the binary in 2's complement
-        //using a short
+    //LE
+    fun readShort(address: UShort): UShort {
+        val hi = readByte(address)
+        val lo = readByte(address.inc())
+        return (((lo and 0xFFu).toUShort() shl 8) or (hi and 0xFFu).toUShort()).and(0xFFFFu);
     }
 
 
-    fun writeByte(address: Int, value: UByte) {
+    fun writeByte(address: UShort, value: UByte) {
         val region = address.getRegion()
         if (region.canWrite) {
             val regionArray = getByteArrayAtRegion(address)
             val index = address and region.difference
-            regionArray[index] = value.and(0xFFu)
+            regionArray[index.toInt()] = value.and(0xFFu)
         } else {
             throw IllegalAccessException("You cannot write to this area")
         }
+    }
+
+    fun reset() {
+
+    }
+
+    fun loadROM(rom: Rom) {
+        rom.romBank0.copyInto(rombank0)
+        rom.romBank1.copyInto(rombank1)
     }
 
     companion object {
