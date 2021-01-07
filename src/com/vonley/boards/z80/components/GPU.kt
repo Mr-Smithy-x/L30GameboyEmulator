@@ -15,25 +15,25 @@ class GPU(private val mmu: MMU, private val cpuRegister: CPURegister) {
     val lcdMonoChromePalette = LCDMonoChromePalette()
 
     //LCD Interrupts
-    //40
-    var vBlankInterrupt: UInt = 0x0u
-    //48
-    var hBlankInterrupt: UInt = 0x0u
-    //LCD Position and Scrolling
-    //FF42
-    var scrollY: UByte = 0x0u
-    //FF43
-    var scrollX: UByte = 0x0u
-    //LY Compare//FF44 range: 0 - 153
-    var lcdc: UByte = 0x0u
-    //LYC
-    //FF45
-    //0 - 153
-    var lyCompare: UByte = 0x0u //ly compare
-    //FF4A
-    var windowY: UByte = 0x0u
-    //FF4B - windows x position -7
-    var windowX: UByte = 0x0u
+    var vBlankInterrupt: UInt = 0x0u //40
+    var hBlankInterrupt: UInt = 0x0u //48
+
+    var lcdc: UByte = 0x0u //LY Compare//FF44 range: 0 - 153
+    var lyCompare: UByte = 0x0u //ly compare //LYC //FF45 //0 - 153
+
+    class LCDScroll {
+        //FF42
+        var y: UByte = 0x0u
+        //FF43
+        var x: UByte = 0x0u
+    }
+
+    class LCDWindow {
+        //FF4A
+        var y: UByte = 0x0u
+        //FF4B - windows x position -7
+        var x: UByte = 0x0u
+    }
 
     class LCDControlRegister {
         //0xFF40
@@ -149,7 +149,6 @@ class GPU(private val mmu: MMU, private val cpuRegister: CPURegister) {
             BLACK(0x3u);
         }
     }
-
 
 }
 
