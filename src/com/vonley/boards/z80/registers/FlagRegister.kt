@@ -18,20 +18,12 @@ class FlagRegister {
 
     var byte: UByte
         get() {
-            var register: UInt = 0x0u;
-            if (z) {
-                register = register xor (1u shl 7)
-            }
-            if (n) {
-                register = register xor (1u shl 6)
-            }
-            if (h) {
-                register = register xor (1u shl 5)
-            }
-            if (c) {
-                register = register xor (1u shl 4)
-            }
-            return ((register and 0xFFu).toUByte())
+            var register: UByte = 0x0u;
+            register = register xor (z.asUByte shl 7)
+            register = register xor (n.asUByte shl 6)
+            register = register xor (h.asUByte shl 5)
+            register = register xor (c.asUByte shl 4)
+            return register and 0xFFu
         }
         set(value) {
             z = (value.toUInt() and 0xFFu shr 7) and 0x01u == 0x01u
